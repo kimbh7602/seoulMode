@@ -10,7 +10,8 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<!-- <annotation-driven>
+	<annotation-driven/>
+	<!--
 	<argument-resolvers>
 	<beans:bean
 	class="com.clustering.project.component.CustomizeMethodArgumentResolver" />
@@ -37,10 +38,10 @@
 			value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
 	</beans:bean>
 	
-	<beans:bean id="multipartResolver"
+	<!-- <beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="resolveLazily" value="true" />
-	</beans:bean>
+	</beans:bean> -->
 	<!-- <beans:bean id="commonCodeDao" class="com.clustering.project.dao.CommonCodeDao"/> -->
 	<context:component-scan base-package="com.seoulmode.lecture" />
 

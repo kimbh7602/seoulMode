@@ -31,6 +31,8 @@ public class NoticeController {
 
 		if("list".equals(action)) {
 			
+		}else if("read".equals(action)) {
+			
 		}
 		
 		

@@ -45,6 +45,25 @@
     <script src="<c:url value = '/resources/js/moment.min.js'/>"></script>
     <script src="<c:url value = '/resources/js/daterangepicker.js'/>"></script>
     
+    <!-- bootstrap-wysiwyg -->
+    <script src="<c:url value = '/resources/js/bootstrap-wysiwyg.min.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jquery.hotkeys.js'/>"></script>
+    <script src="<c:url value = '/resources/js/prettify.js'/>"></script>
+    <!-- jQuery Tags Input -->
+    <script src="<c:url value = '/resources/js/jquery.tagsinput.js'/>"></script>
+    <!-- Switchery -->
+    <script src="<c:url value = '/resources/js/switchery.min.js'/>"></script>
+    <!-- Select2 -->
+    <script src="<c:url value = '/resources/js/select2.full.min.js'/>"></script>
+    <!-- Parsley -->
+    <script src="<c:url value = '/resources/js/parsley.min.js'/>"></script>
+    <!-- Autosize -->
+    <script src="<c:url value = '/resources/js/autosize.min.js'/>"></script>
+    <!-- jQuery autocomplete -->
+    <script src="<c:url value = '/resources/js/jquery.autocomplete.min.js'/>"></script>
+    <!-- starrr -->
+    <script src="<c:url value = '/resources/js/starrr.js'/>"></script>
+    
     
     <!-- Datatables -->
     <script src="<c:url value = '/resources/js/jquery.dataTables.min.js'/>"></script>

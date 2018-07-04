@@ -17,7 +17,16 @@
     <!-- iCheck -->
     <link href="<c:url value = '/resources/css/green.css'/>" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="<c:url value = 'resources/css/animate.min.css'/>" rel="stylesheet">
+    <link href="<c:url value = '/resources/css/animate.min.css'/>" rel="stylesheet">
+    
+    <!-- bootstrap-wysiwyg -->
+    <link href="<c:url value = '/resources/css/prettify.min.css'/>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<c:url value = '/resources/css/select2.min.css'/>" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="<c:url value = '/resources/css/switchery.min.css'/>" rel="stylesheet">
+    <!-- starrr -->
+    <link href="<c:url value = '/resources/css/starrr.css'/>" rel="stylesheet">
 	
     <!-- bootstrap-progressbar -->
     <link href="<c:url value = '/resources/css/bootstrap-progressbar-3.3.4.min.css'/>" rel="stylesheet">
@@ -29,7 +38,7 @@
 	<!-- Datatables -->
     <link href="<c:url value = '/resources/css/dataTables.bootstrap.min.css'/>" rel="stylesheet">
     <link href="<c:url value = '/resources/css/buttons.bootstrap.min.css'/>" rel="stylesheet">
-    <link href="<c:url value = '/resources/css/css/fixedHeader.bootstrap.min.css'/>" rel="stylesheet">
+    <link href="<c:url value = '/resources/css/fixedHeader.bootstrap.min.css'/>" rel="stylesheet">
     <link href="<c:url value = '/resources/css/responsive.bootstrap.min.css'/>" rel="stylesheet">
     <link href="<c:url value = '/resources/css/scroller.bootstrap.min.css'/>" rel="stylesheet">
 	

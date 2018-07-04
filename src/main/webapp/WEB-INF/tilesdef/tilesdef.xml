@@ -17,13 +17,13 @@
 		<put-attribute name="layout.footer"
 			value="/WEB-INF/views/template/user_footer.jsp" />
    	</definition>
-	
+   	
 	<!-- home by user -->
 	<definition name="/*" extends="layout.user">
 		<put-attribute name="layout.title" value="{1}" />
 		<put-attribute name="layout.body" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
-
+	
 	<!-- shared view uri by user -->
 	<definition name="/*/*" extends="layout.user">
 		<put-attribute name="layout.title" value="{1} > {2}" />

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="survey">
+
+	<select id="read" resultType="Map" parameterType="Map">
+   
+      select
+      	 b.BOARD_SEQ,
+         b.CATEGORY_SEQ, <!-- 글 카테고리 -->
+         b.title ,   <!-- 글 제목 -->
+         b.contents ,      <!-- 글 내용 -->
+         b.upload_date ,   <!-- 게시일 -->
+         bi.img_name      <!-- 이미지 이름 -->
+      from BOARD b INNER JOIN board_img_rel bir
+      ON b.BOARD_SEQ = bir.BOARD_SEQ
+      INNER JOIN board_img bi
+      ON bir.IMG_SEQ = bi.IMG_SEQ
+      WHERE b.CATEGORY_SEQ = #{CATEGORY_SEQ}
+      ORDER BY b.BOARD_SEQ
+   </select>
+   
+   	<select id="list" resultType="Map" parameterType="Map">
+   
+      select
+      	 b.BOARD_SEQ,
+         b.CATEGORY_SEQ, <!-- 글 카테고리 -->
+         b.title ,   <!-- 글 제목 -->
+         b.contents ,      <!-- 글 내용 -->
+         b.upload_date ,   <!-- 게시일 -->
+         bi.img_name      <!-- 이미지 이름 -->
+      from BOARD b INNER JOIN board_img_rel bir
+      ON b.BOARD_SEQ = bir.BOARD_SEQ
+      INNER JOIN board_img bi
+      ON bir.IMG_SEQ = bi.IMG_SEQ
+      WHERE b.CATEGORY_SEQ = #{CATEGORY_SEQ}
+      ORDER BY b.BOARD_SEQ
+   </select>
+   
+   <select id = "edit_read" resultType ="Map" parameterType= "Map">
+   	
+      select
+      	 b.BOARD_SEQ,
+         b.title ,   <!-- 글 제목 -->
+         b.contents ,      <!-- 글 내용 -->
+         bi.img_name,  <!-- 이미지 이름 -->
+         bi.IMG_SEQ,
+         b.UPLOAD_DATE      
+      from BOARD b INNER JOIN board_img_rel bir
+      ON b.BOARD_SEQ = bir.BOARD_SEQ
+      INNER JOIN board_img bi
+      ON bir.IMG_SEQ = bi.IMG_SEQ
+      WHERE b.BOARD_SEQ = #{BOARD_SEQ}
+      
+   </select>
+
+	<insert id="insert_board" parameterType="Map">
+		INSERT INTO 
+		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
+		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
+	</insert>
+	
+	<insert id="insert" parameterType="Map">
+		INSERT INTO 
+		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
+		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
+	</insert>
+	
+	<insert id = "insert_board_img" parameterType="Map">
+		INSERT INTO
+		board_img(IMG_SEQ,IMG_NAME)
+		VALUES(SEQ_IMG.nextval, #{file})
+	</insert>
+	
+	<insert id = "insert_board_img_rel" parameterType="Map">
+		INSERT INTO
+		board_img_rel(BOARD_SEQ, IMG_SEQ)
+		VALUES(SEQ_BOARD.currval, SEQ_IMG.currval)
+	</insert>
+
+	
+	<update id = "update_board" parameterType="Map">
+		UPDATE board
+		SET TITLE = #{TITLE}, CONTENTS =#{CONTENTS}, UPLOAD_DATE = sysdate
+		WHERE BOARD_SEQ = #{BOARD_SEQ}
+	</update>
+	<update id = "update_board_img" parameterType="Map">
+		UPDATE board_img
+		SET IMG_NAME = #{file}
+		WHERE IMG_SEQ = #{IMG_SEQ}
+	</update>
+	<update id = "update_view" parameterType="Map">
+		UPDATE board
+		SET views = views+1
+		WHERE CATEGORY_SEQ = #{CATEGORY_SEQ}
+	</update>
+	<delete id="delete_board_img_rel" parameterType="Map">
+		delete from BOARD_IMG_REL
+		where BOARD_SEQ = #{BOARD_SEQ}
+	</delete>
+	<delete id="delete_board_img" parameterType="Map">
+		delete from BOARD_IMG
+		where IMG_SEQ = #{IMG_SEQ}
+	</delete>
+	<delete id="delete_board" parameterType="Map">
+		delete from BOARD
+		where BOARD_SEQ = #{BOARD_SEQ}
+	</delete>
+	
+	
+	
+	
+	
+</mapper>

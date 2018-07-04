@@ -33,7 +33,6 @@ public class HomeController {
 			viewName = "/home";
 		}
 		
-		
 		modelandView.setViewName(viewName);
 
 		modelandView.addObject("paramMap", paramMap);

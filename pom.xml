@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.clustering.project</groupId>
-	<artifactId>clusteringIncubation</artifactId>
-	<name>ClusteringProjectBySpringMVC</name>
+	<groupId>com.seoulmode.lecture</groupId>
+	<artifactId>seoulmode</artifactId>
+	<name>SeoulmodeProjectBySpringMVC</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>

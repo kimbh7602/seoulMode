@@ -33,6 +33,8 @@ public class NoticeController {
 			
 		}else if("read".equals(action)) {
 			
+		}else if("modify".equals(action)) {
+			
 		}
 		
 		

@@ -25,5 +25,10 @@ public class ShareDao {
 		
 		return result;
 	}
+	public Object updateObject(String sqlMapId, Object dataMap) {
+		Object result = sqlSession.update(sqlMapId, dataMap);
+		
+		return result;
+	}
 
 }

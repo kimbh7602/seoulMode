@@ -21,8 +21,7 @@
             </div>
           </div>
           <!-- /top tiles -->
-          <br />
-          <div class="row">
+<!--           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
@@ -110,12 +109,10 @@
               </div>
             </div>
 
-
+ -->
+ <!--  End of Recent Notice -->
+ 
             <div class="col-md-12 col-sm-12 col-xs-12">
-
-              <div class="row">
-
-
                 <!-- Start to do list -->
                   <div class="x_panel">
                     <div class="x_title">
@@ -181,10 +178,7 @@
                       </div>
                     </div>
                 </div>
-                <!-- End to do list -->
-                
               </div>
-            </div>
+                <!-- End to do list -->
           </div>
-        </div>
         <!-- /page content -->

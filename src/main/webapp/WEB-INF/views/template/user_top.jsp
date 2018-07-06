@@ -7,11 +7,24 @@
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
-
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
+				<c:choose>
+		        	<c:when test="${principalName eq null}">
+		        <li>
+				<a href="<c:url value='/signUp/signUp'/>">
+					Sign Up
+				</a>
+				</li>
+				<li>
+				<a href="<c:url value='/login/LoginForm'/>" >
+					Login
+				</a>
+				</li>
+		        	</c:when>
+		        	<c:otherwise>
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                   <!--  <img src="images/img.jpg" alt=""> -->John Doe
+                   <!--  <img src="images/img.jpg" alt=""> -->${principalName}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -25,6 +38,8 @@
                     <li><a href="javascript:;">Help</a></li>
                     <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
+					</c:otherwise>
+				</c:choose>
                 </li>
 
                 <li role="presentation" class="dropdown">

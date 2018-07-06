@@ -31,7 +31,7 @@ public class SurveyService {
 		return resultData;
 	}
 	
-	public Object insertObject(Map<String,Object> paramMap) {
+	public Object insertObject(Map<Object,Object> paramMap) {
 		String uniqueSequence = (String) paramMap.get("SURVEY_SEQ");
 		Object resultData;
 		if("".equals(uniqueSequence)){

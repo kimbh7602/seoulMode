@@ -7,12 +7,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seoulmode.lecture.component.MapParamCollector;
 import com.seoulmode.lecture.service.SurveyService;
 
 
@@ -24,28 +26,30 @@ public class SurveyController {
 	private SurveyService service;
 	
 	@RequestMapping(value = MAPPING+"{action}", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView actionMethod(@RequestParam Map<String, Object> paramMap, @PathVariable String action,
+	public ModelAndView actionMethod(@RequestParam MultiValueMap<Object, Object> paramMultiMap
+			,MapParamCollector paramMethodMap, @PathVariable String action,
 			ModelAndView modelandView) {
 
 		String viewName = MAPPING + action ;
 		
+		Map<Object,Object> paramMap = paramMethodMap.getMap();
 		Map<String, Object> resultMap = new HashMap<String, Object>() ;
 		List<Object> resultList = new ArrayList<Object>();
 		String forwardView = (String) paramMap.get("forwardView") ;
 
 
 		if("list".equals(action)) {
-			resultMap = (Map<String, Object>) service.getList(paramMap);
+//			resultList = (List<Object>) service.getList(paramMap);
 		}else if("insert".equals(action)) {
 			
 		}else if("insert_register".equals(action)){
-			service.insertObject(paramMap);
+//			service.insertObject(paramMap);
 		}else if("modify".equals(action)) {
-			resultMap = (Map<String, Object>) service.getObject(paramMap);
+//			resultMap = (Map<String, Object>) service.getObject(paramMap);
 		}else if("modify_register".equals(action)){
-			service.insertObject(paramMap);
+//			service.insertObject(paramMap);
 		}else if("read".equals(action)) {
-			resultMap = (Map<String, Object>) service.getObject(paramMap);
+//			resultMap = (Map<String, Object>) service.getObject(paramMap);
 		}else if("delete".equals(action)) {
 			
 		}else {

@@ -7,54 +7,21 @@
 <mapper namespace="survey">
 
 	<select id="read" resultType="Map" parameterType="Map">
-   
-      select
-      	 b.BOARD_SEQ,
-         b.CATEGORY_SEQ, <!-- 글 카테고리 -->
-         b.title ,   <!-- 글 제목 -->
-         b.contents ,      <!-- 글 내용 -->
-         b.upload_date ,   <!-- 게시일 -->
-         bi.img_name      <!-- 이미지 이름 -->
-      from BOARD b INNER JOIN board_img_rel bir
-      ON b.BOARD_SEQ = bir.BOARD_SEQ
-      INNER JOIN board_img bi
-      ON bir.IMG_SEQ = bi.IMG_SEQ
-      WHERE b.CATEGORY_SEQ = #{CATEGORY_SEQ}
-      ORDER BY b.BOARD_SEQ
+      select *
+      from sm_member
+      WHERE 1=1
    </select>
    
    	<select id="list" resultType="Map" parameterType="Map">
-   
-      select
-      	 b.BOARD_SEQ,
-         b.CATEGORY_SEQ, <!-- 글 카테고리 -->
-         b.title ,   <!-- 글 제목 -->
-         b.contents ,      <!-- 글 내용 -->
-         b.upload_date ,   <!-- 게시일 -->
-         bi.img_name      <!-- 이미지 이름 -->
-      from BOARD b INNER JOIN board_img_rel bir
-      ON b.BOARD_SEQ = bir.BOARD_SEQ
-      INNER JOIN board_img bi
-      ON bir.IMG_SEQ = bi.IMG_SEQ
-      WHERE b.CATEGORY_SEQ = #{CATEGORY_SEQ}
-      ORDER BY b.BOARD_SEQ
+      select *
+      from sm_member
+      WHERE 1=1
    </select>
    
    <select id = "edit_read" resultType ="Map" parameterType= "Map">
-   	
-      select
-      	 b.BOARD_SEQ,
-         b.title ,   <!-- 글 제목 -->
-         b.contents ,      <!-- 글 내용 -->
-         bi.img_name,  <!-- 이미지 이름 -->
-         bi.IMG_SEQ,
-         b.UPLOAD_DATE      
-      from BOARD b INNER JOIN board_img_rel bir
-      ON b.BOARD_SEQ = bir.BOARD_SEQ
-      INNER JOIN board_img bi
-      ON bir.IMG_SEQ = bi.IMG_SEQ
-      WHERE b.BOARD_SEQ = #{BOARD_SEQ}
-      
+      select *
+      from sm_member
+      WHERE 1=1
    </select>
 
 	<insert id="insert_board" parameterType="Map">

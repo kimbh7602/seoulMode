@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body class="login">
-    <div>
+    <!-- <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
-
+ -->
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form class="" action="<c:url value='/j_spring_security_check' />" method='POST'>
+            <form class="" action="<c:url value='/login/login' />" method='POST'>
               <h1>Login Form</h1>
               <div>
                 <input type="text" class="form-control" placeholder="Username" required="" />
@@ -46,7 +46,7 @@
           </section>
         </div>
 
-        <div id="register" class="animate form registration_form">
+     <!--    <div id="register" class="animate form registration_form">
           <section class="login_content">
             <form>
               <h1>Create Account</h1>
@@ -80,7 +80,7 @@
               </div>
             </form>
           </section>
-        </div>
+        </div> -->
       </div>
     </div>
   </body>

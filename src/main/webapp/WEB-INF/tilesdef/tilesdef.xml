@@ -19,16 +19,18 @@
    	</definition>
    	
 	<!-- home by user -->
-	<definition name="/*" extends="layout.user">
-		<put-attribute name="layout.title" value="{1}" />
-		<put-attribute name="layout.body" value="/WEB-INF/views/{1}.jsp" />
+	<definition name="/login/login">
+		<put-attribute name="content" value="/WEB-INF/views/login/login.jsp" />
 	</definition>
 	
 	<!-- shared view uri by user -->
-	<definition name="/*/*" extends="layout.user">
-		<put-attribute name="layout.title" value="{1} > {2}" />
-		<put-attribute name="layout.body" value="/WEB-INF/views/{1}/{2}.jsp" />
-	</definition>
+	
+	
+	<definition name="/error/generic_error">
+    <put-attribute name="body" value="/WEB-INF/views/error/generic_error.jsp" />
+    <put-attribute name="browserTitle" value="Error Screen" />
+    </definition>
+	
 	
 	
 </tiles-definitions>

@@ -17,7 +17,7 @@
 				</a>
 				</li>
 				<li>
-				<a href="<c:url value='/login/LoginForm'/>" >
+				<a href="<c:url value='/login/loginform'/>" >
 					Login
 				</a>
 				</li>

@@ -29,6 +29,8 @@ public class LogInController {
 		
 		if("login".equalsIgnoreCase(action)) {
 			
+		}else if("loginform".equalsIgnoreCase(action)) {
+			
 		}
 		modelandView.setViewName(viewName);
 		

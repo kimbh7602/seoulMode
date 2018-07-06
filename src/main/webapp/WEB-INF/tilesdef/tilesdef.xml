@@ -18,19 +18,35 @@
 			value="/WEB-INF/views/template/user_footer.jsp" />
    	</definition>
    	
+   	<!-- Login template -->
+   	<definition name="layout.login" template="/WEB-INF/views/template/layout_login.jsp">
+		<put-attribute name="layout.header"
+			value="/WEB-INF/views/template/header.jsp" />
+	    <put-attribute name="layout.left"
+			value="/WEB-INF/views/template/user_left.jsp" />
+		<put-attribute name="layout.footer"
+			value="/WEB-INF/views/template/user_footer.jsp" />
+   	</definition>
+
+	<!-- login -->   	
+    <definition name="/login/loginform" extends="layout.login">
+        <put-attribute name="layout.title" value="login" />
+        <put-attribute name="layout.body" value="/WEB-INF/views/login/loginform.jsp" />        
+	</definition>
+   	
+   	
 	<!-- home by user -->
-	<definition name="/login/login">
-		<put-attribute name="content" value="/WEB-INF/views/login/login.jsp" />
+    <definition name="/*" extends="layout.user">
+        <put-attribute name="layout.title" value="{1}" />
+        <put-attribute name="layout.body" value="/WEB-INF/views/{1}.jsp" />        
 	</definition>
 	
 	<!-- shared view uri by user -->
-	
-	
-	<definition name="/error/generic_error">
-    <put-attribute name="body" value="/WEB-INF/views/error/generic_error.jsp" />
-    <put-attribute name="browserTitle" value="Error Screen" />
+    <definition name="/*/*" extends="layout.user">
+        <put-attribute name="layout.title" value="{1} > {2}" />
+        <put-attribute name="layout.body" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
-	
+
 	
 	
 </tiles-definitions>

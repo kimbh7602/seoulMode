@@ -5,7 +5,7 @@
       <a class="hiddenanchor" id="signin"></a>
 
       <div class="login_wrapper">
-        <div>
+        <div >
           <section class="login_content">
             <form>
               <h1>Login Form</h1>
@@ -16,7 +16,7 @@
                 <input type="password" class="form-control" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Log in</a>
+                <a class="btn btn-default submit" href="<c:url value='/home'/>">Log in</a>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
@@ -75,4 +75,5 @@
           </section>
         </div>
       </div>
+    </div>
     </div>

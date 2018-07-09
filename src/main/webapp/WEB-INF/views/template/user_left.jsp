@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="principalName" value="${pageContext.request.userPrincipal.name}"/>
 		<div class="col-md-3 left_col">
           <div class="left_col scroll-view">
@@ -10,12 +11,10 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-               <!--  <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
               </div>
               <div class="profile_info">
 				<c:choose>
 		      		<c:when test="${principalName eq null}">
-		      			
 		      		</c:when>
 		      		<c:otherwise>
 		      		       <span>Welcome,</span>
@@ -35,66 +34,25 @@
                 <ul class="nav side-menu">
                   <li><a  href="<c:url value ='/home'/>"><i class="fa fa-home"></i> Home <span class="fa"></span></a>
                     <ul class="nav child_menu">
-<!--                       <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li> -->
                     </ul>
                   </li>
-<!--                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="form.html">General Form</a></li>
-                      <li><a href="form_advanced.html">Advanced Components</a></li>
-                      <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
-                      <li><a href="icons.html">Icons</a></li>
-                      <li><a href="glyphicons.html">Glyphicons</a></li>
-                      <li><a href="widgets.html">Widgets</a></li>
-                      <li><a href="invoice.html">Invoice</a></li>
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="calendar.html">Calendar</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Boards <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="<c:url value='/notice/list'/>">Notice</a></li>
-                      <li><a href="<c:url value='/survey/list'/>">Survey</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
-                    </ul>
-                  </li> -->
-                </ul>
-              </div>
-              <c:choose>
+					<c:choose>
 		      		<c:when test="${principalName eq null}">
 		      			
 		      		</c:when>
-		      		<c:otherwise>
+			      		<c:otherwise>
+		                  <li><a href="<c:url value='/survey/list'/>"><i class="fa fa-table"></i> Survey </a></li>
+						</c:otherwise>
+		      		</c:choose>
+                </ul>
+              </div>
+                            <!-- 권한에 따라서 띄워주게끔, Admin 이면 뜨게 -->
+              <c:choose>
+		      		<c:when test="${resultMap.auth eq ROLE_ADMIN}">
 			              <div class="menu_section">
 			                <h3>관리자 화면</h3>
 			                <ul class="nav side-menu">
-			                  <li><a><i class="fa fa-table"></i> Survey <span class="fa fa-chevron-down"></span></a>
+			                  <li><a><i class="fa fa-desktop"></i> 설문조사 <span class="fa fa-chevron-down"></span></a>
 			                    <ul class="nav child_menu">
 			                      <li><a href="<c:url value ='/survey/list'/>">List</a></li>
 			                      <li><a href="<c:url value ='/survey/insert'/>">Insert</a></li>
@@ -131,6 +89,8 @@
 			                  </li> -->
 			                </ul>
 			              </div>
+		      		</c:when>
+		      		<c:otherwise>
 					</c:otherwise>
 		      	</c:choose>
 

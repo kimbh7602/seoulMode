@@ -39,7 +39,7 @@ public class SurveyController {
 
 
 		if("list".equals(action)) {
-//			resultList = (List<Object>) service.getList(paramMap);
+			resultList = (List<Object>) service.getList(paramMap);
 		}else if("insert".equals(action)) {
 			
 		}else if("insert_register".equals(action)){
@@ -49,7 +49,7 @@ public class SurveyController {
 		}else if("modify_register".equals(action)){
 //			service.insertObject(paramMap);
 		}else if("read".equals(action)) {
-//			resultMap = (Map<String, Object>) service.getObject(paramMap);
+			resultMap = (Map<String, Object>) service.getObject(paramMap);
 		}else if("delete".equals(action)) {
 			
 		}else {

@@ -8,40 +8,33 @@
 
 	<select id="read" resultType="Map" parameterType="Map">
       select *
-      from sm_member
-      WHERE 1=1
+      from sm_survey
+      WHERE SURVEY_SEQ=#{SURVEY_SEQ}
    </select>
    
    	<select id="list" resultType="Map" parameterType="Map">
       select *
-      from sm_member
-      WHERE 1=1
+      from sm_survey
+		WHERE 1=1
    </select>
    
-   <select id = "edit_read" resultType ="Map" parameterType= "Map">
+   	<select id="member_list" resultType="Map" parameterType="Map">
       select *
       from sm_member
-      WHERE 1=1
+   		<where>
+			<choose>
+			    <when test="MEMBER_EMAIL==null">
+			    	WHERE 1=1
+			    </when>
+			    <otherwise>
+			    	WHERE MEMBER_EMAIL = #{MEMBER_EMAIL}
+			    </otherwise>
+		    </choose>
+	    </where>
    </select>
+   
 
-	<insert id="insert_board" parameterType="Map">
-		INSERT INTO 
-		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
-		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
-	</insert>
-	
-	<insert id="insert" parameterType="Map">
-		INSERT INTO 
-		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
-		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
-	</insert>
-	
-	<insert id = "insert_board_img" parameterType="Map">
-		INSERT INTO
-		board_img(IMG_SEQ,IMG_NAME)
-		VALUES(SEQ_IMG.nextval, #{file})
-	</insert>
-	
+   
 	<insert id = "insert_board_img_rel" parameterType="Map">
 		INSERT INTO
 		board_img_rel(BOARD_SEQ, IMG_SEQ)
@@ -54,24 +47,8 @@
 		SET TITLE = #{TITLE}, CONTENTS =#{CONTENTS}, UPLOAD_DATE = sysdate
 		WHERE BOARD_SEQ = #{BOARD_SEQ}
 	</update>
-	<update id = "update_board_img" parameterType="Map">
-		UPDATE board_img
-		SET IMG_NAME = #{file}
-		WHERE IMG_SEQ = #{IMG_SEQ}
-	</update>
-	<update id = "update_view" parameterType="Map">
-		UPDATE board
-		SET views = views+1
-		WHERE CATEGORY_SEQ = #{CATEGORY_SEQ}
-	</update>
-	<delete id="delete_board_img_rel" parameterType="Map">
-		delete from BOARD_IMG_REL
-		where BOARD_SEQ = #{BOARD_SEQ}
-	</delete>
-	<delete id="delete_board_img" parameterType="Map">
-		delete from BOARD_IMG
-		where IMG_SEQ = #{IMG_SEQ}
-	</delete>
+
+
 	<delete id="delete_board" parameterType="Map">
 		delete from BOARD
 		where BOARD_SEQ = #{BOARD_SEQ}

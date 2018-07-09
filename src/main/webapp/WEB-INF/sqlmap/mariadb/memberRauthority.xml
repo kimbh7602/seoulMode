@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="member">
+<mapper namespace="memberRauthority">
 
 	<select id="read" resultType="Map" parameterType="Map">
    
@@ -92,8 +92,8 @@
 
 	
 	<update id = "update" parameterType="Map">
-		UPDATE SM_MEMBER
-		SET MEMBER_NAME = #{MEMBER_NAME}, MEMBER_PASSWORD = #{MEMBER_PASSWORD}, COURSE_SEQ = #{COURSE_SEQ}
+		UPDATE SM_MEMBERRAUTHORITY
+		SET AUTHORITY_SEQ = #{AUTHORITY_SEQ}
 		WHERE MEMBER_SEQ = #{MEMBER_SEQ}
 	</update>
 	<!-- <update id = "update_board_img" parameterType="Map">
@@ -115,7 +115,7 @@
 		where IMG_SEQ = #{IMG_SEQ}
 	</delete> -->
 	<delete id="delete" parameterType="Map">
-		delete from SM_MEMBER
+		delete from SM_MEMBERRAUTHORITY
 		where MEMBER_SEQ = #{MEMBER_SEQ}
 	</delete>
 	

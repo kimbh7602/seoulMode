@@ -1,5 +1,6 @@
 package com.seoulmode.lecture.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,26 @@ public class MemberService {
 	@Autowired
 	private CommonUtil commonutil;
 	
-public Object getList(Object dataMap) {
+	public Object getList(Object dataMap) {
 		
-		Object resultData = dao.getList("survey.list",dataMap);
+		Object resultData = dao.getList("member.list",dataMap);
 		
 		return resultData;
 	}
 	
 	public Object getObject(Object dataMap) {
 		
-		Object resultData = dao.getObject("survey.read",dataMap);
+		Object resultData = dao.getObject("member.read",dataMap);
 		
+		return resultData;
+	}
+	
+	public Object readModify(Object dataMap) {
+		Object resultData = dao.getObject("member.read", dataMap);
+		List courseList = (List)dao.getList("course.list", dataMap);
+		((Map)resultData).put("courseList", courseList);
+		List authorityList = (List)dao.getList("authority.list", dataMap);
+		((Map)resultData).put("authorityList", authorityList);
 		return resultData;
 	}
 	
@@ -45,8 +55,15 @@ public Object getList(Object dataMap) {
 		return resultData;
 	}
 	
-	public Object UpdateObject(Object dataMap) {
+	public Object updateObject(Object dataMap) {
 		Object resultData = dao.updateObject("member.update", dataMap);
+		Object resultKey = dao.updateObject("memberRauthority.update", dataMap);
+		return resultData;
+	}
+	
+	public Object deleteObject(Object dataMap) {
+		Object resultKey = dao.deleteObject("memberRauthority.delete", dataMap);
+		Object resultData = dao.deleteObject("member.delete", dataMap);
 		
 		return resultData;
 	}

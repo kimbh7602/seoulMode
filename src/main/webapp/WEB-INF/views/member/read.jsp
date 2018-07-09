@@ -44,7 +44,7 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="<c:url value='/member/update'/>">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="<c:url value='/member/modify'/>">
 						<input type="hidden" name="MEMBER_SEQ" value="${resultMap.MEMBER_SEQ }">
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">EMAIL <span class="required">*</span>
@@ -57,42 +57,26 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">PASSWORD <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="password" required="required" name="MEMBER_PASSWORD" value="${resultMap.MEMBER_PASSWORD }" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="password" required="required" name="MEMBER_PASSWORD" value="${resultMap.MEMBER_PASSWORD }" class="form-control col-md-7 col-xs-12" disabled="true">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">NAME</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="" class="form-control col-md-7 col-xs-12" type="text" name="MEMBER_NAME" value="${resultMap.MEMBER_NAME }">
+                          <input id="" class="form-control col-md-7 col-xs-12" type="text" name="MEMBER_NAME" value="${resultMap.MEMBER_NAME }„" disabled="true">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">COURSE <span class="required">*</span>
-                        </label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">COURSE</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select id="" name="COURSE_SEQ" required="required" class="form-control col-md-7 col-xs-12">
-                          	<c:forEach items="${resultMap.courseList}" var="resultData" varStatus="loop">
-                          		<option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
-                          	</c:forEach>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">AUTHORITY <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select id="" name="AUTHORITY_SEQ" required="required" class="form-control col-md-7 col-xs-12">
-                          	<c:forEach items="${resultMap.authorityList}" var="resultData" varStatus="loop">
-                          		<option value="${resultData.AUTHORITY_SEQ }">${resultData.AUTHORITY_NAME }</option>
-                          	</c:forEach>
-                          </select>
+                          <input id="" class="form-control col-md-7 col-xs-12" type="text" name="COURSE_NAME" value="${resultMap.COURSE_NAME }„" disabled="true">
                         </div>
                       </div>
                       <br>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-0">
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button type="submit" class="btn btn-success">Edit</button>
                           <button class="btn btn-primary" type="button">Cancel</button>
                         </div>
                       </div>

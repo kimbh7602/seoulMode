@@ -4,47 +4,18 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="member">
+<mapper namespace="course">
 
-	<select id="read" resultType="Map" parameterType="Map">
-   
-       select
-      	 m.MEMBER_SEQ,
-      	 m.MEMBER_NAME,
-      	 m.MEMBER_EMAIL,
-      	 m.MEMBER_PASSWORD,
-      	 m.COURSE_SEQ,
-      	 a.AUTHORITY_NAME,
-         c.COURSE_NAME
-      from SM_MEMBER AS m JOIN SM_MEMBERRAUTHORITY AS ma
-      ON m.MEMBER_SEQ = ma.MEMBER_SEQ
-      JOIN SM_AUTHORITY AS a
-      ON ma.AUTHORITY_SEQ = a.AUTHORITY_SEQ
-      JOIN SM_COURSE AS c
-      ON m.COURSE_SEQ = c.COURSE_SEQ
-      WHERE m.MEMBER_SEQ = #{MEMBER_SEQ}
-      
-   </select>
-   
-   	<select id="list" resultType="Map" parameterType="Map">
+	<select id="list" resultType="Map" parameterType="Map">
    
       select
-      	 m.MEMBER_SEQ,
-      	 m.MEMBER_NAME,
-      	 m.MEMBER_EMAIL,
-      	 m.MEMBER_PASSWORD,
-      	 m.COURSE_SEQ,
-      	 a.AUTHORITY_NAME,
-         c.COURSE_NAME
-      from SM_MEMBER AS m JOIN SM_MEMBERRAUTHORITY AS ma
-      ON m.MEMBER_SEQ = ma.MEMBER_SEQ
-      JOIN SM_AUTHORITY AS a
-      ON ma.AUTHORITY_SEQ = a.AUTHORITY_SEQ
-      JOIN SM_COURSE AS c
-      ON m.COURSE_SEQ = c.COURSE_SEQ
-      
+      	 COURSE_SEQ,
+      	 COURSE_NAME
+      from SM_COURSE;
       
    </select>
+   
+   
    
    <select id = "edit_read" resultType ="Map" parameterType= "Map">
    	
@@ -93,7 +64,7 @@
 	
 	<update id = "update" parameterType="Map">
 		UPDATE SM_MEMBER
-		SET MEMBER_NAME = #{MEMBER_NAME}, MEMBER_PASSWORD = #{MEMBER_PASSWORD}, COURSE_SEQ = #{COURSE_SEQ}
+		SET MEMBER_NAME = #{MEMBER_NAME}, MEMBER_EMAIL =#{MEMBER_EMAIL}, MEMBER_PASSWORD = #{MEMBER_PASSWORD}
 		WHERE MEMBER_SEQ = #{MEMBER_SEQ}
 	</update>
 	<!-- <update id = "update_board_img" parameterType="Map">

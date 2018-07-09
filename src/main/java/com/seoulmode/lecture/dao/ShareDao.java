@@ -30,5 +30,10 @@ public class ShareDao {
 		
 		return result;
 	}
+	public Object deleteObject(String sqlMapId, Object dataMap) {
+		Object result = sqlSession.delete(sqlMapId, dataMap);
+		
+		return result;
+	}
 
 }

@@ -5,18 +5,11 @@
 <tiles:insertAttribute name="layout.header" />
 <title><tiles:getAsString name="layout.title" /></title>
 </head>
-<body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
+<body>
        	<!-- Navigation -->
         <!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"> -->
-			<tiles:insertAttribute name="layout.left" />
       <!-- /.navbar-static-side -->
         <!-- </nav> -->
 		<tiles:insertAttribute name="layout.body" />
-     </div>
-    <tiles:insertAttribute name="layout.footer"/>
-    </div>
-    <!-- /#wrapper -->	
 </body>
 </html>

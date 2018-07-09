@@ -12,12 +12,12 @@
 				<c:choose>
 		        	<c:when test="${principalName eq null}">
 		        <li>
-				<a href="<c:url value='/signUp/signUp'/>">
+				<a href="<c:url value='/login/loginform#signup'/>">
 					Sign Up
 				</a>
 				</li>
 				<li>
-				<a href="<c:url value='/login/loginform'/>" >
+				<a href="<c:url value='/login/loginform#signin'/>" >
 					Login
 				</a>
 				</li>
@@ -36,7 +36,7 @@
                       </a>
                     </li>
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="<c:url value='/j_spring_security_logout'/>"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
 					</c:otherwise>
 				</c:choose>

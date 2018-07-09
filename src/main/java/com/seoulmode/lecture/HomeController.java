@@ -19,6 +19,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 	private final static String MAPPING = "/";
 	
+	@RequestMapping(value ="/", method= { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView actionHome(@RequestParam Map<String, Object> paramMap,
+			ModelAndView modelandView) {
+
+		String viewName = "/home";
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>() ;
+		List<Object> resultList = new ArrayList<Object>();
+
+		
+		modelandView.setViewName(viewName);
+
+		modelandView.addObject("paramMap", paramMap);
+		modelandView.addObject("resultMap", resultMap);
+		modelandView.addObject("resultList", resultList);
+		return modelandView;
+	}
 	
 	@RequestMapping(value = MAPPING+"{action}", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView actionMethod(@RequestParam Map<String, Object> paramMap, @PathVariable String action,

@@ -34,7 +34,9 @@ public class LogInController {
 		}
 		modelandView.setViewName(viewName);
 		
-		
+		modelandView.addObject("paramMap", paramMap);
+		modelandView.addObject("resultMap", resultMap);
+		modelandView.addObject("resultList", resultlist);
 		return modelandView;
 	}
 	

@@ -41,17 +41,11 @@ public class MemberService {
 	}
 	
 	public Object insertObject(Map<String,Object> paramMap) {
-		String uniqueSequence = (String) paramMap.get("MEMBER_SEQ");
-		Object resultData;
-		if("".equals(uniqueSequence)){
-			// 해당 SEQ가 없으면 insert
-			uniqueSequence = commonutil.getUniqueSequence();
-			paramMap.put("MEMBER_SEQ", uniqueSequence);
-			resultData = dao.insertObject("survey.insert",paramMap);
-		}else {
-			// 있으면 update
-			resultData = dao.getObject("survey.update",paramMap); 	
-		}
+		String uniqueSequence = commonutil.getUniqueSequence();
+		paramMap.put("MEMBER_SEQ", uniqueSequence);
+		Object resultData = dao.insertObject("member.insert",paramMap);
+		
+		Object resultKey = dao.insertObject("memberRauthority.insert", paramMap);
 		return resultData;
 	}
 	

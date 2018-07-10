@@ -12,13 +12,13 @@
 					<span style="color:red">아이디와 비밀번호를 확인하세요.</span>
 				</c:if>
               <div>
-                <input type="text" class="form-control" placeholder="Email" name="Email" required="" />
+                <input type="text" class="form-control" placeholder="Email" name="MEMBER_EMAIL" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" name="Password" required="" />
+                <input type="password" class="form-control" placeholder="Password" name="MEMBER_PASSWORD" required="" />
               </div>
               <div>
-				<button class="btn btn-default submit" type="submit">로그인</button>
+				<button class="btn btn-default submit" type="submit">SUBMIT</button>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
@@ -40,19 +40,30 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-      <form class="form-horizontal" role="form" action = "<c:url value ='/signUp/insert'/>" method="POST">
+      <form class="form-horizontal" role="form" action = "<c:url value ='/member/insert'/>" method="POST">
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="Username" name="MEMBER_NAME" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input type="email" class="form-control" placeholder="Email" name="MEMBER_EMAIL" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="Password" name="MEMBER_PASSWORD" required="" />
+              </div>
+              <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">COURSE <span class="required"></span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select id="" name="COURSE_SEQ" required="required" class="form-control col-md-7 col-xs-12">
+                          	<c:forEach items="${resultList}" var="resultData" varStatus="loop">
+                          		<option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
+                          	</c:forEach>
+                          </select>
+                        </div>
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <button class="btn btn-default submit">Submit</button>
               </div>
 
               <div class="clearfix"></div>

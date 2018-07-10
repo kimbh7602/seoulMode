@@ -74,8 +74,8 @@
 	
 	<insert id="insert" parameterType="Map">
 		INSERT INTO 
-		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
-		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
+		SM_MEMBERRAUTHORITY(MEMBER_SEQ, AUTHORITY_SEQ) 
+		VALUES(#{MEMBER_SEQ}, 'UUID_2001')
 	</insert>
 	
 	<insert id = "insert_board_img" parameterType="Map">

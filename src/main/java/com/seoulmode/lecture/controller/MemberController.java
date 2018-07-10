@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seoulmode.lecture.service.LoginService;
 import com.seoulmode.lecture.service.MemberService;
 
 /**
@@ -24,6 +25,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+	
 	
 	
 	@RequestMapping(value = MAPPING+"{action}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -49,6 +51,9 @@ public class MemberController {
 			service.deleteObject(paramMap);
 			resultList = (List)service.getList(paramMap);
 			viewName = MAPPING + "list";
+		}else if("insert".equals(action)) {
+			service.insertObject(paramMap);
+			viewName = "/home";
 		}
 		
 		

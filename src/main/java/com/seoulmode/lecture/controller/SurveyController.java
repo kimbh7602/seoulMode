@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,10 +37,20 @@ public class SurveyController {
 		Map<String, Object> resultMap = new HashMap<String, Object>() ;
 		List<Object> resultList = new ArrayList<Object>();
 		String forwardView = (String) paramMap.get("forwardView") ;
+		
 
+		
+		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
+		paramMap.put("MEMBER_EMAIL",member_email);
 
 		if("list".equals(action)) {
-			resultList = (List<Object>) service.getList(paramMap);
+			List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+			resultMap.put("auth",auth.get(0).toString());
+			if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
+				resultList=(List<Object>) service.getList(paramMap);
+			}else {
+			resultList=(List<Object>) service.getMemberList(paramMap);
+			}
 		}else if("insert".equals(action)) {
 			
 		}else if("insert_register".equals(action)){
@@ -49,7 +60,9 @@ public class SurveyController {
 		}else if("modify_register".equals(action)){
 //			service.insertObject(paramMap);
 		}else if("read".equals(action)) {
-			resultMap = (Map<String, Object>) service.getObject(paramMap);
+//			resultMap = (Map<String, Object>) service.getObject(paramMap);
+			List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+			resultMap.put("auth",auth.get(0).toString());
 		}else if("delete".equals(action)) {
 			
 		}else {

@@ -10,7 +10,7 @@
         default-target-url="/home"
 		login-processing-url="/j_spring_security_check"
 		authentication-failure-url="/login/loginform?fail=true"
-		username-parameter="Email" password-parameter="Password" />
+		username-parameter="MEMBER_EMAIL" password-parameter="MEMBER_PASSWORD" />
 		<logout logout-success-url="/home" logout-url="/j_spring_security_logout"
 		invalidate-session="true" delete-cookies="JSESSIONID" />
 		<csrf disabled="true"/>
@@ -36,6 +36,9 @@
         <authentication-provider>
         	<user-service>
 				<user name="member" password="12345" authorities="ROLE_USER" />
+				<user name="admin" password="12345" authorities="ROLE_ADMIN" />
+				<user name="d123@naver.com" password="12345" authorities="ROLE_USER" />
+				
 			</user-service>
         
           <!--   <jdbc-user-service data-source-ref="dataSource"

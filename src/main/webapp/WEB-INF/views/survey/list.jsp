@@ -24,7 +24,7 @@
                     </p>
                     <table id="datatable" class="table table-striped table-bordered">
                     <c:choose>
-                    <c:when test="${resultMap.auth eq ROLE_USER}">
+                    <c:when test="${resultMap.auth eq 'ROLE_USER'}">
                       <thead>
                         <tr>
                           <th>설문조사 명</th>
@@ -45,7 +45,7 @@
                       </tbody>
         			</c:when>
         			
-        			<c:when test="${resultMap.auth eq ROLE_ADMIN}">
+        			<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
                       <thead>
                         <tr>
                           <th>설문조사 명</th>

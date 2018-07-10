@@ -13,27 +13,23 @@
    </select>
    
    	<select id="list" resultType="Map" parameterType="Map">
-      select *
-      from sm_survey
+		select *
+		from sm_survey
 		WHERE 1=1
    </select>
-   
+
    	<select id="member_list" resultType="Map" parameterType="Map">
-      select *
-      from sm_member
-   		<where>
-			<choose>
-			    <when test="MEMBER_EMAIL==null">
-			    	WHERE 1=1
-			    </when>
-			    <otherwise>
-			    	WHERE MEMBER_EMAIL = #{MEMBER_EMAIL}
-			    </otherwise>
-		    </choose>
-	    </where>
+	select ss.SURVEY_NAME, ss.SURVEY_SEQ
+	from (select sq.SURVEY_SEQ
+	from sm_survey_response ssr inner join sm_question sq 
+	ON ssr.question_seq = sq.question_seq
+	where ssr.MEMBER_SEQ = 
+	      (select MEMBER_SEQ
+		    from sm_member
+	      where MEMBER_EMAIL = #{MEMBER_EMAIL})) aq inner join sm_survey ss 
+	      ON ss.SURVEY_SEQ = aq.SURVEY_SEQ;
    </select>
    
-
    
 	<insert id = "insert_board_img_rel" parameterType="Map">
 		INSERT INTO

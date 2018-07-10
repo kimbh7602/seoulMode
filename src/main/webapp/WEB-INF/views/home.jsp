@@ -1,11 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script>
-console.log('${resultMap.auth}');
-</script>
         <!-- page content -->
         <div class="right_col" role="main">
         <c:choose>
-        	<c:when test="${resultMap.auth eq ROLE_ANONYMOUS}">
+        	<c:when test="${resultMap.auth=='ROLE_ANONYMOUS'}">
 	            <div class="col-md-12 col-sm-12 col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
@@ -49,7 +46,7 @@ console.log('${resultMap.auth}');
 	                        <ul class="to_do">
 	                        <c:forEach items="${resultList}" var="resultData" varStatus="loop">
 	                        	<li>
-	                        	<a href="<c:url value='/survey/read?SURVEY_NAME=${resultData.SURVEY_NAME}'/>">${resultData.SURVEY_NAME}</a>
+			                        	<a href="<c:url value='/survey/read?SURVEY_NAME=${resultData.SURVEY_NAME}'/>">${resultData.SURVEY_NAME}</a>
 	                        	</li>
 	                        </c:forEach>
 	                        </ul>
@@ -57,7 +54,6 @@ console.log('${resultMap.auth}');
 	                    </div>
 	                </div>
 	              </div>
-	                <!-- End to do list -->
         	</c:otherwise>
         </c:choose>
           </div>

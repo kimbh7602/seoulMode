@@ -48,7 +48,7 @@
               </div>
                             <!-- 권한에 따라서 띄워주게끔, Admin 이면 뜨게 -->
               <c:choose>
-		      		<c:when test="${resultMap.auth eq ROLE_ADMIN}">
+		      		<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
 			              <div class="menu_section">
 			                <h3>관리자 화면</h3>
 			                <ul class="nav side-menu">

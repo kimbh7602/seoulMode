@@ -1,5 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<script>
+$(document).ready (function () {                
+    $('#btnAdd').click (function () {                                        
+        $('#buttons').append (                        
+            '<div class = "form-group"><label>질문</label><br><input class ="form-control" type="text" name="question"/><hr><button id="viewAdd" type="button">보기 추가</button><input type="button" id="btnRemove" value="Remove"><br></div>'                    
+        ); // end append                            
+        $('#btnRemove').on('click', function () { 
+            $(this).prev().prev().remove (); // remove label
+            $(this).prev().remove (); // remove the textbox
+            $(this).next ().remove (); // remove the <br>
+            $(this).remove (); // remove the button
+        });
+    }); // end click
+}); // end ready 
+</script>
 <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -7,45 +21,13 @@
               <div class="title_left">
                 <h3>Insert <small>Some examples to get you started</small></h3>
               </div>
-
-<!--               <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div> -->
             </div> 
-
             <div class="clearfix"></div>
-
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Survey Board <small>Users</small></h2>
-                    
-                    <!--  Board right-top -->
-<!--                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
-                    <!-- End of Board right-top -->
-                    
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -54,13 +36,22 @@
                     </p>
                         <div class="panel-body">
                             <div class="row">
+
                                 <div class="col-lg-12">
                                 <!-- enctype을 설정해주면 Resolver에서 인지함. -->
                                     <form role="form" enctype="multipart/form-data" method="POST" action="<c:url value='/member/merge' />">
-	                                    <input type="hidden" name="forwardView" value="/member/read" />
+	                                    <input type="hidden" name="forwardView" value="/survey/list"/>
 	                                    <input type="hidden" name="MEMBER_SEQ" value="${resultMap.MEMBER_SEQ }" />
-	                                    <input type="hidden" name="ORGANIZATION_SEQ" value="UUID-11-CIPI9M" />
-	                                    <input type="hidden" name="AUTHORITY_ID" value="dummy_id" />
+											<input type="button" class="btnAdd" value="Add">
+	                                    <div class="buttons">
+	                                    	<div class = "form-group">
+		                                    	<label>질문</label>
+		                                    	<input class ="form-control" type="text" name="question"/>
+		                                    	<hr>
+		                                    	<button class="viewAdd" type="button">보기 추가</button>
+	                                    	</div>
+	                                    </div>
+<%-- 	                                    
                                         <div class="form-group">
                                             <label>MEMBER_ID Text Input </label>
                                             <input class="form-control" type="text" name="MEMBER_ID" value="${resultMap.MEMBER_ID }">
@@ -83,10 +74,11 @@
                                             <input class="form-control" type="text" name="CELLPHONE" placeholder="000-0000-0000" value="${resultMap.CELLPHONE }">
                                             <p class="help-block">Base form 000-0000-0000</p>
                                         </div>
+                                         --%>
                                         <div class="form-group">
                                             <hr>
-                                            <input type="file" name="ATTACHEDFILES"/>
-                                            <input type="file" name="ATTACHEDFILES02" />
+<!--                                             <input type="file" name="ATTACHEDFILES"/>
+                                            <input type="file" name="ATTACHEDFILES02" /> -->
                                         </div>
                                         <button type="submit" class="btn btn-default">${paramMap.action == 'update' ? 'Update' : 'Insert' } Button</button>
                                         <button type="reset" class="btn btn-default">Reset Button</button>
@@ -103,3 +95,17 @@
           </div>
         </div>
         <!-- /page content -->
+<script>
+$(document).ready (function () {                
+    $('.btnAdd').click (function () {                                        
+        $('.buttons').append (                        
+            '<input type="text" name="txt"> <input type="button" class="btnRemove" value="Remove"><br>'                    
+        ); // end append                            
+        $('.btnRemove').on('click', function () { 
+            $(this).prev().remove (); // remove the textbox
+            $(this).next ().remove (); // remove the <br>
+            $(this).remove (); // remove the button
+        });
+    }); // end click                                            
+}); // end ready 
+</script>

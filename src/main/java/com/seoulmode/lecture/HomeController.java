@@ -37,10 +37,15 @@ public class HomeController {
 		
 		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
 		paramMap.put("MEMBER_EMAIL",member_email);
-		resultList=(List<Object>) service.getList(paramMap);
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		resultMap.put("auth",auth.get(0));
+		resultMap.put("auth",auth.get(0).toString());
+		System.out.println(resultMap.get("auth")); 
+		if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
+			resultList=(List<Object>) service.getList(paramMap);
+		}else {
+		resultList=(List<Object>) service.getMemberList(paramMap);
+		}
 		
 		modelandView.setViewName(viewName);
 
@@ -61,13 +66,18 @@ public class HomeController {
 		
 		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
 		paramMap.put("MEMBER_EMAIL",member_email);
-		resultList=(List<Object>) service.getList(paramMap);
 		
+		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		resultMap.put("auth",auth.get(0).toString());
+		System.out.println(resultMap.get("auth")); 
+		if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
+			resultList=(List<Object>) service.getList(paramMap);
+		}else {
+		resultList=(List<Object>) service.getMemberList(paramMap);
+		}
 		if("home".equals(action)) {
 			viewName = "/home";
 		}
-		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		resultMap.put("auth",auth.get(0));
 		modelandView.setViewName(viewName);
 
 		modelandView.addObject("paramMap", paramMap);

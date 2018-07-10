@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<script>
+console.log('${resultMap.auth}');
+</script>
 <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -19,9 +21,7 @@
                 </div>
               </div> -->
             </div>
-
             <div class="clearfix"></div>
-
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">

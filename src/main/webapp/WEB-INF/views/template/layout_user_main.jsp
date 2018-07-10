@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <tiles:insertAttribute name="layout.header" />
 <title><tiles:getAsString name="layout.title" /></title>
+
 </head>
 <body class="nav-md">
     <div class="container body">

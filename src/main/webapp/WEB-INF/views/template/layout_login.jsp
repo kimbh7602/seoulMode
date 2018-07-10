@@ -6,10 +6,6 @@
 <title><tiles:getAsString name="layout.title" /></title>
 </head>
 <body>
-       	<!-- Navigation -->
-        <!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"> -->
-      <!-- /.navbar-static-side -->
-        <!-- </nav> -->
 		<tiles:insertAttribute name="layout.body" />
 </body>
 </html>

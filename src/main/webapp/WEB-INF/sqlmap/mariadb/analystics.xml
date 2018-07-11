@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="analystics">
+
+	<select id="examList" resultType="Map" parameterType="Map">
+   
+      select
+      	e.EXAM_SERIES,
+      	e.EXAM_NAME
+      from SM_EXAM as e JOIN SM_COURSEREXAM as c
+      on e.EXAM_SERIES = c.EXAM_SERIES
+      where c.COURSE_SEQ = #{COURSE_SEQ}
+      
+   </select>
+   
+   	
+   
+   <select id = "edit_read" resultType ="Map" parameterType= "Map">
+   	
+       select
+      	 m.MEMBER_SEQ,
+      	 m.MEMBER_NAME,
+      	 m.MEMBER_EMAIL,
+      	 m.MEMBER_PASSWORD,
+      	 m.COURSE_SEQ,
+      	 a.AUTHORITY_NAME
+      	 c.COURSE_NAME
+      from SM_MEMBER m INNER JOIN SM_MEMBERRAUTHORITY ma
+      ON m.MEMBER_SEQ = ma.MEMBER_SEQ
+      INNER JOIN SM_AUTHORITY a
+      ON ma.AUTHORITY_SEQ = a.AUTHORITY_SEQ
+      INNER JOIN SM_COURSE c
+      ON m.COURSE_SEQ = c.COURSE_SEQ
+      WHERE m.MEMBER_SEQ = #{MEMBER_SEQ}
+      
+   </select>
+
+	<insert id="insert_board" parameterType="Map">
+		INSERT INTO 
+		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
+		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
+	</insert>
+	
+	<insert id="insert" parameterType="Map">
+		INSERT INTO 
+		board(CATEGORY_SEQ, BOARD_SEQ, ID, TITLE, CONTENTS, UPLOAD_DATE, VIEWS) 
+		VALUES(#{CATEGORY_SEQ},SEQ_BOARD.nextval,'Inhog',#{TITLE},#{CONTENTS},to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'),'0')
+	</insert>
+	
+	<insert id = "insert_board_img" parameterType="Map">
+		INSERT INTO
+		board_img(IMG_SEQ,IMG_NAME)
+		VALUES(SEQ_IMG.nextval, #{file})
+	</insert>
+	
+	<insert id = "insert_board_img_rel" parameterType="Map">
+		INSERT INTO
+		board_img_rel(BOARD_SEQ, IMG_SEQ)
+		VALUES(SEQ_BOARD.currval, SEQ_IMG.currval)
+	</insert>
+
+	
+	<update id = "update" parameterType="Map">
+		UPDATE SM_MEMBER
+		SET MEMBER_NAME = #{MEMBER_NAME}, MEMBER_EMAIL =#{MEMBER_EMAIL}, MEMBER_PASSWORD = #{MEMBER_PASSWORD}
+		WHERE MEMBER_SEQ = #{MEMBER_SEQ}
+	</update>
+	<!-- <update id = "update_board_img" parameterType="Map">
+		UPDATE board_img
+		SET IMG_NAME = #{file}
+		WHERE IMG_SEQ = #{IMG_SEQ}
+	</update>
+	<update id = "update_view" parameterType="Map">
+		UPDATE board
+		SET views = views+1
+		WHERE CATEGORY_SEQ = #{CATEGORY_SEQ}
+	</update>
+	<delete id="delete_board_img_rel" parameterType="Map">
+		delete from BOARD_IMG_REL
+		where BOARD_SEQ = #{BOARD_SEQ}
+	</delete>
+	<delete id="delete_board_img" parameterType="Map">
+		delete from BOARD_IMG
+		where IMG_SEQ = #{IMG_SEQ}
+	</delete> -->
+	<delete id="delete" parameterType="Map">
+		delete from SM_MEMBER
+		where MEMBER_SEQ = #{MEMBER_SEQ}
+	</delete>
+	
+	
+	
+	
+	
+</mapper>

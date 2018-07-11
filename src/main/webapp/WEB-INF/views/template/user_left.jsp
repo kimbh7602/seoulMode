@@ -46,16 +46,26 @@
 		      		</c:choose>
                 </ul>
               </div>
-                            <!-- 권한에 따라서 띄워주게끔, Admin 이면 뜨게 -->
+                            <!-- ê¶íì ë°ë¼ì ëìì£¼ê²ë, Admin ì´ë©´ ë¨ê² -->
               <c:choose>
 		      		<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
 			              <div class="menu_section">
-			                <h3>관리자 화면</h3>
+			                <h3>ê´ë¦¬ì íë©´</h3>
 			                <ul class="nav side-menu">
 			                  <li><a><i class="fa fa-desktop"></i> 설문조사 <span class="fa fa-chevron-down"></span></a>
 			                    <ul class="nav child_menu">
 			                      <li><a href="<c:url value ='/survey/list'/>">List</a></li>
 			                      <li><a href="<c:url value ='/survey/insert'/>">Insert</a></li>
+			                    </ul>
+			                  </li>
+			                  <li><a><i class="fa fa-desktop"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
+			                    <ul class="nav child_menu">
+			                      <li><a href="<c:url value ='/member/list'/>">List</a></li>
+			                    </ul>
+			                  </li>
+			                  <li><a><i class="fa fa-desktop"></i> 통계관리 <span class="fa fa-chevron-down"></span></a>
+			                    <ul class="nav child_menu">
+			                      <li><a href="<c:url value ='/analystics/read'/>">Analystics</a></li>
 			                    </ul>
 			                  </li>
 			                  <li><a><i class="fa fa-bar-chart-o"></i> Statistic <span class="fa fa-chevron-down"></span></a>

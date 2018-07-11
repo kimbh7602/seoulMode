@@ -34,7 +34,6 @@
 	              <div class="count">12</div>
 	              <span class="count_bottom"><i class="green">34% </i> Survey Name</span>
 	            </div>
-	          </div>
 	          <!-- /top tiles -->
 	            <div class="col-md-12 col-sm-12 col-xs-12">
 	                <!-- Start to do list -->
@@ -58,6 +57,5 @@
 	              </div>
         	</c:otherwise>
         </c:choose>
-          </div>
           </div>
         <!-- /page content -->

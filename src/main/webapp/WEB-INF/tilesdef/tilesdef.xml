@@ -34,7 +34,6 @@
         <put-attribute name="layout.body" value="/WEB-INF/views/login/loginform.jsp" />        
 	</definition>
    	
-   	
 	<!-- home by user -->
     <definition name="/*" extends="layout.user">
         <put-attribute name="layout.title" value="{1}" />

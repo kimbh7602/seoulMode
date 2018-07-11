@@ -16,35 +16,7 @@ $(function(){
 	        }
 	);
 });
-
 </script>
-<!-- <script>
-var fn_setExamSeriesSelect = function(url, id, params){
-	$.ajax({
-		type : "POST", url : url, data : params, cache : false,
-		success : function(data){
-			var formTag = "";
-			formTag += "<select class = 'form-control' name = 'ORGANIZATION_SEQ'>";
-			$.each(data, function(i, item){
-				formTag += '<option value = "'+item.EXAM_SERIES+'">' + item.EXAM_NAME;
-			});
-			formTag +='</select>';
-			$('#'+id).html(formTag);
-			console.log(data);
-		},
-		error : function(xhr, status, exception){
-			alert("Failure \n("+status+") \n("+exception+") \n("+xhr+")");
-			return false;
-		}
-	});
-}
-
-$(function(){
-	fn_setExamSeriesSelect("<c:url value = '/ws/organizationList'/>", "examSeriesDIV");
-});
-
-
-</script> -->
 
 <script type="text/javascript">
 //AJAX select box
@@ -52,12 +24,12 @@ var course = function(province){
 	
 $.ajax({
  type: "GET",
- url: "<c:url value='/ajaxCall'/>",
+ url: "<c:url value='/examAjax'/>",
  dataType:"json",
  data: {"COURSE_SEQ":province},
  success: function(result){
 	 var list = result.data;
-	 console.log('success');
+	 console.log('exam success');
   //SELECT BOX 초기화           
   $("#exam").find("option").remove().end().append("<option value=''>Exam Select</option>");
  
@@ -73,10 +45,37 @@ $.ajax({
  });
 }
 </script>
+<script type="text/javascript">
+//AJAX select box
+var exam = function(examVal){
+	var courseVal = $("#course").val();
+$.ajax({
+ type: "GET",
+ url: "<c:url value='/questionAjax'/>",
+ dataType:"json",
+ data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal},
+ success: function(result){
+	 var list = result.data;
+	 console.log('question success');
+  //SELECT BOX 초기화           
+  $("#question").find("option").remove().end().append("<option value=''>Quetion Select</option>");
+ 
+  //배열 개수 만큼 option 추가
+   $.each(list, function(i){
+    $("#question").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
+   });    
+  },
+   error: function (jqXHR, textStatus, errorThrown) {
+	
+   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")");
+  }                     
+ });
+}
+</script>
 
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_coll" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -105,10 +104,14 @@ $.ajax({
                   <option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
                 </c:forEach>
               </select>
+              <label>Exam Selects</label>
               <select id="exam" name="EXAM_SERIES" class="form-control col-md-7 col-xs-12" onchange="exam(this.value);">
               	<option value="">Exam Select</option>
               </select>
-              
+              <label>Question Selects</label>
+              <select id="question" name="QUESTION_SEQ" class="form-control col-md-7 col-xs-12" onchange="question(this.value);">
+              	<option value="">Question Select</option>
+              </select>
               
               <!-- <label>Exam Selects</label>
               <div id="examSeriesDIV"></div> -->

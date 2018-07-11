@@ -98,7 +98,15 @@
     <!-- Custom Theme Scripts -->
     <script src="<c:url value = '/resources/js/custom.min.js'/>"></script>
     
-    
+    <!-- jqplot -->
+    <script src="<c:url value = '/resources/js/excanvas.js'/>"></script>
+    <script src="<c:url value = '/resources/js/excanvas.min.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jquery.jqplot.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jquery.jqplot.min.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jqplot.barRenderer.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jqplot.barRenderer.min.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jqplot.pieRenderer.js'/>"></script>
+    <script src="<c:url value = '/resources/js/jqplot.pieRenderer.min.js'/>"></script>
     
     
     

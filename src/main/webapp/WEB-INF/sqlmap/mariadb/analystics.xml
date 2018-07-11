@@ -17,6 +17,18 @@
       
    </select>
    
+   <select id="questionList" resultType="Map" parameterType="Map">
+   
+      select
+      	r.QUESTION_SEQ,
+      	q.QUESTION_NAME
+      from SM_SURVEY_RESPONSE AS r JOIN SM_QUESTION AS q
+      on r.QUESTION_SEQ = q.QUESTION_SEQ
+      where r.COURSE_SEQ = #{COURSE_SEQ}
+      and r.EXAM_SERIES = #{EXAM_SERIES}
+      
+   </select>
+   
    	
    
    <select id = "edit_read" resultType ="Map" parameterType= "Map">

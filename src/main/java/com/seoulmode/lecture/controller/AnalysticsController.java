@@ -55,14 +55,29 @@ public class AnalysticsController {
 		return modelandView;
 	}
 	
-	@RequestMapping(value ="/ajaxCall", method = { RequestMethod.GET, RequestMethod.POST })
-	public @ResponseBody Map<String, Object> ajaxCall(@RequestParam Map<String, Object> paramMap) {
+	@RequestMapping(value ="/examAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, Object> examAjax(@RequestParam Map<String, Object> paramMap) {
 		
-		System.out.println("ajax 데이터 삽입 확인");
+		System.out.println("exam");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Object> resultList = new ArrayList<Object>();
 		
 		resultList = (List)service.getExamList(paramMap);
+		
+		resultMap.put("data", resultList);
+		
+		return resultMap;
+		
+	}
+	
+	@RequestMapping(value ="/questionAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, Object> questionAjax(@RequestParam Map<String, Object> paramMap) {
+		
+		System.out.println("question");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Object> resultList = new ArrayList<Object>();
+		
+		resultList = (List)service.getQuestionList(paramMap);
 		
 		resultMap.put("data", resultList);
 		

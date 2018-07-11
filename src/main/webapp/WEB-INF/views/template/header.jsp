@@ -43,6 +43,11 @@
 	
     <!-- Custom Theme Style -->
     <link href="<c:url value = '/resources/css/custom.min.css'/>" rel="stylesheet">
+    
+    <!-- jqplot css -->
+    <link href="<c:url value = '/resources/css/jquery.jqplot.css'/>" rel="stylesheet">
+    <link href="<c:url value = '/resources/css/jquery.jqplot.min.css'/>" rel="stylesheet">
+   
 <!--     
     JQuery
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

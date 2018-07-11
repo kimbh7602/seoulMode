@@ -1,9 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_coll" role="main" >
         <c:choose>
         	<c:when test="${resultMap.auth=='ROLE_ANONYMOUS'}">
-	            <div class="col-md-12 col-sm-12 col-xs-12">
+	            <div class="col-sm-12 col-xs-12">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>설문조사 페이지입니다. </h2>
@@ -17,7 +19,7 @@
         	<c:otherwise>
 	          <!-- top tiles -->
 	          <div class="row tile_count">
-	             <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+	            <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
 	              <span class="count_top"></span><br>
 	              <div class="count">Survey Name</div>
 	              <span class="count_bottom"><i class="green"> </i> </span>
@@ -56,5 +58,6 @@
 	              </div>
         	</c:otherwise>
         </c:choose>
+          </div>
           </div>
         <!-- /page content -->

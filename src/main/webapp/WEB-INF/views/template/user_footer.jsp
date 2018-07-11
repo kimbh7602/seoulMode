@@ -7,7 +7,9 @@
           <div class="clearfix"></div>
         </footer>
 <!-- /footer content -->
-	<!-- jQuery -->
+
+
+   	<!-- jQuery -->
     <script src="<c:url value = '/resources/js/jquery.min.js'/>"></script>
     <!-- Bootstrap -->
     <script src="<c:url value = '/resources/js/bootstrap.min.js'/>"></script>
@@ -35,8 +37,10 @@
     <script src="<c:url value = '/resources/js/jquery.flot.orderBars.js'/>"></script>
     <script src="<c:url value = '/resources/js/jquery.flot.spline.min.js'/>"></script>
     <script src="<c:url value = '/resources/js/curvedLines.js'/>"></script>
+    
     <!-- DateJS -->
     <script src="<c:url value = '/resources/js/date.js'/>"></script>
+    
     <!-- JQVMap -->
     <script src="<c:url value = '/resources/js/jquery.vmap.js'/>"></script>
     <script src="<c:url value = '/resources/js/jquery.vmap.world.js'/>"></script>
@@ -84,4 +88,7 @@
 
     <!-- Custom Theme Scripts -->
     <script src="<c:url value = '/resources/js/custom.min.js'/>"></script>
-        
+    
+    
+    
+    

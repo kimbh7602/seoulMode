@@ -1,21 +1,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="question_idx" value="0"/>
 <script>
 $(document).ready (function () {                
-    $('#btnAdd').click (function () {                                        
-        $('#buttons').append (                        
-            '<div class = "form-group"><label>질문</label><br><input class ="form-control" type="text" name="question"/><hr><button id="viewAdd" type="button">보기 추가</button><input type="button" id="btnRemove" value="Remove"><br></div>'                    
+    $('#btnAdds').click (function () {                                        
+        $('#button').append (                        
+            '<div id="question"><label>질문</label><input type="button" id="btnremove" value="Remove"><br><input class ="form-control" type="text" name="question"/><button id="viewAdd" type="button">보기 추가</button><br></div>'                    
         ); // end append                            
-        $('#btnRemove').on('click', function () { 
-            $(this).prev().prev().remove (); // remove label
-            $(this).prev().remove (); // remove the textbox
+        $('#btnremove').on('click', function () {
+            $(this).prev().remove (); // remove the label
             $(this).next ().remove (); // remove the <br>
+            $(this).next ().remove (); // remove the input
+            $(this).next ().remove (); // remove the button
             $(this).remove (); // remove the button
+            $('#question').remove(); // remove the div
         });
     }); // end click
+    $('#viewAdd').click (function(){
+    	$('#view').append(
+        	'<input type="text" id="view"/><t>'
+        	);
+        });
 }); // end ready 
 </script>
 <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_coll	" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -42,13 +50,15 @@ $(document).ready (function () {
                                     <form role="form" enctype="multipart/form-data" method="POST" action="<c:url value='/member/merge' />">
 	                                    <input type="hidden" name="forwardView" value="/survey/list"/>
 	                                    <input type="hidden" name="MEMBER_SEQ" value="${resultMap.MEMBER_SEQ }" />
-											<input type="button" class="btnAdd" value="Add">
-	                                    <div class="buttons">
+										<input type="button" id="btnAdds" value="Add">
+	                                    <div id="button">
 	                                    	<div class = "form-group">
 		                                    	<label>질문</label>
 		                                    	<input class ="form-control" type="text" name="question"/>
 		                                    	<hr>
-		                                    	<button class="viewAdd" type="button">보기 추가</button>
+		                                    	<div id="view">
+			                                    	<input id="viewAdd" type="button">보기 추가</button>
+		                                    	</div>
 	                                    	</div>
 	                                    </div>
 <%-- 	                                    

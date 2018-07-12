@@ -37,6 +37,9 @@
         	<user-service>
 				<user name="member" password="12345" authorities="ROLE_USER" />
 				<user name="admin" password="12345" authorities="ROLE_ADMIN" />
+				<user name="a123@naver.com" password="12345" authorities="ROLE_USER" />
+				<user name="b123@naver.com" password="12345" authorities="ROLE_USER" />
+				<user name="c123@naver.com" password="12345" authorities="ROLE_USER" />
 				<user name="d123@naver.com" password="12345" authorities="ROLE_USER" />
 				
 			</user-service>

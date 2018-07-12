@@ -19,7 +19,7 @@
    </select>
 
    	<select id="member_list" resultType="Map" parameterType="Map">
-	select ss.SURVEY_NAME, ss.SURVEY_SEQ
+	select DISTINCT(ss.SURVEY_NAME), ss.SURVEY_SEQ
 	from (select sq.SURVEY_SEQ
 	from sm_survey_response ssr inner join sm_question sq 
 	ON ssr.question_seq = sq.question_seq

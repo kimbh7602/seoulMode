@@ -48,8 +48,7 @@
     <link href="<c:url value = '/resources/css/jquery.jqplot.css'/>" rel="stylesheet">
     <link href="<c:url value = '/resources/css/jquery.jqplot.min.css'/>" rel="stylesheet">
    
-<!--     
-    JQuery
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-     -->
+    <!-- jQuery -->
+    <script src="<c:url value = '/resources/js/jquery.js'/>"></script>
+    <!-- Bootstrap -->
+    <script src="<c:url value = '/resources/js/bootstrap.js'/>"></script>

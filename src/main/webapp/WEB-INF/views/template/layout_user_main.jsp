@@ -18,10 +18,6 @@
     </div>
     
 
-   	<!-- jQuery -->
-    <script src="<c:url value = '/resources/js/jquery.min.js'/>"></script>
-    <!-- Bootstrap -->
-    <script src="<c:url value = '/resources/js/bootstrap.min.js'/>"></script>
     <!-- FastClick -->
     <script src="<c:url value = '/resources/js/fastclick.js'/>"></script>
     <!-- NProgress -->

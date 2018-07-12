@@ -1,27 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="question_idx" value="0"/>
-<script>
-$(document).ready (function () {                
-    $('#btnAdds').click (function () {                                        
-        $('#button').append (                        
-            '<div id="question"><label>질문</label><input type="button" id="btnremove" value="Remove"><br><input class ="form-control" type="text" name="question"/><button id="viewAdd" type="button">보기 추가</button><br></div>'                    
-        ); // end append                            
-        $('#btnremove').on('click', function () {
-            $(this).prev().remove (); // remove the label
-            $(this).next ().remove (); // remove the <br>
-            $(this).next ().remove (); // remove the input
-            $(this).next ().remove (); // remove the button
-            $(this).remove (); // remove the button
-            $('#question').remove(); // remove the div
-        });
-    }); // end click
-    $('#viewAdd').click (function(){
-    	$('#view').append(
-        	'<input type="text" id="view"/><t>'
-        	);
-        });
-}); // end ready 
-</script>
 <!-- page content -->
         <div class="right_coll	" role="main">
           <div class="">
@@ -50,46 +28,20 @@ $(document).ready (function () {
                                     <form role="form" enctype="multipart/form-data" method="POST" action="<c:url value='/member/merge' />">
 	                                    <input type="hidden" name="forwardView" value="/survey/list"/>
 	                                    <input type="hidden" name="MEMBER_SEQ" value="${resultMap.MEMBER_SEQ }" />
-										<input type="button" id="btnAdds" value="Add">
-	                                    <div id="button">
+	                                    <p> 제목 </p>
+	                                    <input type="text" name = "survey_name">
+	                                    <hr>
+	                                    <div id="question">
 	                                    	<div class = "form-group">
 		                                    	<label>질문</label>
+												<input type="button" id="btnquesAdds" value="Add">
 		                                    	<input class ="form-control" type="text" name="question"/>
 		                                    	<hr>
-		                                    	<div id="view">
-			                                    	<input id="viewAdd" type="button">보기 추가</button>
+		                                    	<div id="view0">
+		                                    		<input addve="0" id="viewAdd" type="button" value ="보기 추가"></input><hr>
 		                                    	</div>
 	                                    	</div>
 	                                    </div>
-<%-- 	                                    
-                                        <div class="form-group">
-                                            <label>MEMBER_ID Text Input </label>
-                                            <input class="form-control" type="text" name="MEMBER_ID" value="${resultMap.MEMBER_ID }">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Member PASSWORD Text Input </label>
-                                            <input class="form-control" type="password" name="PASSWORD" value="${resultMap.PASSWORD }">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Member Name Text Input </label>
-                                            <input class="form-control" type="text" name="NAME" value="${resultMap.NAME }">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>EMAIL Text Input with Placeholder </label>
-                                            <input class="form-control" type="text" name="EMAIL" placeholder="incubator@clustringincubation.com" value="${resultMap.EMAIL }">
-                                            <p class="help-block">Base form incubator@clustringincubation.com</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>CELLPHONE Text Input with Placeholder </label>
-                                            <input class="form-control" type="text" name="CELLPHONE" placeholder="000-0000-0000" value="${resultMap.CELLPHONE }">
-                                            <p class="help-block">Base form 000-0000-0000</p>
-                                        </div>
-                                         --%>
-                                        <div class="form-group">
-                                            <hr>
-<!--                                             <input type="file" name="ATTACHEDFILES"/>
-                                            <input type="file" name="ATTACHEDFILES02" /> -->
-                                        </div>
                                         <button type="submit" class="btn btn-default">${paramMap.action == 'update' ? 'Update' : 'Insert' } Button</button>
                                         <button type="reset" class="btn btn-default">Reset Button</button>
                                     </form>
@@ -106,16 +58,45 @@ $(document).ready (function () {
         </div>
         <!-- /page content -->
 <script>
+var ques_idx = 0;
+var view_idx = 0;
 $(document).ready (function () {                
-    $('.btnAdd').click (function () {                                        
-        $('.buttons').append (                        
-            '<input type="text" name="txt"> <input type="button" class="btnRemove" value="Remove"><br>'                    
-        ); // end append                            
-        $('.btnRemove').on('click', function () { 
-            $(this).prev().remove (); // remove the textbox
-            $(this).next ().remove (); // remove the <br>
+    $('#btnquesAdds').click (function () {                                        
+        $('#question').append (                        
+            '<div id="form-group'+ ++ques_idx +'">'
+            +'<label>질문</label>'
+            +'<input qe="'+(ques_idx)+'" type="button" class="btnremove" value="Remove">'
+            +'<input class ="form-control" type="text" name="question"/><hr>'
+            +'<div id="view'+(++view_idx)+'"><input addve="'+(view_idx) +'"id="viewAdd" type="button" value ="보기 추가">'
+            +'</input><hr></div></div>'
+        ); // end append
+        $('.btnremove').on('click', function () {
+        	var idx= $(this).attr("qe");
+        	console.log(idx);
+            $(this).prev().remove (); // remove the label
+            $(this).next ().remove (); // remove the input
+            $(this).next ().remove (); // remove the <hr>
+            $(this).next ().remove (); // remove the button
             $(this).remove (); // remove the button
+            $('#form-group'+idx).remove(); // remove the div
         });
-    }); // end click                                            
+    }); // end click
+    $('#viewAdd').click (function(){
+    	var this_view_idx = ques_idx + view_idx;
+    	console.log('this_view_idx:'+this_view_idx);
+    	var ve_idx= $(this).attr("addve");
+    	console.log('ve_idx:'+ve_idx);
+    	$('#view'+ve_idx).append(
+    		'<label>보기</label>'
+        	+'<input ve="'+(this_view_idx)+'"type="text" id="view"/>'
+            +'<input ve="'+(this_view_idx)+'"type="button" class="btnviewremove" value="Remove"><hr>'
+        	);
+    	$('.btnviewremove').on('click',function(){
+    		$(this).prev().remove(); // remove the label
+    		$(this).prev().remove(); // remove the input
+            $(this).next ().remove (); // remove the hr
+            $(this).remove (); // remove the button
+    		})
+        });
 }); // end ready 
 </script>

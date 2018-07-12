@@ -38,14 +38,13 @@ public class SurveyController {
 		List<Object> resultList = new ArrayList<Object>();
 		String forwardView = (String) paramMap.get("forwardView") ;
 		
-
+		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		resultMap.put("auth",auth.get(0).toString());
 		
 		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
 		paramMap.put("MEMBER_EMAIL",member_email);
 
 		if("list".equals(action)) {
-			List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-			resultMap.put("auth",auth.get(0).toString());
 			if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
 				resultList=(List<Object>) service.getList(paramMap);
 			}else {
@@ -61,8 +60,6 @@ public class SurveyController {
 //			service.insertObject(paramMap);
 		}else if("read".equals(action)) {
 //			resultMap = (Map<String, Object>) service.getObject(paramMap);
-			List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-			resultMap.put("auth",auth.get(0).toString());
 		}else if("delete".equals(action)) {
 			
 		}else {

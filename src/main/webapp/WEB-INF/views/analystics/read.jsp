@@ -1,17 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
 $(function(){
-	$.jqplot ('graph', [[['첫번째', 50], ['두번째', 22], ['세번째', 38], ['네번째', 30]]],
+	$.jqplot ('graph', [[['ì²«ë²ì§¸', 50], ['ëë²ì§¸', 22], ['ì¸ë²ì§¸', 38], ['ë¤ë²ì§¸', 30]]],
 	        {
 	          seriesDefaults: {
-	            //원형으로 렌더링
+	            //ìíì¼ë¡ ë ëë§
 	            renderer: $.jqplot.PieRenderer,
-	            //원형상단에 값보여주기(알아서 %형으로 변환)
+	            //ìíìë¨ì ê°ë³´ì¬ì£¼ê¸°(ììì %íì¼ë¡ ë³í)
 	            rendererOptions: {
 	              showDataLabels: true
 	            }
 	          },
-	          //우측 색상별 타이틀 출력
+	          //ì°ì¸¡ ììë³ íì´í ì¶ë ¥
 	          legend: { show:true, location: 'e' }
 	        }
 	);
@@ -30,17 +30,17 @@ $.ajax({
  success: function(result){
 	 var list = result.data;
 	 console.log('exam success');
-  //SELECT BOX 초기화           
+  //SELECT BOX ì´ê¸°í           
   $("#exam").find("option").remove().end().append("<option value=''>Exam Select</option>");
  
-  //배열 개수 만큼 option 추가
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
    $.each(list, function(i){
     $("#exam").append("<option value='"+list[i].EXAM_SERIES+"'>"+list[i].EXAM_NAME+"</option>")
    });    
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")");
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
   }                     
  });
 }
@@ -57,17 +57,54 @@ $.ajax({
  success: function(result){
 	 var list = result.data;
 	 console.log('question success');
-  //SELECT BOX 초기화           
+  //SELECT BOX ì´ê¸°í           
   $("#question").find("option").remove().end().append("<option value=''>Quetion Select</option>");
  
-  //배열 개수 만큼 option 추가
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
    $.each(list, function(i){
     $("#question").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
    });    
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")");
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
+  }                     
+ });
+}
+</script>
+<script type="text/javascript">
+//AJAX select box
+var question = function(questionVal){
+	var courseVal = $("#course").val();
+	var examVal = $("#exam").val();
+$.ajax({
+ type: "GET",
+ url: "<c:url value='/responseAjax'/>",
+ dataType:"json",
+ data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ":questionVal},
+ success: function(result){
+	 var column = result.col;
+	 var row = result.row;
+	 console.log('response success');
+	 alert(column);
+	 alert(row);
+	 var formTag = "<p>씨발</p>";
+		formTag += '<table id="datatable-buttons" class="table table-striped table-bordered"> <thead> <tr>';
+		$.each(column, function(i){
+			formTag += '<th>'+column[i].VIEW_NAME+'</th>';
+		});
+		formTag +='</tr> </thead> <tbody>';
+		$.each(row, function(i){
+			formTag += '<td>'+row[i].CNT+'</td>';
+		});
+		formTag +='</tbody></table>';
+		alert(formTag);
+   $('#response-div').html(formTag);
+	alert("sucess");
+  },
+   error: function (jqXHR, textStatus, errorThrown) {
+	
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
   }                     
  });
 }
@@ -94,9 +131,14 @@ $.ajax({
               </div>
               <br/>
               <div class="form-group">
-              <input type="button" id="btn-graph" value="그리기" class="btn btn-default btn-sm">
+              <input type="button" id="btn-graph" value="Draw" class="btn btn-default btn-sm">
               <div id="graph" style="width:400px; height:300px;"></div>
               </div>
+              <div class="form-group">
+              <label>Table?</label>
+              <div id="response-div"></div>
+              </div>
+              <div class="form-group">
               <label>Course Selects</label>
               <select id="course" name="COURSE_SEQ" class="form-control col-md-7 col-xs-12" onchange="course(this.value);">
               	<option value="">Course Select</option>
@@ -104,14 +146,21 @@ $.ajax({
                   <option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
                 </c:forEach>
               </select>
+              </div>
+              <div class="form-group">
               <label>Exam Selects</label>
               <select id="exam" name="EXAM_SERIES" class="form-control col-md-7 col-xs-12" onchange="exam(this.value);">
               	<option value="">Exam Select</option>
               </select>
+              </div>
+              <div class="form-group">
               <label>Question Selects</label>
               <select id="question" name="QUESTION_SEQ" class="form-control col-md-7 col-xs-12" onchange="question(this.value);">
               	<option value="">Question Select</option>
               </select>
+              </div>
+              
+              </div>
               
               <!-- <label>Exam Selects</label>
               <div id="examSeriesDIV"></div> -->

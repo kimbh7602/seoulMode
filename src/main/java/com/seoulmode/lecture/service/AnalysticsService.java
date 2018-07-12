@@ -39,6 +39,20 @@ public class AnalysticsService {
 		return resultData;
 	}
 	
+	public Object getResponseColList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.colList", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object getResponseRowList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.rowList", dataMap);
+		
+		return resultData;
+	}
+	
 	public Object getObject(Object dataMap) {
 		
 		Object resultData = new HashMap();

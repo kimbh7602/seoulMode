@@ -85,4 +85,22 @@ public class AnalysticsController {
 		
 	}
 	
+	@RequestMapping(value ="/responseAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, Object> responseAjax(@RequestParam Map<String, Object> paramMap) {
+		
+		System.out.println("response");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Object> colList = new ArrayList<Object>();
+		List<Object> rowList = new ArrayList<Object>();
+		
+		colList = (List)service.getResponseColList(paramMap);
+		rowList = (List)service.getResponseRowList(paramMap);
+		
+		resultMap.put("col", colList);
+		resultMap.put("row", rowList);
+		
+		return resultMap;
+		
+	}
+	
 }

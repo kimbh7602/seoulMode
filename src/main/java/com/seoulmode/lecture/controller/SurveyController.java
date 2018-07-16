@@ -51,7 +51,7 @@ public class SurveyController {
 			resultList=(List<Object>) service.getMemberList(paramMap);
 			}
 		}else if("insert".equals(action)) {
-			
+			resultList = (List<Object>) service.getList_flag(paramMap);
 		}else if("insert_register".equals(action)){
 //			service.insertObject(paramMap);
 		}else if("modify".equals(action)) {

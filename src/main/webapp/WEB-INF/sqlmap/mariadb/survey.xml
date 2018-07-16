@@ -17,6 +17,12 @@
 		from sm_survey
 		WHERE 1=1
    </select>
+   
+   	<select id="flag_list" resultType="Map" parameterType="Map">
+		select *
+		from SM_QUESTION_FLAG
+		WHERE 1=1
+   </select>
 
    	<select id="member_list" resultType="Map" parameterType="Map">
 	select DISTINCT(ss.SURVEY_NAME), ss.SURVEY_SEQ
@@ -31,10 +37,25 @@
    </select>
    
    
-	<insert id = "insert_board_img_rel" parameterType="Map">
+	<insert id = "survey_insert" parameterType="Map">
 		INSERT INTO
-		board_img_rel(BOARD_SEQ, IMG_SEQ)
-		VALUES(SEQ_BOARD.currval, SEQ_IMG.currval)
+		SM_SURVEY
+		VALUES(#{SURVEY_SEQ},#{SURVEY_NAME})
+	</insert>
+	
+	<insert id = "view_insert" parameterType="Map">
+		INSERT INTO
+		SM_QUESTIONRVIEW
+		VALUES
+			<foreach collection="inputdata" item="item" index="index" separator=",">
+			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.QEUSTION_SEQ})
+			</foreach>
+	</insert>
+	
+	<insert id = "ques_insert" parameterType="Map">
+		INSERT INTO
+		SM_QUESTION
+		VALUES(#{QUESTION_SEQ},#{QUESTION_NAME},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 
 	

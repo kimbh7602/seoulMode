@@ -1,33 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<script>
-var fn_setFormTagSelect = function(url, id, params){
-	$.ajax({
-		type : "POST", url : url, data : params, cache : false,
-		success : function(data){
-			var formTag = "";
-			formTag += "<select class = 'form-control' name = 'ORGANIZATION_SEQ'>";
-			$.each(data, function(i, item){
-				formTag += '<option value = "'+item.ORGANIZATION_SEQ+'">' + item.NAME;
-			});
-			formTag +='</select>';
-			$('#'+id).html(formTag);
-			console.log(data);
-		},
-		error : function(xhr, status, exception){
-			alert("Failure \n("+status+") \n("+exception+") \n("+xhr+")");
-			return false;
-		}
-	});
-}
-
-$(function(){
-	fn_setFormTagSelect("<c:url value = '/ws/organizationList'/>", "organizationDIV");
-});
-
-
-</script>
-
 
 <!-- page content -->
         <div class="right_coll" role="main">
@@ -77,7 +49,7 @@ $(function(){
                     
                     <select id="" name="COURSE_SEQ" required="required" class="form-control col-md-7 col-xs-12">
                           	<c:forEach items="${resultList}" var="resultData" varStatus="loop">
-                          	
+                          		<option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
                           	
                           	</c:forEach>
                     </select>

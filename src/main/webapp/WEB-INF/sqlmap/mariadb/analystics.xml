@@ -32,7 +32,7 @@
    <select id="colList" resultType="Map" parameterType="Map">
    
       select
-      	v.VIEW_NAME
+         q.QUESTION_NAME, v.VIEW_NAME, v.VIEW_SEQ
       from SM_SURVEY_RESPONSE AS r JOIN SM_QUESTION AS q
       on r.QUESTION_SEQ = q.QUESTION_SEQ
       JOIN SM_QUESTIONRVIEW AS v
@@ -41,25 +41,25 @@
       and r.EXAM_SERIES = #{EXAM_SERIES}
       and r.QUESTION_SEQ = #{QUESTION_SEQ}
       group by v.VIEW_NAME
-      order by v.VIEW_NAME
+      order by v.VIEW_SEQ
       
    </select>
    
    <select id="rowList" resultType="Map" parameterType="Map">
    
       select
-      	count(r.OBJECTIVE_RESPONSE) AS CNT
+         v.VIEW_SEQ, count(r.OBJECTIVE_RESPONSE) AS CNT
       from SM_SURVEY_RESPONSE AS r
       JOIN SM_QUESTION AS q
       on r.QUESTION_SEQ = q.QUESTION_SEQ
       JOIN SM_QUESTIONRVIEW AS v
       ON q.QUESTION_SEQ = v.QUESTION_SEQ
-      where r.COURSE_SEQ = #{COURSE_SEQ}
+      where r.OBJECTIVE_RESPONSE = v.VIEW_SEQ
+      and r.COURSE_SEQ = #{COURSE_SEQ}
       and r.EXAM_SERIES = #{EXAM_SERIES}
       and r.QUESTION_SEQ = #{QUESTION_SEQ}
-      and r.OBJECTIVE_RESPONSE in not null
       group by r.OBJECTIVE_RESPONSE
-      order by v.VIEW_NAME
+      order by r.OBJECTIVE_RESPONSE
       
    </select>
    

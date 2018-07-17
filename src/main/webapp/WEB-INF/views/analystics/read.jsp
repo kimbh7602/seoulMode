@@ -1,23 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script>
-$(function(){
-	$.jqplot ('graph', [[['ì²«ë²ì§¸', 50], ['ëë²ì§¸', 22], ['ì¸ë²ì§¸', 38], ['ë¤ë²ì§¸', 30]]],
-	        {
-	          seriesDefaults: {
-	            //ìíì¼ë¡ ë ëë§
-	            renderer: $.jqplot.PieRenderer,
-	            //ìíìë¨ì ê°ë³´ì¬ì£¼ê¸°(ììì %íì¼ë¡ ë³í)
-	            rendererOptions: {
-	              showDataLabels: true
-	            }
-	          },
-	          //ì°ì¸¡ ììë³ íì´í ì¶ë ¥
-	          legend: { show:true, location: 'e' }
-	        }
-	);
-});
-</script>
+<%@ page language="java" contentType="application/vnd.ms-excel; name='My_Excel', text/html; charset=utf-8"%>
 
+<%
+ response.setHeader("Content-Disposition", "inline; filename=Coursenew_Excel_" +new java.sql.Date(System.currentTimeMillis()) + "_.xls");   
+ response.setHeader("Content-Description", "JSP Generated Data");
+%>
+
+
+
+
+<!-- Course SelectBox -->
 <script type="text/javascript">
 //AJAX select box
 var course = function(province){
@@ -45,6 +37,8 @@ $.ajax({
  });
 }
 </script>
+
+<!-- Exam SelectBox -->
 <script type="text/javascript">
 //AJAX select box
 var exam = function(examVal){
@@ -72,42 +66,100 @@ $.ajax({
  });
 }
 </script>
+
+<!-- Question SelectBox -->
+<!-- Pie Chart -->
 <script type="text/javascript">
 //AJAX select box
 var question = function(questionVal){
-	var courseVal = $("#course").val();
-	var examVal = $("#exam").val();
+   var courseVal = $("#course").val();
+   var examVal = $("#exam").val();
 $.ajax({
  type: "GET",
  url: "<c:url value='/responseAjax'/>",
  dataType:"json",
  data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ":questionVal},
  success: function(result){
-	 var column = result.col;
-	 var row = result.row;
-	 console.log('response success');
-	 alert(column);
-	 alert(row);
-	 var formTag = "<p>씨발</p>";
-		formTag += '<table id="datatable-buttons" class="table table-striped table-bordered"> <thead> <tr>';
-		$.each(column, function(i){
-			formTag += '<th>'+column[i].VIEW_NAME+'</th>';
-		});
-		formTag +='</tr> </thead> <tbody>';
-		$.each(row, function(i){
-			formTag += '<td>'+row[i].CNT+'</td>';
-		});
-		formTag +='</tbody></table>';
-		alert(formTag);
+    var column = result.col;
+    var row = result.row;
+    var rowVal = new Array();
+     $.each(column, function(i){
+      $.each(row, function(j){
+         if(column[i].VIEW_SEQ == row[j].VIEW_SEQ){
+            rowVal[i] = row[j].CNT;
+         }
+      }) ;
+    });
+     $.each(rowVal, function(i){
+       if(rowVal[i] == null){
+          rowVal[i] = 0;
+       } 
+     });
+    console.log(rowVal[0]);
+    console.log('response success');
+    var formTag = '<p>'+column[0].QUESTION_NAME+'</p>';
+    var formTag2 = '';
+      
+      formTag += '<table id="datatable" class="table table-striped table-bordered" style="font-size:13px;"> <tr>';
+      $.each(column, function(k){
+         formTag += '<th> '+column[k].VIEW_NAME+' </th>';
+      });
+      formTag +='</tr>';
+      $.each(rowVal, function(m){
+         formTag += '<td>'+rowVal[m]+'</td>';
+      });
+      formTag +='</table>';
+      
+      formTag2 += '<div id="dvData" style="display:none;">';
+      formTag2 += '<table> <tr>';
+      $.each(column, function(k){
+         formTag2 += '<th> '+column[k].VIEW_NAME+' </th>';
+      });
+      formTag2 +='</tr>';
+      $.each(rowVal, function(m){
+         formTag2 += '<td>'+rowVal[m]+'</td>';
+      });
+      formTag2 +='</table>';
+      formTag2 +='</div>';
+      alert(formTag);
    $('#response-div').html(formTag);
-	alert("sucess");
+   $('#response-div-hidden').html(formTag2);
+   
+   var graphVal = new Array();
+   $.each(column, function(i){
+     graphVal[i] = [column[i].VIEW_NAME, rowVal[i]];
+   });
+   $.jqplot ('graph', [graphVal],
+           {
+             seriesDefaults: {
+               renderer: $.jqplot.PieRenderer,
+               rendererOptions: {
+                 showDataLabels: true
+               }
+             },
+             legend: { show:true, location: 'e' }
+           }
+   );
+   alert("sucess");
   },
    error: function (jqXHR, textStatus, errorThrown) {
-	
-   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
+   
+   alert("Error.("+textStatus+")("+errorThrown+")");
   }                     
  });
 }
+</script>
+
+<script>
+$(function(){
+	$("#btnExport").click(function (e) {
+		alert($('#dvData').html());
+		
+		var uri = encodeURI('data:application/vnd.ms-excel,' + $('#dvData').html());
+		window.open(uri);
+	    e.preventDefault();
+	});
+});
 </script>
 
 
@@ -116,7 +168,7 @@ $.ajax({
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Chart Js <small>Some examples to get you started</small></h3>
+                <h3>Analystics Chart<small></small></h3>
               </div>
 			
               <div class="title_right">
@@ -129,15 +181,11 @@ $.ajax({
                   </div>
                 </div>
               </div>
-              <br/>
-              <div class="form-group">
-              <input type="button" id="btn-graph" value="Draw" class="btn btn-default btn-sm">
-              <div id="graph" style="width:400px; height:300px;"></div>
-              </div>
-              <div class="form-group">
-              <label>Table?</label>
-              <div id="response-div"></div>
-              </div>
+              <br>
+               
+              
+              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
               <div class="form-group">
               <label>Course Selects</label>
               <select id="course" name="COURSE_SEQ" class="form-control col-md-7 col-xs-12" onchange="course(this.value);">
@@ -147,196 +195,50 @@ $.ajax({
                 </c:forEach>
               </select>
               </div>
+              <br><br>
               <div class="form-group">
               <label>Exam Selects</label>
               <select id="exam" name="EXAM_SERIES" class="form-control col-md-7 col-xs-12" onchange="exam(this.value);">
               	<option value="">Exam Select</option>
               </select>
               </div>
+              <br><br>
               <div class="form-group">
               <label>Question Selects</label>
               <select id="question" name="QUESTION_SEQ" class="form-control col-md-7 col-xs-12" onchange="question(this.value);">
               	<option value="">Question Select</option>
               </select>
               </div>
+              </div>
+              </div>
+              
+              <!-- Graph Div -->
+              <div class="form-group col-md-12 col-sm-12 col-xs-12">
+              	<div class="x_panel">
+              		<label>Chart</label>
+              		<div class="clearfix"></div>
+              		<div id="graph" style="width:600px; height:350px;"></div>
+              	</div>
+              </div>
+              
+              <!-- Table Div -->
+              <div class="form-group col-md-12 col-sm-12 col-xs-12">
+              	<div class="x_panel">
+              		<label>Table</label>
+              		<br>
+              		<input type="button" id="btnExport" value="Export into Excel" />
+              		<div class="clearfix"></div>
+              		<div class="x_content">
+              			<div id="response-div"></div>
+              			<div id="response-div-hidden"></div>
+              		</div>
+              	</div>
+              </div>
               
               </div>
               
-              <!-- <label>Exam Selects</label>
-              <div id="examSeriesDIV"></div> -->
-              
             </div>
-            
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Line graph<small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="lineChart"></canvas>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Bar graph <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="mybarChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Radar <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="canvasRadar"></canvas>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Donut Graph <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="canvasDoughnut"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Pie Graph Chart <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="pieChart"></canvas>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Pie Area Graph <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="polarArea"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- page content -->
+        
+

@@ -59,7 +59,7 @@ public class SurveyController {
 		}else if("modify_register".equals(action)){
 //			service.insertObject(paramMap);
 		}else if("read".equals(action)) {
-//			resultMap = (Map<String, Object>) service.getObject(paramMap);
+			resultList = (List<Object>) service.getList_Read(paramMap);
 		}else if("delete".equals(action)) {
 			
 		}else {

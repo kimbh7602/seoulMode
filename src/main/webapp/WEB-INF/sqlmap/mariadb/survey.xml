@@ -6,10 +6,18 @@
     
 <mapper namespace="survey">
 
-	<select id="read" resultType="Map" parameterType="Map">
-      select *
-      from sm_survey
-      WHERE SURVEY_SEQ=#{SURVEY_SEQ}
+	<select id="question_read" resultType="Map" parameterType="Map">
+		SELECT sq.QUESTION_SEQ, sq.QUESTION_NAME, sq.QUESTION_NUM, sq.QUESTION_FLAG_SEQ, sq.SURVEY_SEQ
+		FROM sm_survey ss INNER JOIN sm_question sq
+		ON sq.SURVEY_SEQ = ss.SURVEY_SEQ
+		WHERE sq.SURVEY_SEQ= #{SURVEY_SEQ}
+   </select>
+   
+	<select id="view_read" resultType="Map" parameterType="Map">
+		SELECT sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ
+		FROM sm_question sq INNER JOIN sm_questionrview sqv
+		ON sq.QUESTION_SEQ = sqv.QUESTION_SEQ
+		WHERE sqv.QUESTION_SEQ = #{QUESTION_SEQ}
    </select>
    
    	<select id="list" resultType="Map" parameterType="Map">
@@ -55,7 +63,7 @@
 	<insert id = "ques_insert" parameterType="Map">
 		INSERT INTO
 		SM_QUESTION
-		VALUES(#{QUESTION_SEQ},#{QUESTION_NAME},#{QUESTION_FLAG},#{SURVEY_SEQ})
+		VALUES(#{QUESTION_SEQ},#{QUESTION_NAME},#{QUESTION_NUM},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 
 	

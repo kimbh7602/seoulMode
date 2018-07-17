@@ -36,9 +36,21 @@ public class SurveyService {
 	
 	public Object getObject(Object dataMap) {
 		
-		Object resultData = dao.getObject("survey.read",dataMap);
-		
+		Object resultData = null; 
 		return resultData;
+	}
+	
+	public Object getList_Read(Object dataMap) {
+		List inputdata = new ArrayList();
+		
+		List<Map<String,Object>> question_resultData = (List<Map<String, Object>>) dao.getList("survey.question_read",dataMap);
+		inputdata.add(question_resultData);
+		for(int i =0; i<question_resultData.size();i++) {
+			Object tempdata = question_resultData.get(i);
+			Object view_resultData = dao.getList("survey.view_read",tempdata);
+			inputdata.add(view_resultData);
+		}
+		return inputdata;
 	}
 	
 	public Object getMemberList(Object dataMap) {

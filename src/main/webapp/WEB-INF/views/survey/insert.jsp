@@ -52,10 +52,12 @@
 		                                    	</div>
 	                                    	</div>
 	                                    </div>
-                                        <button type="submit" class="btn btn-default">${paramMap.action == 'update' ? 'Update' : 'Insert' } Button</button>
-                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                        <button type="submit" class="btn btn-default">${paramMap.action == 'update' ? '수정' : '등록' }</button>
+                                        <!-- <button type="reset" class="btn btn-default"></button> -->
                                     </form>
-                                        <button  class="btn btn-default" id ="btnquesAdds">질문 추가</button>
+                                    <div>
+                                        <button  class="btn btn-default" id ="btnquesAdds">질문 추가</button><p>질문을 완성한 후 눌러주세요.</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.row (nested) -->
@@ -71,6 +73,7 @@
         
 <script>
 var ve_idx=0;			// #view를 구분하는 idx
+var ques_idx=0;			// 질문 갯수 Count
 $(document).on("change",".question_flag",function(){
 	var select = $('#question_flag option:selected').val();
 	if(select == "UUID_8000"){
@@ -87,49 +90,62 @@ $(document).on("change",".question_flag",function(){
 		// 보기추가 부분을 Input 하나로.
 	}
 });
-$.fn.changeobject = function(){
+$.fn.changeobject = function(){			// 객관식 선택 시 
 	ve_idx = 1;
 	var object_html ='<label>보기</label>'
     	+'<input ve="'+(ve_idx)+'"type="text" id="view" name="view'+(ve_idx)+'"/>'
-        +'<input ve="'+(ve_idx)+'"type="button" class="btnviewremove'+(ve_idx)+'" value="Remove"><hr>';
+        +'<input ve="'+(ve_idx)+'"type="button" class="btnviewremove" value="Remove"><hr>';
 	$('#views').html(object_html);
+	var object_html_view = '<input class="viewAdd" type="button" value ="보기 추가"></input><hr>';
+	$('#view').html(object_html_view);
     $('[name = "question"]').val("");
 }
-$.fn.changesubject = function(){
-	ve_idx = 1;
+$.fn.changesubject = function(){		// 주관식 선택 시
+	ve_idx = -1;
 	var subject_html = "<input type='textarea'>";
-	$('#views').html(subject_html);
+	$('#views').html(subject_html); 
+	var subject_html_view = "<hr>";
+	$('#view').html(subject_html_view);
     $('[name = "question"]').val("");
 }
 
-$(document).on("click",".viewAdd",function(){
+$(document).on("click",".viewAdd",function(){		//
 	ve_idx++;
 	$('#views').append(
 		'<label>보기</label>'
     	+'<input ve="'+(ve_idx)+'"type="text" id="view" name="view'+(ve_idx)+'"/>'
-        +'<input ve="'+(ve_idx)+'"type="button" class="btnviewremove'+(ve_idx)+'" value="Remove"><hr>'
+        +'<input ve="'+(ve_idx)+'"type="button" class="btnviewremove" value="Remove"><hr>'
     	);
-	$('.btnviewremove'+ve_idx).on('click',function(){
-		$(this).prev().remove(); // remove the label
-		$(this).prev().remove(); // remove the input
-        $(this).next ().remove (); // remove the hr
-        $(this).remove (); // remove the button
-		});
-    });
+});
+
+$(document).on("click",".btnviewremove",function(){		
+	$(this).prev().remove(); // remove the label
+	$(this).prev().remove(); // remove the input
+    $(this).next ().remove (); // remove the hr
+    $(this).remove (); // remove the button
+    ve_idx--;
+});
+
 $(function() {
    $("#btnquesAdds")
          .click(
                function() {
+            	  ques_idx++;
                   var views = [];
                   var question = $('[name = "question"]').val();
+                  if(ve_idx == -1){
+                	  
+                  }else{
             	  for(var i =0; i<=ve_idx;i++){
             		  views.push($('[name = "view'+i+'"]').val());
-            	  }
+            	  	}
+                  }
+            	  
             	  var survey_name = $('[name="survey_name"]').val();
             	  var survey_seq = $('[name="SURVEY_SEQ"]').val();
             	  var question_flag = $('#question_flag option:selected').val();
-            	  var alldata = {"QUESTION_NAME": question , "views" : views, "SURVEY_NAME" : survey_name ,"SURVEY_SEQ":survey_seq,"QUESTION_FLAG":question_flag};
-            	  console.log(alldata);
+            	  var alldata = {"QUESTION_NUM" : ques_idx, "QUESTION_NAME": question , "views" : views, "SURVEY_NAME" : survey_name ,"SURVEY_SEQ":survey_seq,"QUESTION_FLAG":question_flag};
+            	  // 180717 ERD 수정한 후 , 질문 INDEX 추가하자.
                   $.ajax({
                       type : "POST",
                       url : "<c:url value='/ws/survey_insert'/>",

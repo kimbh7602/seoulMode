@@ -47,7 +47,7 @@
 	                        <ul class="to_do">
 	                        <c:forEach items="${resultList}" var="resultData" varStatus="loop">
 	                        	<li>
-			                        	<a href="<c:url value='/survey/read?SURVEY_NAME=${resultData.SURVEY_NAME}'/>">${resultData.SURVEY_NAME}</a>
+			                        	<a href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}&SURVEY_NAME=${resultData.SURVEY_NAME}'/>">${resultData.SURVEY_NAME}</a>
 	                        	</li>
 	                        </c:forEach>
 	                        </ul>

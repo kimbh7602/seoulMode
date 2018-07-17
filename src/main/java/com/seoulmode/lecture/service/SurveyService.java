@@ -1,5 +1,8 @@
 package com.seoulmode.lecture.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,13 @@ public class SurveyService {
 		return resultData;
 	}
 	
+	public Object getList_flag(Object dataMap) {
+		
+		Object resultData = dao.getList("survey.flag_list",dataMap);
+		
+		return resultData;
+	}
+	
 	public Object getObject(Object dataMap) {
 		
 		Object resultData = dao.getObject("survey.read",dataMap);
@@ -44,13 +54,39 @@ public class SurveyService {
 			// 해당 SEQ가 없으면 insert
 			uniqueSequence = commonutil.getUniqueSequence();
 			paramMap.put("SURVEY_SEQ", uniqueSequence);
-			resultData = dao.insertObject("survey.insert",paramMap);
+			resultData = dao.insertObject("survey.survey_insert",paramMap);
 		}else {
 			// 있으면 update
 			resultData = dao.getObject("survey.update",paramMap); 
 		}
 		
+		resultData = uniqueSequence;
 		
 		return resultData;
+	}
+	
+	public Object insertView(Map<Object,Object> paramMap) {
+		String uniqueSequence;
+		List<Map<String,Object>> inputdata = new ArrayList<Map<String,Object>>();
+		
+		uniqueSequence = commonutil.getUniqueSequence();		
+		paramMap.put("QUESTION_SEQ", uniqueSequence);
+		
+		Object resultData = dao.insertObject("survey.ques_insert",paramMap);
+		
+		String[] test = (String[])paramMap.get("views");
+		for(int i =1;i<test.length; i++) {
+			Map<String,Object> inputMap = new HashMap<String, Object>();
+			String view_uniqueSequence = commonutil.getUniqueSequence();
+			inputMap.put("QEUSTION_SEQ",uniqueSequence);
+			inputMap.put("VIEW_SEQ",view_uniqueSequence);
+			inputMap.put("VIEW_NAME",test[i]);
+			inputdata.add(inputMap);
+		}
+		paramMap.put("inputdata", inputdata);
+
+		dao.insertObject("survey.view_insert",paramMap);
+		
+		return paramMap; 
 	}
 }

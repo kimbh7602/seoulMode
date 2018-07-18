@@ -46,6 +46,11 @@ public class SurveyService {
 		for(int i =0; i<question_resultData.size();i++) {
 			Object tempdata = question_resultData.get(i);
 			List<Map<String,Object>> view_resultData = (List<Map<String, Object>>) dao.getList("survey.view_read",tempdata);
+			if(view_resultData.isEmpty()) {
+				Map<String,Object> dummy = new HashMap<String,Object>();
+				dummy.put("VIEWS", "dummy");
+				view_resultData.add(dummy);
+			}
 			question_resultData.get(i).put("VIEWS",view_resultData);
 		}
 		return question_resultData;

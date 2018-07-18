@@ -3,84 +3,91 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+
 <mapper namespace="survey">
 
 	<select id="question_read" resultType="Map" parameterType="Map">
-		SELECT sq.QUESTION_SEQ, sq.QUESTION_NAME, sq.QUESTION_NUM, sq.QUESTION_FLAG_SEQ, sq.SURVEY_SEQ
-		FROM sm_survey ss INNER JOIN sm_question sq
+		SELECT sq.QUESTION_SEQ, sq.QUESTION_NAME, sq.QUESTION_NUM,
+		sq.QUESTION_FLAG_SEQ, sq.SURVEY_SEQ
+		FROM sm_survey ss INNER JOIN
+		sm_question sq
 		ON sq.SURVEY_SEQ = ss.SURVEY_SEQ
-		WHERE sq.SURVEY_SEQ= #{SURVEY_SEQ}
-   </select>
-   
+		WHERE sq.SURVEY_SEQ=
+		#{SURVEY_SEQ}
+	</select>
+
 	<select id="view_read" resultType="Map" parameterType="Map">
-		SELECT sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ
-		FROM sm_question sq INNER JOIN sm_questionrview sqv
+		SELECT
+		sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ
+		FROM sm_question sq INNER
+		JOIN sm_questionrview sqv
 		ON sq.QUESTION_SEQ = sqv.QUESTION_SEQ
-		WHERE sqv.QUESTION_SEQ = #{QUESTION_SEQ}
-   </select>
-   
-   	<select id="list" resultType="Map" parameterType="Map">
+		WHERE
+		sqv.QUESTION_SEQ = #{QUESTION_SEQ}
+	</select>
+
+	<select id="list" resultType="Map" parameterType="Map">
 		select *
-		from sm_survey
+		from
+		sm_survey
 		WHERE 1=1
-   </select>
-   
-   	<select id="flag_list" resultType="Map" parameterType="Map">
+	</select>
+
+	<select id="flag_list" resultType="Map" parameterType="Map">
 		select *
 		from SM_QUESTION_FLAG
 		WHERE 1=1
-   </select>
+	</select>
 
-   	<select id="member_list" resultType="Map" parameterType="Map">
-	select DISTINCT(ss.SURVEY_NAME), ss.SURVEY_SEQ
-	from (select sq.SURVEY_SEQ
-	from sm_survey_response ssr inner join sm_question sq 
-	ON ssr.question_seq = sq.question_seq
-	where ssr.MEMBER_SEQ = 
-	      (select MEMBER_SEQ
-		    from sm_member
-	      where MEMBER_EMAIL = #{MEMBER_EMAIL})) aq inner join sm_survey ss 
-	      ON ss.SURVEY_SEQ = aq.SURVEY_SEQ;
-   </select>
-   
-   
-	<insert id = "survey_insert" parameterType="Map">
+	<select id="member_list" resultType="Map" parameterType="Map">
+		select DISTINCT(ss.SURVEY_NAME), ss.SURVEY_SEQ
+		from (select sq.SURVEY_SEQ
+		from sm_survey_response ssr inner join sm_question sq
+		ON ssr.question_seq = sq.question_seq
+		where ssr.MEMBER_SEQ =
+		(select MEMBER_SEQ
+		from sm_member
+		where MEMBER_EMAIL = #{MEMBER_EMAIL})) aq inner join sm_survey ss
+		ON ss.SURVEY_SEQ = aq.SURVEY_SEQ;
+	</select>
+
+
+	<insert id="survey_insert" parameterType="Map">
 		INSERT INTO
 		SM_SURVEY
 		VALUES(#{SURVEY_SEQ},#{SURVEY_NAME})
 	</insert>
-	
-	<insert id = "view_insert" parameterType="Map">
+
+	<insert id="view_insert" parameterType="Map">
 		INSERT INTO
 		SM_QUESTIONRVIEW
 		VALUES
-			<foreach collection="inputdata" item="item" index="index" separator=",">
+		<foreach collection="inputdata" item="item" index="index"
+			separator=",">
 			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.QEUSTION_SEQ})
-			</foreach>
+		</foreach>
 	</insert>
-	
-	<insert id = "ques_insert" parameterType="Map">
+
+	<insert id="ques_insert" parameterType="Map">
 		INSERT INTO
 		SM_QUESTION
 		VALUES(#{QUESTION_SEQ},#{QUESTION_NAME},#{QUESTION_NUM},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 
-	
-	<update id = "update_board" parameterType="Map">
+
+	<update id="update_board" parameterType="Map">
 		UPDATE board
-		SET TITLE = #{TITLE}, CONTENTS =#{CONTENTS}, UPLOAD_DATE = sysdate
-		WHERE BOARD_SEQ = #{BOARD_SEQ}
+		SET TITLE =
+		#{TITLE}, CONTENTS =#{CONTENTS}, UPLOAD_DATE = sysdate
+		WHERE BOARD_SEQ
+		= #{BOARD_SEQ}
 	</update>
 
 
 	<delete id="delete_board" parameterType="Map">
 		delete from BOARD
-		where BOARD_SEQ = #{BOARD_SEQ}
+		where
+		BOARD_SEQ = #{BOARD_SEQ}
 	</delete>
-	
-	
-	
-	
 	
 </mapper>

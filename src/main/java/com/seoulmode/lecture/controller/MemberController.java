@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,10 @@ public class MemberController {
 			service.insertObject(paramMap);
 			viewName = "/home";
 		}
+		
+		// Left 를 위한 권한 가져오기
+		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		resultMap.put("auth",auth.get(0).toString());
 		
 		
 		modelandView.setViewName(viewName);

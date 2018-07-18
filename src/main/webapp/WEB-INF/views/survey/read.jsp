@@ -31,19 +31,26 @@
 					</div>
 					<div class="x_content">
  						<c:forEach items="${resultList}" var="resultData"  varStatus="loop">
-						<c:forEach items="${resultData}" var="questionData" varStatus="loop2">
-							<c:when test="${questionData.QUESTION_NAME eq 'qq'}">
-							</c:when>
-							<c:otherwise>
 								<div class="panel-body">
-									<div class="row">
-										<div class="col-lg-12">
-											<p>${questionData.QUESTION_NAME}</p>
-										</div>
+									<div class="row" flag ="${resultData.QUESTION_FLAG_SEQ}">
+										<p>${resultData.QUESTION_NAME}</p>
+										<c:forEach items="${resultData.VIEWS}" var="questionData" varStatus="loop2">
+											<c:choose>
+													<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8002'}" >
+														<!-- <input type ="text"/> -->
+														<textarea name="content" cols="50" rows="10" required="required" wrap="hard"></textarea>
+													</c:when>
+													<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}" >
+														<input type="radio" name="chk_view" value="${questionData.VIEW_SEQ}">${questionData.VIEW_NAME}
+													</c:when>
+													<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}" >
+														<input type="checkbox" name="checkbox" value="${questionData.VIEW_SEQ}">${questionData.VIEW_NAME}
+														<hr>
+													</c:when>
+											</c:choose>
+										</c:forEach>
 									</div>
 								</div>
-							</c:otherwise>
- 						</c:forEach>
  						</c:forEach>
 					</div>
 				</div>
@@ -52,6 +59,5 @@
 	</div>
 </div>
 <script>
-console.log('${resultData}');
 </script>
 <!-- /page content -->

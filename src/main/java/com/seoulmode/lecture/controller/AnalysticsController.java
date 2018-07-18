@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,9 @@ public class AnalysticsController {
 			resultList = (List)service.getExamList(paramMap);
 		}
 		
+		// Left 를 위한 권한 가져오기
+		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		resultMap.put("auth",auth.get(0).toString());
 		
 		modelandView.setViewName(viewName);
 

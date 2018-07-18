@@ -28,6 +28,8 @@ public class RestWSController {
    public Object actionMethod(@RequestParam Map<Object,Object> paramMap, @PathVariable String action,HttpServletRequest request) {
 	   String[] parameterValues = request.getParameterValues("views");
 	   paramMap.put("views",parameterValues);
+	   String[] views_num = request.getParameterValues("views_num");
+	   paramMap.put("views_num",views_num);
 	   Map<Object,Object> resultMap = new HashMap<Object,Object>();
 	   
 		if("survey_insert".equals(action)) {

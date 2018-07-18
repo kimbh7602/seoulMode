@@ -14,16 +14,18 @@
 		ON sq.SURVEY_SEQ = ss.SURVEY_SEQ
 		WHERE sq.SURVEY_SEQ=
 		#{SURVEY_SEQ}
+		GROUP BY sq.QUESTION_NUM
 	</select>
 
 	<select id="view_read" resultType="Map" parameterType="Map">
 		SELECT
-		sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ
+		sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ, sqv.VIEW_NUM
 		FROM sm_question sq INNER
 		JOIN sm_questionrview sqv
 		ON sq.QUESTION_SEQ = sqv.QUESTION_SEQ
 		WHERE
 		sqv.QUESTION_SEQ = #{QUESTION_SEQ}
+		GROUP BY sqv.VIEW_NUM
 	</select>
 
 	<select id="list" resultType="Map" parameterType="Map">
@@ -64,7 +66,7 @@
 		VALUES
 		<foreach collection="inputdata" item="item" index="index"
 			separator=",">
-			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.QEUSTION_SEQ})
+			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.VIEW_NUM},#{item.QEUSTION_SEQ})
 		</foreach>
 	</insert>
 
@@ -75,12 +77,10 @@
 	</insert>
 
 
-	<update id="update_board" parameterType="Map">
-		UPDATE board
-		SET TITLE =
-		#{TITLE}, CONTENTS =#{CONTENTS}, UPLOAD_DATE = sysdate
-		WHERE BOARD_SEQ
-		= #{BOARD_SEQ}
+	<update id="survey_update" parameterType="Map">
+		UPDATE SM_SURVEY
+		SET SURVEY_SEQ = #{SURVEY_SEQ}, SURVEY_NAME = #{SURVEY_NAME}
+		WHERE SURVEY_SEQ = #{SURVEY_SEQ}
 	</update>
 
 

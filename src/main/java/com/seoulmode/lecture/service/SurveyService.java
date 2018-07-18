@@ -72,7 +72,7 @@ public class SurveyService {
 			resultData = dao.insertObject("survey.survey_insert",paramMap);
 		}else {
 			// 있으면 update
-			resultData = dao.getObject("survey.update",paramMap); 
+			resultData = dao.getObject("survey.survey_update",paramMap); 
 		}
 		
 		resultData = uniqueSequence;
@@ -89,13 +89,15 @@ public class SurveyService {
 		
 		Object resultData = dao.insertObject("survey.ques_insert",paramMap);
 		
-		String[] test = (String[])paramMap.get("views");
-		for(int i =1;i<test.length; i++) {
+		String[] views_name = (String[])paramMap.get("views");
+		String[] views_num = (String[])paramMap.get("views_num");
+		for(int i =0;i<views_name.length; i++) {
 			Map<String,Object> inputMap = new HashMap<String, Object>();
 			String view_uniqueSequence = commonutil.getUniqueSequence();
 			inputMap.put("QEUSTION_SEQ",uniqueSequence);
 			inputMap.put("VIEW_SEQ",view_uniqueSequence);
-			inputMap.put("VIEW_NAME",test[i]);
+			inputMap.put("VIEW_NAME",views_name[i]);
+			inputMap.put("VIEW_NUM",views_num[i]);
 			inputdata.add(inputMap);
 		}
 		paramMap.put("inputdata", inputdata);

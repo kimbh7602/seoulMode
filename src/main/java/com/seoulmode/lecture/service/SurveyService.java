@@ -27,9 +27,17 @@ public class SurveyService {
 		return resultData;
 	}
 	
-	public Object getList_flag(Object dataMap) {
+	public Object getList_insert(Object dataMap) {
 		
-		Object resultData = dao.getList("survey.flag_list",dataMap);
+		List resultData = new ArrayList();
+		
+		Object resultData_ques = dao.getList("survey.flag_list",dataMap);
+		
+		Object resultData_course = dao.getList("survey.course_list",dataMap);
+		
+		resultData.add(resultData_ques);
+		resultData.add(resultData_course);
+		
 		
 		return resultData;
 	}
@@ -62,7 +70,7 @@ public class SurveyService {
 		return resultData;
 	}
 	
-	public Object insertObject(Map<Object,Object> paramMap) {
+	public Object insertSurvey(Map<Object,Object> paramMap) {
 		String uniqueSequence = (String) paramMap.get("SURVEY_SEQ");
 		Object resultData;
 		if("".equals(uniqueSequence)){
@@ -105,5 +113,20 @@ public class SurveyService {
 		dao.insertObject("survey.view_insert",paramMap);
 		
 		return paramMap; 
+	}
+
+	public Object course_rel_insert(Map<Object, Object> paramMap) {
+//		paramMap.put("SURVEY_SEQ","UUID_9000");
+		Object resultData = dao.insertObject("survey.course_rel_insert",paramMap);
+		
+		return resultData;
+	}
+	
+	public Object insert_response(Object dataMap) {
+		
+		Object resultData = dao.insertObject("survey.insert_response",dataMap);
+		
+		return resultData;
+		
 	}
 }

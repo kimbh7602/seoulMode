@@ -28,6 +28,14 @@
 		GROUP BY sqv.VIEW_NUM
 	</select>
 
+	<select id="course_list" resultType="Map" parameterType="Map">
+		select sc.COURSE_SEQ,sc.COURSE_NAME,sc.ORGANIZATION_SEQ,so.ORGANIZATION_NAME
+		from 
+		sm_COURSE sc INNER JOIN sm_organization so
+		ON so.ORGANIZATION_SEQ = sc.ORGANIZATION_SEQ
+		WHERE 1=1;
+	</select>
+	
 	<select id="list" resultType="Map" parameterType="Map">
 		select *
 		from
@@ -58,6 +66,25 @@
 		INSERT INTO
 		SM_SURVEY
 		VALUES(#{SURVEY_SEQ},#{SURVEY_NAME})
+	</insert>
+	
+	
+	<insert id="insert_response" parameterType="Map">
+		INSERT INTO
+		SM_SURVEY_RESPONSE
+		VALUES(null,null,#{MEMBER_SEQ},#{QUESTION_SEQ},#{COURSE_SEQ},#{SURVEY_SEQ},#{SURVEY_SERIES})
+	</insert>
+	
+	<insert id="course_rel_insert" parameterType="Map">
+		INSERT INTO sm_courserexam
+		VALUES (
+<!-- 		#{COURSE_SEQ}
+		, #{SURVEY_SEQ}
+		, #{SURVEY_SERIES}
+		) -->
+		 #{SURVEY_SEQ}
+		,#{COURSE_SEQ}
+		)
 	</insert>
 
 	<insert id="view_insert" parameterType="Map">

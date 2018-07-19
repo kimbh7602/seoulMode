@@ -51,13 +51,14 @@ public class SurveyController {
 			resultList=(List<Object>) service.getMemberList(paramMap);
 			}
 		}else if("insert".equals(action)) {
-			resultList = (List<Object>) service.getList_flag(paramMap);
-		}else if("insert_register".equals(action)){
-//			service.insertObject(paramMap);
+			resultList = (List<Object>) service.getList_insert(paramMap);
+		}else if("course_rel_insert".equals(action)){
+			service.course_rel_insert(paramMap);
+			resultList=(List<Object>) service.getList(paramMap);
 		}else if("modify".equals(action)) {
 //			resultMap = (Map<String, Object>) service.getObject(paramMap);
-		}else if("modify_register".equals(action)){
-//			service.insertObject(paramMap);
+		}else if("response".equals(action)){
+			service.insert_response(paramMap);
 		}else if("read".equals(action)) {
 			resultList = (List<Object>) service.getList_Read(paramMap);
 		}else if("delete".equals(action)) {

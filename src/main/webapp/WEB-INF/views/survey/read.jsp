@@ -21,7 +21,7 @@
 						</h2>
 						<div class="clearfix"></div>
 					</div>
-					<form role="form" enctype="multipart/form-data" method="POST" action="<c:url value='/survey/response' />">
+					<form role="form" method="POST" action="<c:url value='/survey/response' />">
 					<div class="x_content">
 						<c:forEach items="${resultList}" var="resultData" varStatus="loop">
 							<div class="panel-body">
@@ -32,7 +32,7 @@
 										<c:set var="view_idx" value="${view_idx+1}"/>
 										<c:choose>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}">
-												<input type="radio" name="${question_idx}chk_view${view_idx}"
+												<input type="radio" name="${question_idx}chk_view"
 													value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}">

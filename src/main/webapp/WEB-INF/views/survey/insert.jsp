@@ -21,30 +21,31 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<p class="text-muted font-13 m-b-30">설문조사의 제목, 질문, 보기를 직접 작성한
+						<p class="text-muted font-13 m-b-30">설문조사의 제목, 해당 과정, 질문, 보기를 직접 작성한
 							후 등록 버튼을 눌러주세요.</p>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-12">
 									<!-- enctype을 설정해주면 Resolver에서 인지함. -->
-									<form role="form" enctype="multipart/form-data" method="POST"
-										action="<c:url value='/member/merge' />">
+									<form role="form" method="POST"
+										action="<c:url value='/survey/course_rel_insert' />">
 										<input type="hidden" name="forwardView" value="/survey/list" />
 										<p>제목</p>
-										<input type="text" name="survey_name"/>
+										<input type="text" name="SURVEY_NAME"/>
 										<input type="hidden" name="SURVEY_SEQ"/>
-										<hr>
 										<div id="question">
 											<div class="form-group" id="insert_check"></div>
 											<hr>
 											<div class="form-group">
 												<label>질문</label> <select class="question_flag"
-													id="question_flag">
-													<c:forEach items="${resultList}" var="resultData"
-														varStatus="loop">
+													id="question_flag" name="question_flag" style="height: 25;">
+													<c:forEach items="${resultList[0]}" var="resultData"
+														varStatus="loop1">
 														<option value="${resultData.QUESTION_FLAG_SEQ}">${resultData.QUESTION_FLAG_NAME}</option>
 													</c:forEach>
-												</select> <input class="form-control" type="text" name="question"
+												</select>
+												<span class="help-block">질문작성 전 질문형태를 설정해주세요.</span>
+												 <input class="form-control" type="text" name="question"
 													id="question" value="" />
 												<hr>
 												<div id="view">
@@ -53,15 +54,26 @@
 												</div>
 												<div id="views"></div>
 											</div>
+											<hr>
+											<p>과정 선택</p>
+											<span class="help-block">설문을 입력하기 전 과정을 선택해주세요.</span>
+											<select class="course_seq" id ="course_seq" name="COURSE_SEQ"style="height: 25;">
+												<c:forEach items="${resultList[1]}" var="resultData"
+													varStatus="loop0">
+													<option value="${resultData.COURSE_SEQ}">${resultData.ORGANIZATION_NAME} ) ${resultData.COURSE_NAME}</option>
+												</c:forEach>
+											</select>
+											<hr>
+										</div>
+										<div>
+											<button class="btn btn-default" id="btnquesAdds">질문
+												추가</button>
+											<span class="help-block">질문을 완성한 후 눌러주세요.</span>
+											<hr>
 										</div>
 										<button type="submit" class="btn btn-default">${paramMap.action == 'update' ? '수정' : '등록' }</button>
 										<!-- <button type="reset" class="btn btn-default"></button> -->
 									</form>
-									<div>
-										<button class="btn btn-default" id="btnquesAdds">질문
-											추가</button>
-										<p>질문을 완성한 후 눌러주세요.</p>
-									</div>
 								</div>
 							</div>
 							<!-- /.row (nested) -->
@@ -74,7 +86,9 @@
 	</div>
 </div>
 <!-- /page content -->
-
+<style>
+p{font-size:20px};
+</style>
 <script>
 	var ve_idx = 0; // #view를 구분하는 idx
 	var ques_idx = 0; // 질문 갯수 Count
@@ -195,10 +209,10 @@
 						}
 					}
 
-					var survey_name = $('[name="survey_name"]').val();
+					var survey_name = $('[name="SURVEY_NAME"]').val();
 					var survey_seq = $('[name="SURVEY_SEQ"]').val();
-					var question_flag = $('#question_flag option:selected')
-							.val();
+					var question_flag = $('#question_flag option:selected').val();
+
 					var alldata = {
 						"QUESTION_NUM" : ques_idx,
 						"QUESTION_NAME" : question,
@@ -226,7 +240,6 @@
 									'<div class = "form-group">' + '<p>질문명 :'
 											+ data.QUESTION_NAME + ' </p>'
 											+ test + '<p>확인</p>');
-							$.fn.changeobjectsingular();
 							$.fn.confirm(data);
 						},
 

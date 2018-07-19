@@ -33,7 +33,7 @@ public class RestWSController {
 	   Map<Object,Object> resultMap = new HashMap<Object,Object>();
 	   
 		if("survey_insert".equals(action)) {
-			String survey_seq =	(String) surveyservice.insertObject(paramMap);
+			String survey_seq =	(String) surveyservice.insertSurvey(paramMap);
 			paramMap.put("SURVEY_SEQ",survey_seq);
 			resultMap = (Map<Object, Object>) surveyservice.insertView(paramMap);
 		}

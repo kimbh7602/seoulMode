@@ -116,7 +116,6 @@ public class SurveyService {
 	}
 
 	public Object course_rel_insert(Map<Object, Object> paramMap) {
-//		paramMap.put("SURVEY_SEQ","UUID_9000");
 		Object resultData = dao.insertObject("survey.course_rel_insert",paramMap);
 		
 		return resultData;

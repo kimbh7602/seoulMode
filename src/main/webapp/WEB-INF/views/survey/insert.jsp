@@ -66,7 +66,7 @@
 											<hr>
 										</div>
 										<div>
-											<button class="btn btn-default" id="btnquesAdds">질문
+											<button type="button" class="btn btn-default" id="btnquesAdds">질문
 												추가</button>
 											<span class="help-block">질문을 완성한 후 눌러주세요.</span>
 											<hr>
@@ -112,6 +112,12 @@ p{font-size:20px};
 			$.fn.changedescription();
 		}
 	});
+	$.fn.changeoriginal = function() { // 객관식단수 선택 시 
+		ve_idx = 0;
+		var object_html_view = '<input class="viewAdd" type="button" value ="보기 추가"></input><hr>';
+		$('#view').html(object_html_view);
+		$('[name = "question"]').val("");
+	}
 	$.fn.changeobjectsingular = function() { // 객관식단수 선택 시 
 		ve_idx = 1;
 		var object_html = '<label>보기</label>' + '<input ve="' + (ve_idx)
@@ -240,6 +246,7 @@ p{font-size:20px};
 									'<div class = "form-group">' + '<p>질문명 :'
 											+ data.QUESTION_NAME + ' </p>'
 											+ test + '<p>확인</p>');
+							$.fn.changeoriginal();
 							$.fn.confirm(data);
 						},
 

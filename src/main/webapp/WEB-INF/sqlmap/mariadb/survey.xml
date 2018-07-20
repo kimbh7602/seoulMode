@@ -78,12 +78,10 @@
 	<insert id="course_rel_insert" parameterType="Map">
 		INSERT INTO sm_courserexam
 		VALUES (
-<!-- 		#{COURSE_SEQ}
+		null
 		, #{SURVEY_SEQ}
-		, #{SURVEY_SERIES}
-		) -->
-		 #{SURVEY_SEQ}
-		,#{COURSE_SEQ}
+		, #{COURSE_SEQ}
+		)
 		)
 	</insert>
 

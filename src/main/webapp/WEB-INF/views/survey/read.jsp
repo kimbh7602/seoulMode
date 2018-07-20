@@ -16,17 +16,20 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
+					<form role="form" method="POST" action="<c:url value='/survey/response' />">
 					<div class="x_title">
+						<input type="hidden" name="SUEVEY_SEQ" value="${paramMap.SURVEY_SEQ}">
 						<h2>${paramMap.SURVEY_NAME}<small>설문조사 회차</small>
 						</h2>
 						<div class="clearfix"></div>
 					</div>
-					<form role="form" method="POST" action="<c:url value='/survey/response' />">
 					<div class="x_content">
+						<div class="panel-body">
 						<c:forEach items="${resultList}" var="resultData" varStatus="loop">
-							<div class="panel-body">
 								<div class="row">
 									<p>${resultData.QUESTION_NUM})${resultData.QUESTION_NAME}</p>
+									<input type="hidden" name="${question.idx}QUESTION_FLAG" value="${resultData.QUESTION_FLAG_SEQ}">
+									<input type="hidden" name="${question.idx}QUESTION_SEQ" value="${resultData.QUESTION_SEQ}">
 									<c:forEach items="${resultData.VIEWS}" var="questionData"
 										varStatus="loop2">
 										<c:set var="view_idx" value="${view_idx+1}"/>
@@ -52,14 +55,19 @@
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8004'}">
 											<!-- 이부분은 1~5 점 RadioButton 으로 선택할 수있게 -->
+												<input type="radio" name="${question_idx}" value ="1">1
+												<input type="radio" name="${question_idx}" value ="2">2
+												<input type="radio" name="${question_idx}" value ="3">3
+												<input type="radio" name="${question_idx}" value ="4">4
+												<input type="radio" name="${question_idx}" value ="5">5
 											</c:when>
 										</c:choose>
 									</c:forEach>
 								</div>
-							</div>
 							<c:set var="view_idx" value="0"/>
 							<c:set var="question_idx" value="${question_idx+1}"/>
-						</c:forEach>
+							</c:forEach>
+						</div>
 					</div>
 					<button type="submit" class="btn btn-default">등록</button>
 					</form>
@@ -69,6 +77,6 @@
 	</div>
 </div>
 <script>
-	
+
 </script>
 <!-- /page content -->

@@ -82,7 +82,6 @@
 		, #{SURVEY_SEQ}
 		, #{COURSE_SEQ}
 		)
-		)
 	</insert>
 
 	<insert id="view_insert" parameterType="Map">
@@ -98,7 +97,7 @@
 	<insert id="ques_insert" parameterType="Map">
 		INSERT INTO
 		SM_QUESTION
-		VALUES(#{QUESTION_SEQ},#{QUESTION_NAME},#{QUESTION_NUM},#{QUESTION_FLAG},#{SURVEY_SEQ})
+		VALUES(#{QUESTION_SEQ},#{QUESTION_NUM},#{QUESTION_NAME},#{QUESTION_KEYWORD},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 
 

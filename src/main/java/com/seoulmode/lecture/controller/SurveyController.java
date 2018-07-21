@@ -67,7 +67,6 @@ public class SurveyController {
 			
 		}
 		
-		
 		if(forwardView != null){
 			viewName = forwardView;
 		}

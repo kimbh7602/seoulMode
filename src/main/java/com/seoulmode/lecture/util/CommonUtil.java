@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -35,5 +36,13 @@ public class CommonUtil {
 		
 		return result ;
 	}
-
+	
+	public String PasswordEncoderGenerator(String password) {
+		String hashedPassword = "";
+		if(password != null){
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			hashedPassword = passwordEncoder.encode(password);
+		}
+		return hashedPassword;
+	}
 }

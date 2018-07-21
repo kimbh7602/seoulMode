@@ -35,17 +35,18 @@
 										<c:set var="view_idx" value="${view_idx+1}"/>
 										<c:choose>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}">
-												<input type="radio" name="${question_idx}chk_view"
+												<pre><input type="radio" name="${question_idx}chk_view"
 													value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
+													</pre>
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}">
-												<input type="checkbox" name="${question_idx}checkbox${view_idx}"
+												<pre ><input type="checkbox" name="${question_idx}checkbox${view_idx}"
 													value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
-														<hr>
+													</pre>
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8002'}">
 												<!-- <input type ="text"/> -->
-												<textarea name="${question_idx}content${view_idx}" rows="1"
+												<textarea name="${question_idx}content${view_idx}" rows="5"
 													required="required" wrap="hard"></textarea>
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8003'}">
@@ -54,7 +55,6 @@
 													required="required" wrap="hard"></textarea>
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8004'}">
-											<!-- 이부분은 1~5 점 RadioButton 으로 선택할 수있게 -->
 												<input type="radio" name="${question_idx}" value ="1">1
 												<input type="radio" name="${question_idx}" value ="2">2
 												<input type="radio" name="${question_idx}" value ="3">3
@@ -66,10 +66,11 @@
 								</div>
 							<c:set var="view_idx" value="0"/>
 							<c:set var="question_idx" value="${question_idx+1}"/>
+							<hr>
 							</c:forEach>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">등록</button>
+					<button type="submit" class="btn btn-default">등록</button>
 					</form>
 				</div>
 			</div>

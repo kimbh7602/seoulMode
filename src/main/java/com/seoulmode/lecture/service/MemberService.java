@@ -43,6 +43,7 @@ public class MemberService {
 	public Object insertObject(Map<String,Object> paramMap) {
 		String uniqueSequence = commonutil.getUniqueSequence();
 		paramMap.put("MEMBER_SEQ", uniqueSequence);
+		paramMap.put("MEMBER_PASSWORD", commonutil.PasswordEncoderGenerator((String)paramMap.get("MEMBER_PASSWORD")));
 		Object resultData = dao.insertObject("member.insert",paramMap);
 		
 		Object resultKey = dao.insertObject("memberRauthority.insert", paramMap);

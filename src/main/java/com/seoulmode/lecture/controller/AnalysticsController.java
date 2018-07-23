@@ -80,10 +80,20 @@ public class AnalysticsController {
 		System.out.println("question");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Object> resultList = new ArrayList<Object>();
+		List<Object> colList = new ArrayList<Object>();
+		List<Object> rowList = new ArrayList<Object>();
+		List<Object> valueList = new ArrayList<Object>();
 		
 		resultList = (List)service.getQuestionList(paramMap);
+		colList = (List)service.getEaxmColList(paramMap);
+		rowList = (List)service.getExamRowList(paramMap);
+		valueList = (List)service.getExamValueList(paramMap);
+		
 		
 		resultMap.put("data", resultList);
+		resultMap.put("col", colList);
+		resultMap.put("row", rowList);
+		resultMap.put("val", valueList);
 		
 		return resultMap;
 		
@@ -96,12 +106,36 @@ public class AnalysticsController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Object> colList = new ArrayList<Object>();
 		List<Object> rowList = new ArrayList<Object>();
+		List<Object> questionList = new ArrayList<Object>();
 		
 		colList = (List)service.getResponseColList(paramMap);
 		rowList = (List)service.getResponseRowList(paramMap);
+		questionList = (List)service.getQuestionList(paramMap);
 		
 		resultMap.put("col", colList);
 		resultMap.put("row", rowList);
+		resultMap.put("data", questionList);
+		
+		return resultMap;
+		
+	}
+	
+	@RequestMapping(value ="/crossResponseAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, Object> crossResponseAjax(@RequestParam Map<String, Object> paramMap) {
+		
+		System.out.println("response2");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Object> colList = new ArrayList<Object>();
+		List<Object> rowList = new ArrayList<Object>();
+		List<Object> valList = new ArrayList<Object>();
+		
+		colList = (List)service.getCrossColList(paramMap);
+		rowList = (List)service.getCrossRowList(paramMap);
+		valList = (List)service.getCrossValList(paramMap);
+		
+		resultMap.put("col", colList);
+		resultMap.put("row", rowList);
+		resultMap.put("val", valList);
 		
 		return resultMap;
 		

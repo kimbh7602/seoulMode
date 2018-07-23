@@ -17,6 +17,47 @@
       
    </select>
    
+   <select id="examTableCol" resultType="Map" parameterType="Map">
+   
+      select distinct
+        q.QUESTION_NAME AS QUESTION_NAME
+      from SM_SURVEY_RESPONSE AS r
+      JOIN SM_QUESTION AS q
+      ON r.QUESTION_SEQ = q.QUESTION_SEQ
+      where r.COURSE_SEQ = #{COURSE_SEQ}
+      and r.EXAM_SERIES = #{EXAM_SERIES}
+      order by r.QUESTION_SEQ
+      
+   </select>
+   
+   <select id="examTableRow" resultType="Map" parameterType="Map">
+   
+      select distinct
+        m.MEMBER_NAME
+      from SM_SURVEY_RESPONSE AS r
+      JOIN SM_MEMBER AS m
+      ON r.MEMBER_SEQ = m.MEMBER_SEQ
+      where r.COURSE_SEQ = #{COURSE_SEQ}
+      and r.EXAM_SERIES = #{EXAM_SERIES}
+      ORDER BY r.MEMBER_SEQ
+      
+   </select>
+   
+   <select id="examTableValue" resultType="Map" parameterType="Map">
+   
+      SELECT
+        r.MEMBER_SEQ, r.QUESTION_SEQ, r.OBJECTIVE_RESPONSE, v.VIEW_NAME AS VIEW_NAME
+      FROM SM_SURVEY_RESPONSE as r
+      join SM_QUESTION as q
+      on r.QUESTION_SEQ = q.QUESTION_SEQ
+      join SM_QUESTIONRVIEW as v
+      on r.OBJECTIVE_RESPONSE = v.VIEW_SEQ
+      WHERE r.COURSE_SEQ = #{COURSE_SEQ}
+      AND r.EXAM_SERIES = #{EXAM_SERIES}
+      ORDER BY r.MEMBER_SEQ, r.QUESTION_SEQ
+      
+   </select>
+   
    <select id="questionList" resultType="Map" parameterType="Map">
    
       select distinct
@@ -60,6 +101,59 @@
       and r.QUESTION_SEQ = #{QUESTION_SEQ}
       group by r.OBJECTIVE_RESPONSE
       order by r.OBJECTIVE_RESPONSE
+      
+   </select>
+   
+   <select id="crossColList" resultType="Map" parameterType="Map">
+   
+      select
+         q.QUESTION_NAME, v.VIEW_NAME, v.VIEW_SEQ
+      from SM_SURVEY_RESPONSE AS r JOIN SM_QUESTION AS q
+      on r.QUESTION_SEQ = q.QUESTION_SEQ
+      JOIN SM_QUESTIONRVIEW AS v
+      ON q.QUESTION_SEQ = v.QUESTION_SEQ
+      where r.COURSE_SEQ = #{COURSE_SEQ}
+      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.QUESTION_SEQ = #{QUESTION_SEQ1}
+      group by v.VIEW_NAME
+      order by v.VIEW_SEQ
+      
+   </select>
+   
+   <select id="crossRowList" resultType="Map" parameterType="Map">
+   
+      select
+         q.QUESTION_NAME, v.VIEW_NAME, v.VIEW_SEQ
+      from SM_SURVEY_RESPONSE AS r JOIN SM_QUESTION AS q
+      on r.QUESTION_SEQ = q.QUESTION_SEQ
+      JOIN SM_QUESTIONRVIEW AS v
+      ON q.QUESTION_SEQ = v.QUESTION_SEQ
+      where r.COURSE_SEQ = #{COURSE_SEQ}
+      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.QUESTION_SEQ = #{QUESTION_SEQ2}
+      group by v.VIEW_NAME
+      order by v.VIEW_SEQ
+      
+   </select>
+   
+   <select id="crossValueList" resultType="Map" parameterType="Map">
+   
+      select
+         r1.OBJECTIVE_RESPONSE AS OR1 , r2.OBJECTIVE_RESPONSE AS OR2, count(r2.OBJECTIVE_RESPONSE) AS CNT
+      from SM_SURVEY_RESPONSE AS r1
+      JOIN SM_SURVEY_RESPONSE AS r2
+      ON r1.MEMBER_SEQ = r2.MEMBER_SEQ
+      JOIN SM_QUESTION AS q
+      on r1.QUESTION_SEQ = q.QUESTION_SEQ
+      JOIN SM_QUESTIONRVIEW AS v
+      ON q.QUESTION_SEQ = v.QUESTION_SEQ
+      where r1.OBJECTIVE_RESPONSE = v.VIEW_SEQ
+      and r1.COURSE_SEQ = #{COURSE_SEQ}
+      and r1.EXAM_SERIES = #{EXAM_SERIES}
+      and r1.QUESTION_SEQ = #{QUESTION_SEQ1}
+      and r2.QUESTION_SEQ = #{QUESTION_SEQ2}
+      group by r1.OBJECTIVE_RESPONSE
+      order by r2.OBJECTIVE_RESPONSE
       
    </select>
    

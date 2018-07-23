@@ -25,6 +25,27 @@ public class AnalysticsService {
 		return resultData;
 	}
 	
+	public Object getEaxmColList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.examTableCol",dataMap);
+		
+		return resultData;
+	}
+
+	public Object getExamRowList(Object dataMap) {
+	
+	Object resultData = dao.getList("analystics.examTableRow",dataMap); 
+	
+	return resultData;
+}
+
+	public Object getExamValueList(Object dataMap) {
+	
+	Object resultData = dao.getList("analystics.examTableValue",dataMap);
+	
+	return resultData;
+}
+	
 	public Object getExamList(Object dataMap) {
 		
 		Object resultData = dao.getList("analystics.examList", dataMap);
@@ -49,6 +70,27 @@ public class AnalysticsService {
 	public Object getResponseRowList(Object dataMap) {
 		
 		Object resultData = dao.getList("analystics.rowList", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object getCrossColList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.crossColList", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object getCrossRowList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.crossRowList", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object getCrossValList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.crossValueList", dataMap);
 		
 		return resultData;
 	}

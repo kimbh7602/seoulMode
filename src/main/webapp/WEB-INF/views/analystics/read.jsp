@@ -1,12 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="application/vnd.ms-excel; name='My_Excel', text/html; charset=utf-8"%>
-
-<%
- response.setHeader("Content-Disposition", "inline; filename=Coursenew_Excel_" +new java.sql.Date(System.currentTimeMillis()) + "_.xls");   
- response.setHeader("Content-Description", "JSP Generated Data");
-%>
-
-
 
 
 <!-- Course SelectBox -->
@@ -22,17 +14,17 @@ $.ajax({
  success: function(result){
 	 var list = result.data;
 	 console.log('exam success');
-  //SELECT BOX ì´ê¸°í           
+  //SELECT BOX 초기화           
   $("#exam").find("option").remove().end().append("<option value=''>Exam Select</option>");
  
-  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
+  //배열 개수 만큼 option 추가
    $.each(list, function(i){
     $("#exam").append("<option value='"+list[i].EXAM_SERIES+"'>"+list[i].EXAM_NAME+"</option>")
    });    
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
+   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")");
   }                     
  });
 }
@@ -50,28 +42,49 @@ $.ajax({
  data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal},
  success: function(result){
 	 var list = result.data;
+	 var col = result.col;
+	 var row = result.row;
+	 var val = result.val;
 	 console.log('question success');
-  //SELECT BOX ì´ê¸°í           
-  $("#question").find("option").remove().end().append("<option value=''>Quetion Select</option>");
+  //SELECT BOX 초기화           
+  $("#question1").find("option").remove().end().append("<option value=''>Quetion Select</option>");
  
-  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
+  //배열 개수 만큼 option 추가
    $.each(list, function(i){
-    $("#question").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
+    $("#question1").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
    });    
+  
+  var formTag2 = '';
+   formTag2 += '<div id="dvData">';
+   formTag2 += '<table> <tr>';
+   $.each(col, function(i){
+      formTag2 += '<th> '+col[i].QUESTION_NAME+' </th>';
+   });
+   formTag2 +='</tr>';
+   $.each(row, function(i){
+      formTag2 += '<tr><td>'+row[i].MEMBER_NAME+'</td>';
+      $.each(val, function(j){
+    	 formTag2 += '<td>'+val[j].VIEW_NAME+'</td>';
+      });
+      formTag2 += '</tr>';
+   });
+   formTag2 +='</table>';
+   formTag2 +='</div>';
+   $('#response-div-hidden').html(formTag2);
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
+   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")asdfsasdfsafs");
   }                     
  });
 }
 </script>
 
-<!-- Question SelectBox -->
+<!-- Question1 SelectBox -->
 <!-- Pie Chart -->
 <script type="text/javascript">
 //AJAX select box
-var question = function(questionVal){
+var question1 = function(questionVal){
    var courseVal = $("#course").val();
    var examVal = $("#exam").val();
 $.ajax({
@@ -80,9 +93,18 @@ $.ajax({
  dataType:"json",
  data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ":questionVal},
  success: function(result){
+ 	var list = result.data;
+ 	
+ 	$("#question2").find("option").remove().end().append("<option value=''>Quetion Select</option>");
+ 
+  //배열 개수 만큼 option 추가
+   $.each(list, function(i){
+    $("#question2").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
+   });
+ 
     var column = result.col;
     var row = result.row;
-    var rowVal = new Array();
+    var rowVal = new Array(column.length);
      $.each(column, function(i){
       $.each(row, function(j){
          if(column[i].VIEW_SEQ == row[j].VIEW_SEQ){
@@ -98,7 +120,6 @@ $.ajax({
     console.log(rowVal[0]);
     console.log('response success');
     var formTag = '<p>'+column[0].QUESTION_NAME+'</p>';
-    var formTag2 = '';
       
       formTag += '<table id="datatable" class="table table-striped table-bordered" style="font-size:13px;"> <tr>';
       $.each(column, function(k){
@@ -110,20 +131,10 @@ $.ajax({
       });
       formTag +='</table>';
       
-      formTag2 += '<div id="dvData" style="display:none;">';
-      formTag2 += '<table> <tr>';
-      $.each(column, function(k){
-         formTag2 += '<th> '+column[k].VIEW_NAME+' </th>';
-      });
-      formTag2 +='</tr>';
-      $.each(rowVal, function(m){
-         formTag2 += '<td>'+rowVal[m]+'</td>';
-      });
-      formTag2 +='</table>';
-      formTag2 +='</div>';
+      
       alert(formTag);
    $('#response-div').html(formTag);
-   $('#response-div-hidden').html(formTag2);
+   
    
    var graphVal = new Array();
    $.each(column, function(i){
@@ -135,11 +146,149 @@ $.ajax({
                renderer: $.jqplot.PieRenderer,
                rendererOptions: {
                  showDataLabels: true
-               }
+               }	
              },
              legend: { show:true, location: 'e' }
            }
    );
+   alert("sucess");
+  },
+   error: function (jqXHR, textStatus, errorThrown) {
+   
+   alert("Error.("+textStatus+")("+errorThrown+")");
+  }                     
+ });
+}
+</script>
+
+<!-- Question2 SelectBox -->
+<script type="text/javascript">
+//AJAX select box
+var question2 = function(questionVal2){
+   var courseVal = $("#course").val();
+   var examVal = $("#exam").val();
+   var questionVal1 = $("#question1").val();
+$.ajax({
+ type: "GET",
+ url: "<c:url value='/crossResponseAjax'/>",
+ dataType:"json",
+ data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ1":questionVal1, "QUESTION_SEQ2":questionVal2},
+ success: function(result){
+    var column = result.col;
+    var row = result.row;
+    var value = result.val;
+    var rowVal = new Array(row.length);
+    for(var i = 0; i < row.length; i++){
+    	rowVal[i] = new Array(column.length);
+    }
+    console.log(value);
+    console.log(row[0].VIEW_SEQ);
+    console.log(column[0].VIEW_SEQ);
+    
+    //INSERT TABLE VALUE
+    $.each(rowVal, function(i){
+    	$.each(rowVal[i], function(j){
+    		$.each(value, function(k){
+    			if(row[i].VIEW_SEQ == value[k].OR2){
+    				if(column[j].VIEW_SEQ == value[k].OR1){
+    					rowVal[i][j] = value[k].CNT;
+    				}
+    			}
+    		})
+    	});
+    });
+     $.each(rowVal, function(i){
+       $.each(rowVal[i], function(j){
+    	   if(rowVal[i][j] == null){
+    		   rowVal[i][j] = 0;
+    	   }
+       }) ;
+     });
+     
+     
+    console.log(rowVal[0]);
+    console.log('response success');
+    
+    //CREATE TABLE
+    var formTag = '<p>'+column[0].QUESTION_NAME+'</p>';
+      
+      formTag += '<table id="datatable" class="table table-striped table-bordered" style="font-size:13px;"> <tr>';
+      formTag += '<th></th>';
+      $.each(column, function(k){
+         formTag += '<th> '+column[k].VIEW_NAME+' </th>';
+      });
+      formTag +='</tr>';
+      $.each(rowVal, function(i){
+      	formTag += '<tr><td>'+row[i].VIEW_NAME+'</td>';
+      	$.each(rowVal[i], function(j){
+         formTag += '<td>'+rowVal[i][j]+'</td>';
+         });
+      	formTag += '</tr>';
+      });
+      formTag +='</table>';
+      
+      $.each(rowVal, function(i){
+    	  $.each(rowVal[i], function(j){
+    		  console.log(i, j, rowVal[i][j]);
+    	  });
+      });
+      alert(formTag);
+   $('#response-div').html(formTag); // DRAW GRAPH
+   
+   		
+	   	var lineVal = new Array(row.length);
+   		var lineGraphVal = [];
+   		var lineform = new Array();
+	    for(var i = 0; i < row.length; i++){
+	    	lineVal[i] = [];
+	    	for(var j = 0; j < column.length; j++){
+	    		lineVal[i].push(rowVal[i][j]);
+	    	}
+	    	lineGraphVal.push(lineVal[i]);
+	    }
+	    
+	    console.log(lineGraphVal);
+	    
+	    
+	    
+	   $.jqplot ('graph', lineGraphVal, {
+	       // Give the plot a title.
+	       title: 'Plot With Options',
+	       // You can specify options for all axes on the plot at once with
+	       // the axesDefaults object.  Here, we're using a canvas renderer
+	       // to draw the axis label which allows rotated text.
+	       axesDefaults: {
+	         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+	       },
+	       // Likewise, seriesDefaults specifies default options for all
+	       // series in a plot.  Options specified in seriesDefaults or
+	       // axesDefaults can be overridden by individual series or
+	       // axes options.
+	       // Here we turn on smoothing for the line.
+	       seriesDefaults: {
+	           rendererOptions: {
+	               smooth: false
+	           }
+	       
+	       },
+	       // An axes object holds options for all axes.
+	       // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
+	       // Up to 9 y axes are supported.
+	       axes: {
+	         // options for each axis are specified in seperate option objects.
+	         xaxis: {
+	           label: column[0].QUESTION_NAME,
+	           // Turn off "padding".  This will allow data point to lie on the
+	           // edges of the grid.  Default padding is 1.2 and will keep all
+	           // points inside the bounds of the grid.
+	           pad: 0
+	         },
+	         yaxis: {
+	           label: row[0].QUESTION_NAME
+	         }
+	       }
+	     });
+   
    alert("sucess");
   },
    error: function (jqXHR, textStatus, errorThrown) {
@@ -205,12 +354,20 @@ $(function(){
               <br><br>
               <div class="form-group">
               <label>Question Selects</label>
-              <select id="question" name="QUESTION_SEQ" class="form-control col-md-7 col-xs-12" onchange="question(this.value);">
+              <select id="question1" name="QUESTION_SEQ1" class="form-control col-md-7 col-xs-12" onchange="question1(this.value);">
+              	<option value="">Question Select</option>
+              </select>
+              </div>
+              <br><br>
+              <div class="form-group">
+              <label>Question Selects</label>
+              <select id="question2" name="QUESTION_SEQ2" class="form-control col-md-7 col-xs-12" onchange="question2(this.value);">
               	<option value="">Question Select</option>
               </select>
               </div>
               </div>
               </div>
+              
               
               <!-- Graph Div -->
               <div class="form-group col-md-12 col-sm-12 col-xs-12">

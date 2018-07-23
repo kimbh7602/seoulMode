@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seoulmode.lecture.security.MemberInfo;
 import com.seoulmode.lecture.service.SurveyService;
 
 /**
@@ -66,6 +67,14 @@ public class HomeController {
 		
 		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
 		paramMap.put("MEMBER_EMAIL",member_email);
+		
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+			Object member_Id = SecurityContextHolder.getContext().getAuthentication().getPrincipal();			
+			paramMap.put("MEMBER_EMAIL",member_Id);
+		}else {
+			MemberInfo member_Id = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			paramMap.put("MEMBER_EMAIL",member_Id.getMemberID());
+		}
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());

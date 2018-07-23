@@ -20,6 +20,13 @@
 			delete-cookies="JSESSIONID" />
 		<csrf disabled="true" />
 
+<!-- 		<form-login login-page="/login/loginform#signin"
+			default-target-url="/home"
+			login-processing-url="/j_spring_security_check"
+			authentication-failure-url="/login/loginform?fail=true"
+			username-parameter="MEMBER_EMAIL"
+			password-parameter="MEMBER_PASSWORD" /> -->
+			
 		<!-- return boolean -->
 		<intercept-url pattern="/*" access="permitAll()" />
 		<intercept-url pattern="/*/*" access="permitAll()" />
@@ -27,7 +34,6 @@
 
 <!-- 	<authentication-manager>
 		<authentication-provider>
-			<password-encoder hash="bcrypt" />
 			<user-service>
 				<user name="member" password="12345" authorities="ROLE_USER" />
 				<user name="admin" password="12345" authorities="ROLE_ADMIN" />
@@ -40,7 +46,7 @@
 				<user name="d123@naver.com" password="12345"
 					authorities="ROLE_USER" />
 
-			</user-service
+			</user-service>
 
 		</authentication-provider>
 	</authentication-manager> -->
@@ -49,7 +55,7 @@
 		class="com.seoulmode.lecture.security.CustomizeUserDetailsService" />
 		<authentication-manager>
 		<authentication-provider user-service-ref="customizeUserDetailsService" >
-					<password-encoder hash="bcrypt" />
+			<password-encoder hash="bcrypt" />
 		</authentication-provider>
 	</authentication-manager>
 	

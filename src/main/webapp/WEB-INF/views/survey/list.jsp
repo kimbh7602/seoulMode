@@ -52,6 +52,7 @@
                           <th>SEQ</th>
                           <th>기관</th>
                           <th>Delete</th>
+                          <th>Modify</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,6 +62,7 @@
                           <td>${resultData.SURVEY_SEQ}</td>
                           <td>SeoulMode(수정요망)</td>
                           <td><a href="<c:url value='/survey/delete?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">삭제</a></td>
+                          <td><a href="<c:url value='/survey/modify?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">수정</a></td>
                         </tr>
                         </c:forEach>
                       </tbody>

@@ -226,7 +226,7 @@ p{font-size:20px};
 					var survey_name = $('[name="SURVEY_NAME"]').val();
 					var survey_seq = $('[name="SURVEY_SEQ"]').val();
 					var question_flag = $('#question_flag option:selected').val();
-					var question_keyworkd =	$('[name = "question_keyword"]').val();
+					var question_keyword =	$('[name = "question_keyword"]').val();
 
 					var alldata = {
 						"QUESTION_NUM" : ques_idx,

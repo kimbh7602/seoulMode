@@ -39,6 +39,14 @@ public class HomeController {
 		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
 		paramMap.put("MEMBER_EMAIL",member_email);
 		
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+			Object member_Id = SecurityContextHolder.getContext().getAuthentication().getPrincipal();			
+			paramMap.put("MEMBER_ID",member_Id);
+		}else {
+			MemberInfo member_Id = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			paramMap.put("MEMBER_EMAIL",member_Id.getMemberID());
+		}
+		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());
 		System.out.println(resultMap.get("auth")); 
@@ -65,15 +73,15 @@ public class HomeController {
 		Map<String, Object> resultMap = new HashMap<String, Object>() ;
 		List<Object> resultList = new ArrayList<Object>();
 		
-		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
-		paramMap.put("MEMBER_EMAIL",member_email);
+		String member_name = SecurityContextHolder.getContext().getAuthentication().getName();
+		paramMap.put("MEMBER_NAME",member_name);
 		
 		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
-			Object member_Id = SecurityContextHolder.getContext().getAuthentication().getPrincipal();			
-			paramMap.put("MEMBER_EMAIL",member_Id);
+			Object member_email = SecurityContextHolder.getContext().getAuthentication().getPrincipal();			
+			paramMap.put("MEMBER_EMAIL",member_email);
 		}else {
-			MemberInfo member_Id = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			paramMap.put("MEMBER_EMAIL",member_Id.getMemberID());
+			MemberInfo member_email = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			paramMap.put("MEMBER_EMAIL",member_email.getMemberID());
 		}
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();

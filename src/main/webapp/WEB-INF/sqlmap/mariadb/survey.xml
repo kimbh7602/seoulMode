@@ -20,22 +20,27 @@
 	<select id="view_read" resultType="Map" parameterType="Map">
 		SELECT
 		sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ, sqv.VIEW_NUM
-		FROM sm_question sq INNER
+		FROM
+		sm_question sq INNER
 		JOIN sm_questionrview sqv
-		ON sq.QUESTION_SEQ = sqv.QUESTION_SEQ
+		ON sq.QUESTION_SEQ =
+		sqv.QUESTION_SEQ
 		WHERE
 		sqv.QUESTION_SEQ = #{QUESTION_SEQ}
-		GROUP BY sqv.VIEW_NUM
+		GROUP BY
+		sqv.VIEW_NUM
 	</select>
 
 	<select id="course_list" resultType="Map" parameterType="Map">
-		select sc.COURSE_SEQ,sc.COURSE_NAME,sc.ORGANIZATION_SEQ,so.ORGANIZATION_NAME
-		from 
+		select
+		sc.COURSE_SEQ,sc.COURSE_NAME,sc.ORGANIZATION_SEQ,so.ORGANIZATION_NAME
+		from
 		sm_COURSE sc INNER JOIN sm_organization so
-		ON so.ORGANIZATION_SEQ = sc.ORGANIZATION_SEQ
+		ON so.ORGANIZATION_SEQ =
+		sc.ORGANIZATION_SEQ
 		WHERE 1=1;
 	</select>
-	
+
 	<select id="list" resultType="Map" parameterType="Map">
 		select *
 		from
@@ -50,15 +55,24 @@
 	</select>
 
 	<select id="member_list" resultType="Map" parameterType="Map">
-		select DISTINCT(ss.SURVEY_NAME), ss.SURVEY_SEQ
-		from (select sq.SURVEY_SEQ
-		from sm_survey_response ssr inner join sm_question sq
-		ON ssr.question_seq = sq.question_seq
-		where ssr.MEMBER_SEQ =
-		(select MEMBER_SEQ
+		select
+		ss.SURVEY_NAME, s.SURVEY_SEQ
+		from sm_SURVEY ss inner join (select
+		SURVEY_SEQ
+		from SM_COURSEREXAM ssc
+		where ssc.COURSE_SEQ =
+		(select
+		COURSE_SEQ
 		from sm_member
-		where MEMBER_EMAIL = #{MEMBER_EMAIL})) aq inner join sm_survey ss
-		ON ss.SURVEY_SEQ = aq.SURVEY_SEQ;
+		where MEMBER_EMAIL = #{MEMBER_EMAIL} )) s
+		where ss.SURVEY_SEQ = s.SURVEY_SEQ;
+	</select>
+
+	<select id="question_seq" resultType="Map" parameterType="Map">
+		select
+		DISTINCT(SURVEY_SEQ), DISTINCT(QUESTION_SEQ)
+		from SM_SURVEY_RESPONSE
+		where SURVEY_SEQ = #{SURVEY_SEQ}
 	</select>
 
 
@@ -67,16 +81,17 @@
 		SM_SURVEY
 		VALUES(#{SURVEY_SEQ},#{SURVEY_NAME})
 	</insert>
-	
-	
+
+
 	<insert id="insert_response" parameterType="Map">
 		INSERT INTO
 		SM_SURVEY_RESPONSE
 		VALUES(null,null,#{MEMBER_SEQ},#{QUESTION_SEQ},#{COURSE_SEQ},#{SURVEY_SEQ},#{SURVEY_SERIES})
 	</insert>
-	
+
 	<insert id="course_rel_insert" parameterType="Map">
-		INSERT INTO sm_courserexam
+		INSERT INTO
+		sm_courserexam
 		VALUES (
 		null
 		, #{SURVEY_SEQ}
@@ -101,17 +116,63 @@
 	</insert>
 
 
-	<update id="survey_update" parameterType="Map">
-		UPDATE SM_SURVEY
-		SET SURVEY_SEQ = #{SURVEY_SEQ}, SURVEY_NAME = #{SURVEY_NAME}
-		WHERE SURVEY_SEQ = #{SURVEY_SEQ}
+	<update id="323" parameterType="Map">
+		<foreach collection="inputdata" item="item" index="index"
+			separator=",">
+			UPDATE SM_QUESTION
+			SET
+			QUESTION_NAME = #{item.QUESTION_NAME}
+			WHERE
+			QUESTION_SEQ = #{item.QUESTION_SEQ}
+		</foreach>
+	</update>
+	
+	<update id="question_update" parameterType="Map">
+			UPDATE SM_QUESTION
+			SET
+			QUESTION_NAME = #{QUESTION_NAME}
+			WHERE
+			QUESTION_SEQ = #{QUESTION_SEQ}
+	</update>
+	
+	<update id="view_update" parameterType="Map">
+			UPDATE SM_QUESTIONRVIEW
+			SET
+			VIEW_NAME = #{VIEW_NAME}
+			WHERE
+			VIEW_SEQ = #{VIEW_SEQ}
 	</update>
 
 
-	<delete id="delete_board" parameterType="Map">
-		delete from BOARD
+	<delete id="survey_delete_response" parameterType="Map">
+		delete
+		from SM_SURVEY_RESPONSE
 		where
-		BOARD_SEQ = #{BOARD_SEQ}
+		SURVEY_SEQ = #{SURVEY_SEQ}
 	</delete>
-	
+	<delete id="survey_delete_course" parameterType="Map">
+		delete
+		from SM_COURSEREXAM
+		where
+		SURVEY_SEQ = #{SURVEY_SEQ}
+	</delete>
+	<delete id="survey_delete_view" parameterType="Map">
+		delete
+		from SM_QUESTIONRVIEW
+		where
+		QUESTION_SEQ = #{QUESTION_SEQ}
+	</delete>
+	<delete id="survey_delete_question" parameterType="Map">
+		delete
+		from SM_QUESTION
+		where
+		SURVEY_SEQ = #{SURVEY_SEQ}
+	</delete>
+	<delete id="survey_delete" parameterType="Map">
+		delete
+		from SM_SURVEY
+		where
+		SURVEY_SEQ = #{SURVEY_SEQ}
+	</delete>
+
 </mapper>

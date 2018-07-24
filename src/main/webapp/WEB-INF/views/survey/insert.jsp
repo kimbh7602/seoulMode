@@ -107,10 +107,10 @@ p{font-size:20px};
 			$.fn.changesubject();
 		} else if (select == "UUID_8003") {
 			alert(select);
-			$.fn.changesatisfaction();
+			$.fn.changedescription();
 		} else if (select == "UUID_8004") {
 			alert(select);
-			$.fn.changedescription();
+			$.fn.changesatisfaction();
 		}
 	});
 	$.fn.changeoriginal = function() { // ê°ê´ìë¨ì ì í ì 

@@ -38,7 +38,7 @@ public class CommonUtil {
 	}
 	
 	public String PasswordEncoderGenerator(String password) {
-		String hashedPassword = "";
+		String hashedPassword = password;
 		if(password != null){
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			hashedPassword = passwordEncoder.encode(password);

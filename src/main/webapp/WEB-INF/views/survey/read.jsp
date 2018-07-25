@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- page content -->
-<c:set var="question_idx" value="0" />
-<c:set var="view_idx" value="0" />
-
+<c:set var="subjective_idx" value="0"/>
+<c:set var="object_plural_idx" value="0"/>
 <div class="right_coll" role="main">
 	<div class="">
 		<div class="page-title">
@@ -30,6 +29,17 @@
 							<div class="panel-body">
 								<c:forEach items="${resultList}" var="resultData"
 									varStatus="loop">
+									<c:if test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}"></c:if>
+									<c:if test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}">
+									<c:set var="object_plural_idx" value="${object_plural_idx + 1}"/>
+									</c:if>
+									<c:if test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8002'}">
+									<c:set var="subjective_idx" value="${subjective_idx + 1}"/>
+									</c:if>
+									<c:if test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8003'}">
+									<c:set var="subjective_idx" value="${subjective_idx + 1}"/>
+									</c:if>
+									<c:if test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8004'}"></c:if>
 									<div class="row">
 										<p>${resultData.QUESTION_NUM})${resultData.QUESTION_NAME}</p>
 										<input type="hidden" name="QUESTION_FLAG"
@@ -41,7 +51,7 @@
 											<c:choose>
 												<c:when
 													test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}">
-													<pre><input type="radio" name="OBJECTIVE_RESPONSE_SINGULAR"
+													<pre><input type="radio" name="OBJECTIVE_RESPONSE_SINGULAR,${resultData.QUESTION_SEQ}"
 													value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
 													</pre>
 												</c:when>
@@ -65,11 +75,11 @@
 												</c:when>
 												<c:when
 													test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8004'}">
-													<input type="radio" name="SATISFACTION_RESPONSE" value="1">1
-													<input type="radio" name="SATISFACTION_RESPONSE" value="2">2
-													<input type="radio" name="SATISFACTION_RESPONSE" value="3">3
-													<input type="radio" name="SATISFACTION_RESPONSE" value="4">4
-													<input type="radio" name="SATISFACTION_RESPONSE" value="5">5
+													<input type="radio" name="SATISFACTION_RESPONSE,${resultData.QUESTION_SEQ}" value="1">1
+													<input type="radio" name="SATISFACTION_RESPONSE,${resultData.QUESTION_SEQ}" value="2">2
+													<input type="radio" name="SATISFACTION_RESPONSE,${resultData.QUESTION_SEQ}" value="3">3
+													<input type="radio" name="SATISFACTION_RESPONSE,${resultData.QUESTION_SEQ}" value="4">4
+													<input type="radio" name="SATISFACTION_RESPONSE,${resultData.QUESTION_SEQ}" value="5">5
 												</c:when>
 											</c:choose>
 										</c:forEach>
@@ -82,6 +92,8 @@
 								</c:forEach>
 							</div>
 						</div>
+						<input type="hidden" name= "OBJECT_PLURAL_IDX" value ="${object_plural_idx}">
+						<input type="hidden" name= "SUBJECTIVE_IDX" value ="${subjectivce_idx}">
 						<button type="submit" class="btn btn-default">등록</button>
 					</form>
 				</div>
@@ -91,6 +103,7 @@
 </div>
 <script>
 $(document).ready(function(){
+	$.fn.subjective_idx('${subjective_idx}');
     $("input:checkbox[name=OBJECTIVE_RESPONSE_PLURAL]").change(function(){
         if($("input:checkbox[name=OBJECTIVE_RESPONSE_PLURAL]").is(":checked")){
         	var id = $(this).attr("ques_seq");
@@ -104,6 +117,11 @@ $(document).ready(function(){
     });
 });
 
+
+$.fn.subjective_idx = function(subjective_idx){
+	$("[name = SUBJECTIVE_IDX]").val(subjective_idx);
+	console.log(subjective_idx);
+}
 
 $.fn.countup = function(object,object2){
 	$("[flag = '"+object+"']").val(object2);

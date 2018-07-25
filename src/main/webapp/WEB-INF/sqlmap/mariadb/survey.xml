@@ -116,16 +116,7 @@
 	</insert>
 
 
-	<update id="323" parameterType="Map">
-		<foreach collection="inputdata" item="item" index="index"
-			separator=",">
-			UPDATE SM_QUESTION
-			SET
-			QUESTION_NAME = #{item.QUESTION_NAME}
-			WHERE
-			QUESTION_SEQ = #{item.QUESTION_SEQ}
-		</foreach>
-	</update>
+
 	
 	<update id="question_update" parameterType="Map">
 			UPDATE SM_QUESTION

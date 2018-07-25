@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seoulmode.lecture.component.MapParamCollector;
+import com.seoulmode.lecture.security.MemberInfo;
 import com.seoulmode.lecture.service.SurveyService;
 
 
@@ -41,8 +42,18 @@ public class SurveyController {
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());
 		
-		String member_email = SecurityContextHolder.getContext().getAuthentication().getName();
-		paramMap.put("MEMBER_EMAIL",member_email);
+
+		String member_name = SecurityContextHolder.getContext().getAuthentication().getName();
+		paramMap.put("MEMBER_NAME",member_name);
+		
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+			Object member_email = SecurityContextHolder.getContext().getAuthentication().getPrincipal();			
+			paramMap.put("MEMBER_EMAIL",member_email);
+		}else {
+			MemberInfo member_email = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			paramMap.put("MEMBER_EMAIL",member_email.getMemberID());
+		}
+		
 
 		if("list".equals(action)) {
 			if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
@@ -61,11 +72,11 @@ public class SurveyController {
 			service.survey_modify(paramMap);
 			resultList=(List<Object>) service.getList(paramMap);
 		}else if("response".equals(action)){
-			service.insert_response(paramMap);
+//			service.insert_response(paramMap);
 		}else if("read".equals(action)) {
 			resultList = (List<Object>) service.getList_Read(paramMap);
 		}else if("delete".equals(action)) {
-			
+			service.delete_survey(paramMap);
 		}else {
 			
 		}

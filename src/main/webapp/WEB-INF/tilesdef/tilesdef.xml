@@ -30,19 +30,19 @@
 
 	<!-- login -->   	
     <definition name="/login/loginform" extends="layout.login">
-        <put-attribute name="layout.title" value="login" />
+        <put-attribute name="layout.title" value="SeoulMode" />
         <put-attribute name="layout.body" value="/WEB-INF/views/login/loginform.jsp" />        
 	</definition>
    	
 	<!-- home by user -->
     <definition name="/*" extends="layout.user">
-        <put-attribute name="layout.title" value="{1}" />
+        <put-attribute name="layout.title" value="SeoulMode" />
         <put-attribute name="layout.body" value="/WEB-INF/views/{1}.jsp" />        
 	</definition>
 	
 	<!-- shared view uri by user -->
     <definition name="/*/*" extends="layout.user">
-        <put-attribute name="layout.title" value="{1} > {2}" />
+        <put-attribute name="layout.title" value="SeoulMode" />
         <put-attribute name="layout.body" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
 

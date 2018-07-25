@@ -73,6 +73,7 @@
 											<hr>
 										</div>
 										<button type="submit" class="btn btn-default">${paramMap.action == 'update' ? '수정' : '등록' }</button>
+										<span class="help-block">질문 추가버튼으로 질문을 추가한 후, 마지막으로 등록 버튼을 눌러주세요.</span>
 										<!-- <button type="reset" class="btn btn-default"></button> -->
 									</form>
 								</div>

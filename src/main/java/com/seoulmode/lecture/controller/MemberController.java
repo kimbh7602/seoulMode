@@ -34,6 +34,9 @@ public class MemberController {
 
 		String viewName = MAPPING + action ;
 		
+		String forwardView = (String) paramMap.get("forwardView") ;
+		
+
 		Map<String, Object> resultMap = new HashMap<String, Object>() ;
 		List<Object> resultList = new ArrayList<Object>();
 
@@ -53,9 +56,11 @@ public class MemberController {
 			viewName = MAPPING + "list";
 		}else if("insert".equals(action)) {
 			service.insertObject(paramMap);
-			viewName = "/home";
 		}
 		
+		if(forwardView != null){
+			viewName = forwardView;
+		}
 		// Left 를 위한 권한 가져오기
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());

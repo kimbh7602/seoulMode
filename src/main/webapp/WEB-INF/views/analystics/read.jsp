@@ -14,17 +14,17 @@ $.ajax({
  success: function(result){
 	 var list = result.data;
 	 console.log('exam success');
-  //SELECT BOX 초기화           
+  //SELECT BOX ì´ê¸°í           
   $("#exam").find("option").remove().end().append("<option value=''>Exam Select</option>");
  
-  //배열 개수 만큼 option 추가
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
    $.each(list, function(i){
-    $("#exam").append("<option value='"+list[i].EXAM_SERIES+"'>"+list[i].EXAM_NAME+"</option>")
+    $("#exam").append("<option value='"+list[i].SURVEY_SEQ+"'>"+list[i].SURVEY_NAME+"</option>")
    });    
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")");
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
   }                     
  });
 }
@@ -39,32 +39,35 @@ $.ajax({
  type: "GET",
  url: "<c:url value='/questionAjax'/>",
  dataType:"json",
- data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal},
+ data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal},
  success: function(result){
 	 var list = result.data;
 	 var col = result.col;
 	 var row = result.row;
 	 var val = result.val;
+	 
 	 console.log('question success');
-  //SELECT BOX 초기화           
+  //SELECT BOX ì´ê¸°í           
   $("#question1").find("option").remove().end().append("<option value=''>Quetion Select</option>");
  
-  //배열 개수 만큼 option 추가
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
    $.each(list, function(i){
     $("#question1").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
    });    
   
   var formTag2 = '';
-   formTag2 += '<div id="dvData">';
+   formTag2 += '<div id="dvData" style="visibility:hidden">';
    formTag2 += '<table> <tr>';
    $.each(col, function(i){
-      formTag2 += '<th> '+col[i].QUESTION_NAME+' </th>';
+      formTag2 += '<th> '+col[i].QUESTION_KEYWORD+' </th>';
    });
    formTag2 +='</tr>';
+   var count = 0;
    $.each(row, function(i){
-      formTag2 += '<tr><td>'+row[i].MEMBER_NAME+'</td>';
+      
       $.each(val, function(j){
-    	 formTag2 += '<td>'+val[j].VIEW_NAME+'</td>';
+    	 
+    	 formTag2 += '<td>'+val[j].OBJECTIVE_RESPONSE+'</td>';
       });
       formTag2 += '</tr>';
    });
@@ -74,7 +77,7 @@ $.ajax({
   },
    error: function (jqXHR, textStatus, errorThrown) {
 	
-   alert("오류가 발생하였습니다.("+textStatus+")("+errorThrown+")asdfsasdfsafs");
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")asdfsasdfsafs");
   }                     
  });
 }
@@ -91,17 +94,20 @@ $.ajax({
  type: "GET",
  url: "<c:url value='/responseAjax'/>",
  dataType:"json",
- data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ":questionVal},
+ data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal, "QUESTION_SEQ":questionVal},
  success: function(result){
  	var list = result.data;
  	
  	$("#question2").find("option").remove().end().append("<option value=''>Quetion Select</option>");
  
-  //배열 개수 만큼 option 추가
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
    $.each(list, function(i){
     $("#question2").append("<option value='"+list[i].QUESTION_SEQ+"'>"+list[i].QUESTION_NAME+"</option>")
    });
- 
+  
+  	var btnChart1 = '<button id="pie-chart-1" onclick="pie1();">Pie Chart</button> <button id="bar-chart-1" onclick="bar1();">Bar Chart</button> <button id="line-chart-1" onclick="line1();">Line Chart</button>';
+ 	$('#btn-chart-1').html(btnChart1);
+ 	
     var column = result.col;
     var row = result.row;
     var rowVal = new Array(column.length);
@@ -135,22 +141,6 @@ $.ajax({
       alert(formTag);
    $('#response-div').html(formTag);
    
-   
-   var graphVal = new Array();
-   $.each(column, function(i){
-     graphVal[i] = [column[i].VIEW_NAME, rowVal[i]];
-   });
-   $.jqplot ('graph', [graphVal],
-           {
-             seriesDefaults: {
-               renderer: $.jqplot.PieRenderer,
-               rendererOptions: {
-                 showDataLabels: true
-               }	
-             },
-             legend: { show:true, location: 'e' }
-           }
-   );
    alert("sucess");
   },
    error: function (jqXHR, textStatus, errorThrown) {
@@ -160,6 +150,8 @@ $.ajax({
  });
 }
 </script>
+
+
 
 <!-- Question2 SelectBox -->
 <script type="text/javascript">
@@ -172,7 +164,7 @@ $.ajax({
  type: "GET",
  url: "<c:url value='/crossResponseAjax'/>",
  dataType:"json",
- data: {"COURSE_SEQ":courseVal,"EXAM_SERIES":examVal, "QUESTION_SEQ1":questionVal1, "QUESTION_SEQ2":questionVal2},
+ data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal, "QUESTION_SEQ1":questionVal1, "QUESTION_SEQ2":questionVal2},
  success: function(result){
     var column = result.col;
     var row = result.row;
@@ -189,8 +181,8 @@ $.ajax({
     $.each(rowVal, function(i){
     	$.each(rowVal[i], function(j){
     		$.each(value, function(k){
-    			if(row[i].VIEW_SEQ == value[k].OR2){
-    				if(column[j].VIEW_SEQ == value[k].OR1){
+    			if(row[i].VIEW_NAME == value[k].OR2){
+    				if(column[j].VIEW_NAME == value[k].OR1){
     					rowVal[i][j] = value[k].CNT;
     				}
     			}
@@ -233,61 +225,7 @@ $.ajax({
     	  });
       });
       alert(formTag);
-   $('#response-div').html(formTag); // DRAW GRAPH
-   
-   		
-	   	var lineVal = new Array(row.length);
-   		var lineGraphVal = [];
-   		var lineform = new Array();
-	    for(var i = 0; i < row.length; i++){
-	    	lineVal[i] = [];
-	    	for(var j = 0; j < column.length; j++){
-	    		lineVal[i].push(rowVal[i][j]);
-	    	}
-	    	lineGraphVal.push(lineVal[i]);
-	    }
-	    
-	    console.log(lineGraphVal);
-	    
-	    
-	    
-	   $.jqplot ('graph', lineGraphVal, {
-	       // Give the plot a title.
-	       title: 'Plot With Options',
-	       // You can specify options for all axes on the plot at once with
-	       // the axesDefaults object.  Here, we're using a canvas renderer
-	       // to draw the axis label which allows rotated text.
-	       axesDefaults: {
-	         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-	       },
-	       // Likewise, seriesDefaults specifies default options for all
-	       // series in a plot.  Options specified in seriesDefaults or
-	       // axesDefaults can be overridden by individual series or
-	       // axes options.
-	       // Here we turn on smoothing for the line.
-	       seriesDefaults: {
-	           rendererOptions: {
-	               smooth: false
-	           }
-	       
-	       },
-	       // An axes object holds options for all axes.
-	       // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
-	       // Up to 9 y axes are supported.
-	       axes: {
-	         // options for each axis are specified in seperate option objects.
-	         xaxis: {
-	           label: column[0].QUESTION_NAME,
-	           // Turn off "padding".  This will allow data point to lie on the
-	           // edges of the grid.  Default padding is 1.2 and will keep all
-	           // points inside the bounds of the grid.
-	           pad: 0
-	         },
-	         yaxis: {
-	           label: row[0].QUESTION_NAME
-	         }
-	       }
-	     });
+   $('#response-div').html(formTag); // CREATE TABLE
    
    alert("sucess");
   },
@@ -309,6 +247,236 @@ $(function(){
 	    e.preventDefault();
 	});
 });
+</script>
+
+<!-- Pie Chart -->
+<script>
+var pie1 = function(){
+		alert("pie chart");
+		   var questionVal = $("#question1").val();
+		   var courseVal = $("#course").val();
+		   var examVal = $("#exam").val();
+		   
+		$.ajax({
+		 type: "GET",
+		 url: "<c:url value='/responseAjax'/>",
+		 dataType:"json",
+		 data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal, "QUESTION_SEQ":questionVal},
+		 success: function(result){
+		 	var list = result.data;
+		    var column = result.col;
+		    var row = result.row;
+		    var rowVal = new Array(column.length);
+		    $("#graph-label-val").find("label").remove().end();
+		    $("#graph").find(".jqplot-table-legend").remove().end();
+		    $("#graph").find(".jqplot-axis").remove().end();
+		    $("#graph").find(".jqplot-title").remove().end();
+		    $("#graph").find("canvas").remove().end();
+		     $.each(column, function(i){
+		      $.each(row, function(j){
+		         if(column[i].VIEW_SEQ == row[j].VIEW_SEQ){
+		            rowVal[i] = row[j].CNT;
+		         }
+		      }) ;
+		    });
+		     $.each(rowVal, function(i){
+		       if(rowVal[i] == null){
+		          rowVal[i] = 0;
+		       } 
+		     });
+		   
+		   var graphVal = new Array();
+		   $.each(column, function(i){
+		     graphVal[i] = [column[i].VIEW_NAME, rowVal[i]];
+		   });
+		   $.jqplot ('graph', [graphVal],
+		           {
+		             seriesDefaults: {
+		               renderer: $.jqplot.PieRenderer,
+		               rendererOptions: {
+		                 showDataLabels: true
+		               }	
+		             },
+		             legend: { show:true, location: 'e' }
+		           }
+		   );
+		   alert("sucess");
+		  },
+		   error: function (jqXHR, textStatus, errorThrown) {
+		   
+		   alert("Error.("+textStatus+")("+errorThrown+")");
+		  }                     
+		 });
+	}
+</script>
+
+<!-- Bar Chart -->
+<script>
+var bar1 = function(){
+		alert("bar chart");
+		   var questionVal = $("#question1").val();
+		   var courseVal = $("#course").val();
+		   var examVal = $("#exam").val();
+		$.ajax({
+		 type: "GET",
+		 url: "<c:url value='/responseAjax'/>",
+		 dataType:"json",
+		 data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal, "QUESTION_SEQ":questionVal},
+		 success: function(result){
+		 	var list = result.data;
+		    var column = result.col;
+		    var row = result.row;
+		    var rowVal = new Array(column.length);
+		    $("#graph-label-val").find("label").remove().end();
+		    $("#graph").find(".jqplot-table-legend").remove().end();
+		    $("#graph").find(".jqplot-axis").remove().end();
+		    $("#graph").find(".jqplot-title").remove().end();
+		    $("#graph").find("canvas").remove().end();
+		     $.each(column, function(i){
+		      $.each(row, function(j){
+		         if(column[i].VIEW_SEQ == row[j].VIEW_SEQ){
+		            rowVal[i] = row[j].CNT;
+		         }
+		      }) ;
+		    });
+		     $.each(rowVal, function(i){
+		       if(rowVal[i] == null){
+		          rowVal[i] = 0;
+		       } 
+		     });
+		   
+		   var ticks = new Array();
+		   $.each(column, function(i){
+		     ticks.push(i+1);
+		   });
+		   $.jqplot ('graph', [rowVal],
+		           {
+		             seriesDefaults: {
+		               renderer: $.jqplot.BarRenderer,
+// 		               rendererOptions: {
+// 		                 showDataLabels: true
+						 rendererOptions: {	
+							barWidth: 20,      //bar width 설정
+                            barPadding: -15,  //bar padding
+                            barMargin: 0      //bar간 간격 
+ 		               }	
+		             },
+		             axes: {
+		                 xaxis: {
+		                     renderer: $.jqplot.CategoryAxisRenderer,
+		                     ticks : ticks
+		                 }
+		             },
+		             legend: { show:true, location: 'e' }
+		           }
+		   );
+		   var graphLabel = '';
+		   $.each(column, function(i){
+			  var j = i+1;
+			  graphLabel += '<label>'+j+' : '+column[i].VIEW_NAME+'</label><br>'; 
+		   });
+		   $('#graph-label-val').html(graphLabel);
+		   alert("sucess");
+		  },
+		   error: function (jqXHR, textStatus, errorThrown) {
+		   
+		   alert("Error.("+textStatus+")("+errorThrown+")");
+		  }                     
+		 });
+	}
+</script>
+
+<!-- Line Chart -->
+<script>
+var line1 = function(){
+		alert("line chart");
+		   var questionVal = $("#question1").val();
+		   var courseVal = $("#course").val();
+		   var examVal = $("#exam").val();
+		$.ajax({
+		 type: "GET",
+		 url: "<c:url value='/responseAjax'/>",
+		 dataType:"json",
+		 data: {"COURSE_SEQ":courseVal,"SURVEY_SEQ":examVal, "QUESTION_SEQ":questionVal},
+		 success: function(result){
+		 	var list = result.data;
+		    var column = result.col;
+		    var row = result.row;
+		    var rowVal = new Array(column.length);
+		    $("#graph-label-val").find("label").remove().end();
+		    $("#graph").find(".jqplot-table-legend").remove().end();
+		    $("#graph").find(".jqplot-axis").remove().end();
+		    $("#graph").find(".jqplot-title").remove().end();
+		    $("#graph").find("canvas").remove().end();
+		     $.each(column, function(i){
+		      $.each(row, function(j){
+		         if(column[i].VIEW_SEQ == row[j].VIEW_SEQ){
+		            rowVal[i] = row[j].CNT;
+		         }
+		      }) ;
+		    });
+		     $.each(rowVal, function(i){
+		       if(rowVal[i] == null){
+		          rowVal[i] = 0;
+		       } 
+		     });
+		   
+		     var ticks = [];
+			   $.each(column, function(i){
+			     ticks.push(i+1);
+			   });
+			   $.jqplot ('graph', [rowVal], {
+			       // Give the plot a title.
+			       title: 'Plot With Options',
+			       // You can specify options for all axes on the plot at once with
+			       // the axesDefaults object.  Here, we're using a canvas renderer
+			       // to draw the axis label which allows rotated text.
+			       axesDefaults: {
+			         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+			       },
+			       // Likewise, seriesDefaults specifies default options for all
+			       // series in a plot.  Options specified in seriesDefaults or
+			       // axesDefaults can be overridden by individual series or
+			       // axes options.
+			       // Here we turn on smoothing for the line.
+			       seriesDefaults: {
+			           rendererOptions: {
+			               smooth: false
+			           }
+			       },
+			       // An axes object holds options for all axes.
+			       // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
+			       // Up to 9 y axes are supported.
+			       axes: {
+			         // options for each axis are specified in seperate option objects.
+			         xaxis: {
+			           label: column[0].QUESTION_NAME,
+			           ticks : ticks,
+			           // Turn off "padding".  This will allow data point to lie on the
+			           // edges of the grid.  Default padding is 1.2 and will keep all
+			           // points inside the bounds of the grid.
+			           pad: 0
+			         },
+			         yaxis: {
+			           label: "Y Axis"
+			         }
+			       },
+			       legend: { show:true, location: 'e' }
+			     });
+			   var graphLabel = '';
+			   $.each(column, function(i){
+				  var j = i+1;
+				  graphLabel += '<label>'+j+' : '+column[i].VIEW_NAME+'</label><br>'; 
+			   });
+			   $('#graph-label-val').html(graphLabel);
+		   alert("sucess");
+		  },
+		   error: function (jqXHR, textStatus, errorThrown) {
+		   
+		   alert("Error.("+textStatus+")("+errorThrown+")");
+		  }                     
+		 });
+	}
 </script>
 
 
@@ -374,7 +542,14 @@ $(function(){
               	<div class="x_panel">
               		<label>Chart</label>
               		<div class="clearfix"></div>
-              		<div id="graph" style="width:600px; height:350px;"></div>
+              		<div id="btn-chart-1"></div>
+              		<div id="graph-div">
+              			<div id="graph" style="width:600px; height:350px;"></div>
+              		</div>
+              		<div id="graph-label">
+              			<div id="graph-label-val"></div>
+              		</div>
+              		<div id="graph2" style="width:600px; height:350px;"></div>
               	</div>
               </div>
               

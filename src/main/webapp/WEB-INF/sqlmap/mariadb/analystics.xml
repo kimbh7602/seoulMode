@@ -9,10 +9,10 @@
 	<select id="examList" resultType="Map" parameterType="Map">
    
       select
-      	e.EXAM_SERIES,
-      	e.EXAM_NAME
-      from SM_EXAM as e JOIN SM_COURSEREXAM as c
-      on e.EXAM_SERIES = c.EXAM_SERIES
+      	s.SURVEY_SEQ,
+      	s.SURVEY_NAME
+      from SM_SURVEY as s JOIN SM_COURSEREXAM as c
+      on s.SURVEY_SEQ = c.SURVEY_SEQ
       where c.COURSE_SEQ = #{COURSE_SEQ}
       
    </select>
@@ -20,12 +20,12 @@
    <select id="examTableCol" resultType="Map" parameterType="Map">
    
       select distinct
-        q.QUESTION_NAME AS QUESTION_NAME
+        q.QUESTION_NAME AS QUESTION_NAME, q.QUESTION_KEYWORD AS QUESTION_KEYWORD
       from SM_SURVEY_RESPONSE AS r
       JOIN SM_QUESTION AS q
       ON r.QUESTION_SEQ = q.QUESTION_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       order by r.QUESTION_SEQ
       
    </select>
@@ -38,7 +38,7 @@
       JOIN SM_MEMBER AS m
       ON r.MEMBER_SEQ = m.MEMBER_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       ORDER BY r.MEMBER_SEQ
       
    </select>
@@ -46,14 +46,12 @@
    <select id="examTableValue" resultType="Map" parameterType="Map">
    
       SELECT
-        r.MEMBER_SEQ, r.QUESTION_SEQ, r.OBJECTIVE_RESPONSE, v.VIEW_NAME AS VIEW_NAME
+        r.MEMBER_SEQ, r.QUESTION_SEQ, r.OBJECTIVE_RESPONSE
       FROM SM_SURVEY_RESPONSE as r
       join SM_QUESTION as q
       on r.QUESTION_SEQ = q.QUESTION_SEQ
-      join SM_QUESTIONRVIEW as v
-      on r.OBJECTIVE_RESPONSE = v.VIEW_SEQ
       WHERE r.COURSE_SEQ = #{COURSE_SEQ}
-      AND r.EXAM_SERIES = #{EXAM_SERIES}
+      AND r.SURVEY_SEQ = #{SURVEY_SEQ}
       ORDER BY r.MEMBER_SEQ, r.QUESTION_SEQ
       
    </select>
@@ -66,7 +64,7 @@
       from SM_SURVEY_RESPONSE AS r JOIN SM_QUESTION AS q
       on r.QUESTION_SEQ = q.QUESTION_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       
    </select>
    
@@ -79,7 +77,7 @@
       JOIN SM_QUESTIONRVIEW AS v
       ON q.QUESTION_SEQ = v.QUESTION_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       and r.QUESTION_SEQ = #{QUESTION_SEQ}
       group by v.VIEW_NAME
       order by v.VIEW_SEQ
@@ -88,16 +86,14 @@
    
    <select id="rowList" resultType="Map" parameterType="Map">
    
-      select
-         v.VIEW_SEQ, count(r.OBJECTIVE_RESPONSE) AS CNT
-      from SM_SURVEY_RESPONSE AS r
+      SELECT v.VIEW_SEQ, COUNT(OBJECTIVE_RESPONSE) AS CNT
+      FROM SM_SURVEY_RESPONSE AS r
       JOIN SM_QUESTION AS q
-      on r.QUESTION_SEQ = q.QUESTION_SEQ
+      ON r.QUESTION_SEQ = q.QUESTION_SEQ
       JOIN SM_QUESTIONRVIEW AS v
-      ON q.QUESTION_SEQ = v.QUESTION_SEQ
-      where r.OBJECTIVE_RESPONSE = v.VIEW_SEQ
+      ON r.OBJECTIVE_RESPONSE = v.VIEW_NAME
       and r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       and r.QUESTION_SEQ = #{QUESTION_SEQ}
       group by r.OBJECTIVE_RESPONSE
       order by r.OBJECTIVE_RESPONSE
@@ -113,7 +109,7 @@
       JOIN SM_QUESTIONRVIEW AS v
       ON q.QUESTION_SEQ = v.QUESTION_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       and r.QUESTION_SEQ = #{QUESTION_SEQ1}
       group by v.VIEW_NAME
       order by v.VIEW_SEQ
@@ -129,7 +125,7 @@
       JOIN SM_QUESTIONRVIEW AS v
       ON q.QUESTION_SEQ = v.QUESTION_SEQ
       where r.COURSE_SEQ = #{COURSE_SEQ}
-      and r.EXAM_SERIES = #{EXAM_SERIES}
+      and r.SURVEY_SEQ = #{SURVEY_SEQ}
       and r.QUESTION_SEQ = #{QUESTION_SEQ2}
       group by v.VIEW_NAME
       order by v.VIEW_SEQ
@@ -147,9 +143,9 @@
       on r1.QUESTION_SEQ = q.QUESTION_SEQ
       JOIN SM_QUESTIONRVIEW AS v
       ON q.QUESTION_SEQ = v.QUESTION_SEQ
-      where r1.OBJECTIVE_RESPONSE = v.VIEW_SEQ
+      where r1.OBJECTIVE_RESPONSE = v.VIEW_NAME
       and r1.COURSE_SEQ = #{COURSE_SEQ}
-      and r1.EXAM_SERIES = #{EXAM_SERIES}
+      and r1.SURVEY_SEQ = #{SURVEY_SEQ}
       and r1.QUESTION_SEQ = #{QUESTION_SEQ1}
       and r2.QUESTION_SEQ = #{QUESTION_SEQ2}
       group by r1.OBJECTIVE_RESPONSE

@@ -44,7 +44,7 @@ public class SurveyService {
 	
 	public Object getObject(Object dataMap) {
 		
-		Object resultData = null; 
+		Object resultData = null;
 		return resultData;
 	}
 	
@@ -122,10 +122,56 @@ public class SurveyService {
 	}
 	
 	public Object insert_response(Object dataMap) {
-		
+		//응답 넣는 데이터 살펴보고, 쿼리몬도 다시 짜서, SM_SURVEY_RESPONSE 테이블에 값을 넣어보자!!
 		Object resultData = dao.insertObject("survey.insert_response",dataMap);
 		
 		return resultData;
 		
+	}
+	
+	public Object delete_survey(Object dataMap) {
+		
+		Object resultData = dao.getObject("survey.question_seq",dataMap);
+		dao.deleteObject("survey.survey_delete_response",resultData);
+		dao.deleteObject("survey.survey_delete_course",resultData);
+		dao.deleteObject("survey.survey_delete_view",resultData);
+		dao.deleteObject("survey.survey_delete_question",resultData);
+		dao.deleteObject("survey.survey_delete",resultData);
+		
+		return resultData;
+		
+	}
+	
+	public Object survey_modify(Map<Object,Object> dataMap) {
+		
+		List<Map<String,Object>> inputdata = new ArrayList<Map<String,Object>>();
+		Object resultData = null;
+		String[] QUESTION_NAME = (String[]) dataMap.get("QUESTION_NAME");
+		String[] QUESTION_SEQ = (String[]) dataMap.get("QUESTION_SEQ");
+		String[] VIEW_SEQ = (String[]) dataMap.get("VIEW_SEQ");
+		String[] VIEW_NAME = (String[]) dataMap.get("VIEW_NAME");
+		for(int i =0;i<QUESTION_NAME.length;i++) {
+			Map<String,Object> inputMap = new HashMap<String,Object>();
+			
+			inputMap.put("QUESTION_NAME",QUESTION_NAME[i]);
+			inputMap.put("QUESTION_SEQ",QUESTION_SEQ[i]);
+			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
+			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
+			/*			
+			inputMap.put("QUESTION_NAME",QUESTION_NAME[i]);
+			inputMap.put("QUESTION_SEQ",QUESTION_SEQ[i]);
+			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
+			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
+			inputdata.add(inputMap);
+			*/
+			resultData = dao.updateObject("question_update",inputMap);			
+			dao.updateObject("view_update",inputMap);
+
+		}
+//		dataMap.put("inputdata",inputdata);
+//		Object resultData = dao.updateObject("question_update",dataMap);			
+//		dao.updateObject("view_update",dataMap);
+		
+		return resultData;
 	}
 }

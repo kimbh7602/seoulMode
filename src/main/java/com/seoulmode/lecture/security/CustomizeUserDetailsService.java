@@ -18,13 +18,14 @@ import com.seoulmode.lecture.dao.ShareDao;
 
 public class CustomizeUserDetailsService implements UserDetailsService{
 	
+	
 	@Autowired
 	private ShareDao dao; 
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		String sqlMapId = "member.read";
+		String sqlMapId = "member.security_read";
 		dataMap.put("MEMBER_EMAIL", username);
 		// EMAIl 로  정보 가져오는 쿼리문 짜고, 실행 확인
 		Map<String, Object> resultMember = (Map<String, Object>) dao.getObject(sqlMapId, dataMap);
@@ -32,7 +33,7 @@ public class CustomizeUserDetailsService implements UserDetailsService{
 		if (resultMember == null) {
 		throw new UsernameNotFoundException("Not found username: "+username);
 		}
-		sqlMapId = "memberRauthority.list";
+		sqlMapId = "memberRauthority.security_read";
 		dataMap.put("MEMBER_SEQ", resultMember.get("MEMBER_SEQ"));
 		List<Object> resultAuthorities = (List<Object>) dao.getList(sqlMapId, resultMember);
 		return new MemberInfo(resultMember,	buildUserAuthority(resultAuthorities));

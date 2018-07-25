@@ -56,7 +56,10 @@ public class SurveyController {
 			service.course_rel_insert(paramMap);
 			resultList=(List<Object>) service.getList(paramMap);
 		}else if("modify".equals(action)) {
-//			resultMap = (Map<String, Object>) service.getObject(paramMap);
+			resultList = (List<Object>) service.getList_Read(paramMap);
+		}else if("modify_enrollment".equals(action)) {
+			service.survey_modify(paramMap);
+			resultList=(List<Object>) service.getList(paramMap);
 		}else if("response".equals(action)){
 			service.insert_response(paramMap);
 		}else if("read".equals(action)) {

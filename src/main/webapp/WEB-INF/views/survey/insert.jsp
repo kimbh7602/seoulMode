@@ -107,10 +107,10 @@ p{font-size:20px};
 			$.fn.changesubject();
 		} else if (select == "UUID_8003") {
 			alert(select);
-			$.fn.changesatisfaction();
+			$.fn.changedescription();
 		} else if (select == "UUID_8004") {
 			alert(select);
-			$.fn.changedescription();
+			$.fn.changesatisfaction();
 		}
 	});
 	$.fn.changeoriginal = function() { // ê°ê´ìë¨ì ì í ì 
@@ -226,7 +226,7 @@ p{font-size:20px};
 					var survey_name = $('[name="SURVEY_NAME"]').val();
 					var survey_seq = $('[name="SURVEY_SEQ"]').val();
 					var question_flag = $('#question_flag option:selected').val();
-					var question_keyworkd =	$('[name = "question_keyword"]').val();
+					var question_keyword =	$('[name = "question_keyword"]').val();
 
 					var alldata = {
 						"QUESTION_NUM" : ques_idx,

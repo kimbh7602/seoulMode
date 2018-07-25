@@ -15,14 +15,12 @@ public class MemberInfo implements UserDetails {
 	private Set<GrantedAuthority> authorities;
 
 	public MemberInfo(Map<String, Object> resultMember, Set<GrantedAuthority> authorities) {
-		this.memberID = (String) resultMember.get("MEMBER_SEQ");
+		this.memberID = (String) resultMember.get("MEMBER_EMAIL");
 		this.memberName = (String) resultMember.get("MEMBER_NAME");
 		this.password = (String) resultMember.get("MEMBER_PASSWORD");
 		this.authorities = authorities;
 	}
-	User user;
 	
-
 	public String getMemberID() {
 		return memberID;
 	}
@@ -30,12 +28,12 @@ public class MemberInfo implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		return null;
+		return this.password;
 	}
 
 	@Override

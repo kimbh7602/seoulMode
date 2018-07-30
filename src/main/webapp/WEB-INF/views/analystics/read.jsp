@@ -1,6 +1,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
+<!-- Organization SelectBox -->
+<script type="text/javascript">
+//AJAX select box
+var organization = function(province){
+	
+$.ajax({
+ type: "GET",
+ url: "<c:url value='/courseAjax'/>",
+ dataType:"json",
+ data: {"ORGANIZATION_SEQ":province},
+ success: function(result){
+	 var list = result.data;
+	 console.log('course success');
+  //SELECT BOX ì´ê¸°í           
+  $("#course").find("option").remove().end().append("<option value=''>Course Select</option>");
+ 
+  //ë°°ì´ ê°ì ë§í¼ option ì¶ê°
+   $.each(list, function(i){
+    $("#course").append("<option value='"+list[i].COURSE_SEQ+"'>"+list[i].COURSE_NAME+"</option>")
+   });    
+  },
+   error: function (jqXHR, textStatus, errorThrown) {
+	
+   alert("ì¤ë¥ê° ë°ìíììµëë¤.("+textStatus+")("+errorThrown+")");
+  }                     
+ });
+}
+</script>
+
 <!-- Course SelectBox -->
 <script type="text/javascript">
 //AJAX select box
@@ -46,6 +75,8 @@ $.ajax({
 	 var row = result.row;
 	 var val = result.val;
 	 
+	 var colLeng = col.length;
+	 
 	 console.log('question success');
   //SELECT BOX ì´ê¸°í           
   $("#question1").find("option").remove().end().append("<option value=''>Quetion Select</option>");
@@ -63,14 +94,16 @@ $.ajax({
    });
    formTag2 +='</tr>';
    var count = 0;
-   $.each(row, function(i){
       
       $.each(val, function(j){
-    	 
+    	 if(j%colLeng == 0){
+    		 formTag2 += '<tr>';
+    	 }
     	 formTag2 += '<td>'+val[j].OBJECTIVE_RESPONSE+'</td>';
+    	 if(j%colLeng == colLeng-1){
+    		 formTag2 += '</tr>';
+    	 }
       });
-      formTag2 += '</tr>';
-   });
    formTag2 +='</table>';
    formTag2 +='</div>';
    $('#response-div-hidden').html(formTag2);
@@ -504,12 +537,19 @@ var line1 = function(){
               <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
               <div class="form-group">
+              <label>Organization Selects</label>
+              <select id="organization" name="ORGANIZATION_SEQ" class="form-control col-md-7 col-xs-12" onchange="organization(this.value);">
+              	<option value="">Course Select</option>
+                <c:forEach items="${resultMap.organizationList}" var="resultData" varStatus="loop">
+                  <option value="${resultData.ORGANIZATION_SEQ }">${resultData.ORGANIZATION_NAME }</option>
+                </c:forEach>
+              </select>
+              </div>
+              <br><br>
+              <div class="form-group">
               <label>Course Selects</label>
               <select id="course" name="COURSE_SEQ" class="form-control col-md-7 col-xs-12" onchange="course(this.value);">
               	<option value="">Course Select</option>
-                <c:forEach items="${resultMap.courseList}" var="resultData" varStatus="loop">
-                  <option value="${resultData.COURSE_SEQ }">${resultData.COURSE_NAME }</option>
-                </c:forEach>
               </select>
               </div>
               <br><br>
@@ -549,7 +589,7 @@ var line1 = function(){
               		<div id="graph-label">
               			<div id="graph-label-val"></div>
               		</div>
-              		<div id="graph2" style="width:600px; height:350px;"></div>
+              		<!-- <div id="graph2" style="width:600px; height:350px;"></div> -->
               	</div>
               </div>
               

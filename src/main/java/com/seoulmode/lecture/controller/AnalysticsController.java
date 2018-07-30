@@ -59,6 +59,21 @@ public class AnalysticsController {
 		return modelandView;
 	}
 	
+	@RequestMapping(value ="/courseAjax", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Map<String, Object> courseAjax(@RequestParam Map<String, Object> paramMap) {
+		
+		System.out.println("course");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Object> resultList = new ArrayList<Object>();
+		
+		resultList = (List)service.getCourseList(paramMap);
+		
+		resultMap.put("data", resultList);
+		
+		return resultMap;
+		
+	}
+	
 	@RequestMapping(value ="/examAjax", method = { RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody Map<String, Object> examAjax(@RequestParam Map<String, Object> paramMap) {
 		

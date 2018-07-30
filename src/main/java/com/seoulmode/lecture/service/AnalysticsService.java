@@ -46,6 +46,13 @@ public class AnalysticsService {
 	return resultData;
 }
 	
+	public Object getCourseList(Object dataMap) {
+		
+		Object resultData = dao.getList("analystics.courseList", dataMap);
+		
+		return resultData;
+	}
+	
 	public Object getExamList(Object dataMap) {
 		
 		Object resultData = dao.getList("analystics.examList", dataMap);
@@ -99,7 +106,9 @@ public class AnalysticsService {
 		
 		Object resultData = new HashMap();
 		List courseList = (List)dao.getList("course.list", dataMap);
+		List organizationList = (List)dao.getList("analystics.organizationList", dataMap);
 		((Map)resultData).put("courseList", courseList);
+		((Map)resultData).put("organizationList", organizationList);
 		return resultData;
 	}
 	

@@ -17,6 +17,25 @@
       
    </select>
    
+   <select id="courseList" resultType="Map" parameterType="Map">
+   
+      select
+      	COURSE_SEQ,
+      	COURSE_NAME
+      from SM_COURSE
+      where ORGANIZATION_SEQ = #{ORGANIZATION_SEQ}
+      
+   </select>
+   
+   <select id="organizationList" resultType="Map" parameterType="Map">
+   
+      select
+      	ORGANIZATION_SEQ,
+      	ORGANIZATION_NAME
+      from SM_ORGANIZATION
+      
+   </select>
+   
    <select id="examTableCol" resultType="Map" parameterType="Map">
    
       select distinct

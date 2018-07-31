@@ -9,8 +9,8 @@
 	<select id="question_read" resultType="Map" parameterType="Map">
 		SELECT sq.QUESTION_SEQ, sq.QUESTION_NAME, sq.QUESTION_NUM,
 		sq.QUESTION_FLAG_SEQ, sq.SURVEY_SEQ
-		FROM sm_survey ss INNER JOIN
-		sm_question sq
+		FROM SM_SURVEY ss INNER JOIN
+		SM_QUESTION sq
 		ON sq.SURVEY_SEQ = ss.SURVEY_SEQ
 		WHERE sq.SURVEY_SEQ=
 		#{SURVEY_SEQ}
@@ -21,8 +21,8 @@
 		SELECT
 		sqv.VIEW_SEQ, sqv.VIEW_NAME, sqv.QUESTION_SEQ, sqv.VIEW_NUM
 		FROM
-		sm_question sq INNER
-		JOIN sm_questionrview sqv
+		SM_QUESTION sq INNER
+		JOIN SM_QUESTIONRVIEW sqv
 		ON sq.QUESTION_SEQ =
 		sqv.QUESTION_SEQ
 		WHERE
@@ -35,7 +35,7 @@
 		select
 		sc.COURSE_SEQ,sc.COURSE_NAME,sc.ORGANIZATION_SEQ,so.ORGANIZATION_NAME
 		from
-		sm_COURSE sc INNER JOIN sm_organization so
+		SM_COURSE sc INNER JOIN SM_ORGANIZATION so
 		ON so.ORGANIZATION_SEQ =
 		sc.ORGANIZATION_SEQ
 		WHERE 1=1;
@@ -44,7 +44,7 @@
 	<select id="list" resultType="Map" parameterType="Map">
 		select *
 		from
-		sm_survey
+		SM_SURVEY
 		WHERE 1=1
 	</select>
 
@@ -57,15 +57,29 @@
 	<select id="member_list" resultType="Map" parameterType="Map">
 		select
 		ss.SURVEY_NAME, s.SURVEY_SEQ
-		from sm_SURVEY ss inner join (select
+		from SM_SURVEY ss inner join (select
 		SURVEY_SEQ
 		from SM_COURSEREXAM ssc
 		where ssc.COURSE_SEQ =
 		(select
 		COURSE_SEQ
-		from sm_member
+		from SM_MEMBER
 		where MEMBER_EMAIL = #{MEMBER_EMAIL} )) s
 		where ss.SURVEY_SEQ = s.SURVEY_SEQ;
+	</select>
+
+	<select id="organization_list" resultType="Map"	parameterType="Map">
+		select ORGANIZATION_SEQ, ORGANIZATION_NAME
+		from SM_ORGANIZATION
+		where ORGANIZATION_SEQ =
+		(select
+		ORGANIZATION_SEQ
+		from SM_COURSE sc
+		where sc.COURSE_SEQ =
+		(select
+		COURSE_SEQ
+		from SM_MEMBER
+		where MEMBER_EMAIL = #{MEMBER_EMAIL}));
 	</select>
 
 	<select id="question_seq" resultType="Map" parameterType="Map">
@@ -91,7 +105,7 @@
 
 	<insert id="course_rel_insert" parameterType="Map">
 		INSERT INTO
-		sm_courserexam
+		SM_COURSEREXAM
 		VALUES (
 		null
 		, #{SURVEY_SEQ}
@@ -117,45 +131,49 @@
 
 
 
-	
+
 	<update id="question_update" parameterType="Map">
-			UPDATE SM_QUESTION
-			SET
-			QUESTION_NAME = #{QUESTION_NAME}
-			WHERE
-			QUESTION_SEQ = #{QUESTION_SEQ}
+		UPDATE SM_QUESTION
+		SET
+		QUESTION_NAME = #{QUESTION_NAME}
+		WHERE
+		QUESTION_SEQ = #{QUESTION_SEQ}
 	</update>
-	
+
 	<update id="view_update" parameterType="Map">
-			UPDATE SM_QUESTIONRVIEW
-			SET
-			VIEW_NAME = #{VIEW_NAME}
-			WHERE
-			VIEW_SEQ = #{VIEW_SEQ}
+		UPDATE SM_QUESTIONRVIEW
+		SET
+		VIEW_NAME = #{VIEW_NAME}
+		WHERE
+		VIEW_SEQ = #{VIEW_SEQ}
 	</update>
 
 
 	<delete id="survey_delete_response" parameterType="Map">
 		delete
-		from SM_SURVEY_RESPONSE
+		from
+		SM_SURVEY_RESPONSE
 		where
 		SURVEY_SEQ = #{SURVEY_SEQ}
 	</delete>
 	<delete id="survey_delete_course" parameterType="Map">
 		delete
-		from SM_COURSEREXAM
+		from
+		SM_COURSEREXAM
 		where
 		SURVEY_SEQ = #{SURVEY_SEQ}
 	</delete>
 	<delete id="survey_delete_view" parameterType="Map">
 		delete
-		from SM_QUESTIONRVIEW
+		from
+		SM_QUESTIONRVIEW
 		where
 		QUESTION_SEQ = #{QUESTION_SEQ}
 	</delete>
 	<delete id="survey_delete_question" parameterType="Map">
 		delete
-		from SM_QUESTION
+		from
+		SM_QUESTION
 		where
 		SURVEY_SEQ = #{SURVEY_SEQ}
 	</delete>

@@ -10,8 +10,7 @@
 					action="<c:url value ='/j_spring_security_check'/>" method="POST">
 					<h1>Login Form</h1>
 					<c:if test="${paramMap.fail eq true}">
-						<span style="color: red">ìì´ëì ë¹ë°ë²í¸ë¥¼
-							íì¸íì¸ì.</span>
+						<span style="color: red">아이디와 비밀번호를 확인한 후 다시 시도해주세요.</span>
 					</c:if>
 					<div>
 						<input type="text" class="form-control" placeholder="Email"
@@ -34,11 +33,12 @@
 								Account </a>
 						</p>
 						<p class="change_lick">
-							<a href="<c:url value='/home'/>">홈으로</a>
+							<a href="<c:url value='/home'/>">홈으로</a>
 						</p>
 						<div class="clearfix">
 						<p>ROLE_ADMIN : ID = a123@naver.com , PW = 12345</p>
 						<p>ROLE_USER : ID = f123@naver.com , PW = 12345</p>
+						<p>아직 진행중인 프로젝트 입니다.</p>
 						</div>
 						<br />
 					</div>
@@ -91,7 +91,7 @@
 								in </a>
 						</p>
 						<p class="change_lick">
-							<a href="<c:url value='/home'/>">íì¼ë¡</a>
+							<a href="<c:url value='/home'/>">홈으로</a>
 						</p>
 						<div class="clearfix"></div>
 						<br />

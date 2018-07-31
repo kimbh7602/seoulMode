@@ -29,8 +29,8 @@
                         <tr>
                           <th>설문조사 명</th>
                           <th>SEQ</th>
-                          <th>기관</th>
-                          <th>설문여부</th>
+                          <th>기관</th>
+                          <th>응답여부</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -38,8 +38,8 @@
                         <tr>
                           <td>${resultData.SURVEY_NAME}</td>
                           <td>${resultData.SURVEY_SEQ}</td>
-                          <td>SeoulMode(수정요망)</td>
-                          <td><a href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">미완료</a></td>
+                          <td>${resultData.ORGANIZATION_NAME}</td>
+                          <td><a href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">미응답</a></td>
                         </tr>
                         </c:forEach>
                       </tbody>
@@ -48,9 +48,9 @@
         			<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
                       <thead>
                         <tr>
-                          <th>설문조사 명</th>
+                          <th>설문조사 명</th>
                           <th>SEQ</th>
-                          <th>기관</th>
+                          <th>기관</th>
                           <th>Delete</th>
                           <th>Modify</th>
                         </tr>
@@ -60,9 +60,9 @@
                         <tr>
                           <td><a href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">${resultData.SURVEY_NAME}</a></td>
                           <td>${resultData.SURVEY_SEQ}</td>
-                          <td>SeoulMode(수정요망)</td>
-                          <td><a href="<c:url value='/survey/delete?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">삭제</a></td>
-                          <td><a href="<c:url value='/survey/modify?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">수정</a></td>
+                          <td>${resultData.ORGANIZATION_NAME}</td>
+                          <td><a href="<c:url value='/survey/delete?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">삭제</a></td>
+                          <td><a href="<c:url value='/survey/modify?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">수정</a></td>
                         </tr>
                         </c:forEach>
                       </tbody>

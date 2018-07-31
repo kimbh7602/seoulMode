@@ -23,7 +23,14 @@ public class SurveyService {
 	public Object getList(Object dataMap) {
 		
 		Object resultData = dao.getList("survey.list",dataMap);
-		
+		for(int i=0;i<((List)resultData).size() ;i++) {
+			Map<String,Object> inputData = new HashMap<String,Object>();
+			inputData =  (Map<String, Object>) dao.getObject("organization_list",dataMap);
+			Object ORGANIZATION_SEQ = inputData.get("ORGANIZATION_SEQ");
+			Object ORGANIZATION_NAME = inputData.get("ORGANIZATION_NAME");
+			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_SEQ",ORGANIZATION_SEQ);
+			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_NAME",ORGANIZATION_NAME);
+		}
 		return resultData;
 	}
 	
@@ -39,6 +46,13 @@ public class SurveyService {
 		resultData.add(resultData_course);
 		
 		
+		return resultData;
+	}
+	
+	public Object getMemberList(Object dataMap) {
+		Object resultData = dao.getList("survey.member_list",dataMap);
+		Object resultData2 = dao.getList("organization_list",dataMap);
+
 		return resultData;
 	}
 	
@@ -64,11 +78,6 @@ public class SurveyService {
 		return question_resultData;
 	}
 	
-	public Object getMemberList(Object dataMap) {
-		Object resultData = dao.getList("survey.member_list",dataMap);
-		
-		return resultData;
-	}
 	
 	public Object insertSurvey(Map<Object,Object> paramMap) {
 		String uniqueSequence = (String) paramMap.get("SURVEY_SEQ");

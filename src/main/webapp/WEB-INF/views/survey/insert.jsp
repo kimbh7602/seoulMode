@@ -21,7 +21,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<p class="text-muted font-13 m-b-30">설문조사의 제목, 해당 과정, 질문, 보기를 직접 작성한 후 등록 버튼을 눌러주세요.</p>
+						<p class="text-muted font-13 m-b-30">설문조사의 제목, 해당 과정, 질문, 질문 키워드, 보기를 직접 작성한 후 등록 버튼을 눌러주세요.</p>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-12">
@@ -51,14 +51,14 @@
 												<input class="form-control" type="text" name="question_keyword" id="question_keyword" value="" />
 												<hr>
 												<div id="view">
-													<input class="viewAdd" type="button" value="보기추가"></input>
+													<input class="viewAdd" type="button" value="보기추가">
 													<hr>
 												</div>
 												<div id="views"></div>
 											</div>
 											<hr>
 											<p>과정 선택</p>
-											<span class="help-block">설문을 입력하기 전 과정을 선택해주세요.</span>
+											<span class="help-block">설문을 등록하기 전 과정을 선택해주세요.</span>
 											<select class="course_seq" id ="course_seq" name="COURSE_SEQ"style="height: 25;">
 												<c:forEach items="${resultList[1]}" var="resultData"
 													varStatus="loop0">
@@ -68,11 +68,11 @@
 											<hr>
 										</div>
 										<div>
-											<button type="button" class="btn btn-default" id="btnquesAdds">질문 추가</button>
-											<span class="help-block">질문을 완성한 후 눌러주세요.</span>
+											<button type="button" class="btn btn-default" id="btnquesAdds">질문추가</button>
+											<span class="help-block">질문을 완성한 후 눌러주세요</span>
 											<hr>
 										</div>
-										<button type="submit" class="btn btn-default">${paramMap.action == 'update' ? '수정' : '등록' }</button>
+										<button type="submit" class="btn btn-default">${paramMap.action == 'update' ? '수정' : '등록' }</button>
 										<span class="help-block">질문 추가버튼으로 질문을 추가한 후, 마지막으로 등록 버튼을 눌러주세요.</span>
 										<!-- <button type="reset" class="btn btn-default"></button> -->
 									</form>
@@ -92,12 +92,11 @@
 p{font-size:20px};
 </style>
 <script>
-	var ve_idx = 0; // #viewë¥¼ êµ¬ë¶íë idx
-	var ques_idx = 0; // ì§ë¬¸ ê°¯ì Count
+	var ve_idx = 0; 
+	var ques_idx = 0; 
 	$(document).on("change", ".question_flag", function() {
 		var select = $('#question_flag option:selected').val();
 		if (select == "UUID_8000") {
-			// ìì±ë°ê¾¸ê¸°
 			alert(select);
 			$.fn.changeobjectsingular();
 		} else if (select == "UUID_8001") {
@@ -114,14 +113,15 @@ p{font-size:20px};
 			$.fn.changesatisfaction();
 		}
 	});
-	$.fn.changeoriginal = function() { // ê°ê´ìë¨ì ì í ì 
+	$.fn.changeoriginal = function() {
 		ve_idx = 0;
-		var object_html_view = '<input class="viewAdd" type="button" value ="보기추가"></input><hr>';
+		var object_html_view = '<input class="viewAdd" type="button" value="보기추가"><hr>';
 		$('#view').html(object_html_view);
+		$('#views').html('');
 		$('[name = "question"]').val("");
 		$('[name = "question_keyword"]').val("");
 	}
-	$.fn.changeobjectsingular = function() { // ê°ê´ìë¨ì ì í ì 
+	$.fn.changeobjectsingular = function() {
 		ve_idx = 1;
 		var object_html = '<label>보기</label>' + '<input ve="' + (ve_idx)
 				+ '"type="text" id="view" name="view' + (ve_idx) + '"/>'
@@ -129,12 +129,12 @@ p{font-size:20px};
 				+ '"type="button" class="btnviewremove" value="Remove"><hr>'
 				+ '<input type = "hidden" name ="flag" value="singular">';
 		$('#views').html(object_html);
-		var object_html_view = '<input class="viewAdd" type="button" value ="보기추가"></input><hr>';
+		var object_html_view = '<input class="viewAdd" type="button" value="보기추가"><hr>';
 		$('#view').html(object_html_view);
 		$('[name = "question"]').val("");
 		$('[name = "question_keyword"]').val("");
 	}
-	$.fn.changeobjectplural = function() { // ê°ê´ìë³µì ì í ì 
+	$.fn.changeobjectplural = function() {
 		ve_idx = 1;
 		var object_html = '<label>보기</label>' + '<input ve="' + (ve_idx)
 				+ '"type="text" id="view" name="view' + (ve_idx) + '"/>'
@@ -142,13 +142,13 @@ p{font-size:20px};
 				+ '"type="button" class="btnviewremove" value="Remove"><hr>'
 				+ '<input type = "hidden" name ="flag" value="plural">';
 		$('#views').html(object_html);
-		var object_html_view = '<input class="viewAdd" type="button" value ="보기추가"></input><hr>';
+		var object_html_view = '<input class="viewAdd" type="button" value="보기추가"><hr>';
 		$('#view').html(object_html_view);
 		$('[name = "question"]').val("");
 		$('[name = "question_keyword"]').val("");
-
 	}
-	$.fn.changesubject = function() { // ì£¼ê´ì ì í ì
+	
+	$.fn.changesubject = function() {//
 		ve_idx = 98765;
 		var subject_html = "<input type='hidden' name='flag' value='subject' ve='" + (ve_idx) + "'>";
 		$('#views').html(subject_html);
@@ -157,7 +157,7 @@ p{font-size:20px};
 		$('[name = "question"]').val("");
 		$('[name = "question_keyword"]').val("");
 	}
-	$.fn.changesatisfaction = function() { // ë§ì¡±ë ì í ì
+	$.fn.changesatisfaction = function() {//
 		ve_idx = 98765;
 		var satisfaction_html = "<input type='hidden' name='flag' value='satisfaction' ve='" + (ve_idx) + "'>";
 		$('#views').html(satisfaction_html);
@@ -166,7 +166,7 @@ p{font-size:20px};
 		$('[name = "question"]').val("");
 		$('[name = "question_keyword"]').val("");
 	}
-	$.fn.changedescription = function() { // ë§ì¡±ë ì í ì
+	$.fn.changedescription = function() {//
 		ve_idx = 98765;
 		var description_html = "<input type='hidden' name='flag' value='description' ve='" + (ve_idx) + "'>";
 		$('#views').html(description_html);

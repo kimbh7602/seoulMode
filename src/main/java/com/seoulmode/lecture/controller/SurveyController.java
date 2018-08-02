@@ -77,6 +77,7 @@ public class SurveyController {
 			resultList = (List<Object>) service.getList_Read(paramMap);
 		}else if("delete".equals(action)) {
 			service.delete_survey(paramMap);
+			resultList=(List<Object>) service.getList(paramMap);
 		}else {
 			
 		}

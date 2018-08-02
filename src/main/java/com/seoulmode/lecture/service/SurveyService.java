@@ -30,6 +30,7 @@ public class SurveyService {
 			Object ORGANIZATION_NAME = inputData.get("ORGANIZATION_NAME");
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_SEQ",ORGANIZATION_SEQ);
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_NAME",ORGANIZATION_NAME);
+			((Map<String, Object>) ((List)resultData).get(i)).put("forwardView","/survey/list");
 		}
 		return resultData;
 	}

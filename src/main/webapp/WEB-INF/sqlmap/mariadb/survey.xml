@@ -84,8 +84,8 @@
 
 	<select id="question_seq" resultType="Map" parameterType="Map">
 		select
-		DISTINCT(SURVEY_SEQ), DISTINCT(QUESTION_SEQ)
-		from SM_SURVEY_RESPONSE
+		DISTINCT(SURVEY_SEQ), QUESTION_SEQ
+		from SM_QUESTION
 		where SURVEY_SEQ = #{SURVEY_SEQ}
 	</select>
 
@@ -129,7 +129,13 @@
 		VALUES(#{QUESTION_SEQ},#{QUESTION_NUM},#{QUESTION_NAME},#{QUESTION_KEYWORD},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 
-
+	<update id="survey_update" parameterType="Map">
+		UPDATE SM_SURVEY
+		SET
+		SURVEY_NAME = #{SURVEY_NAME}
+		WHERE
+		SURVEY_SEQ = #{SURVEY_SEQ}
+	</update>
 
 
 	<update id="question_update" parameterType="Map">

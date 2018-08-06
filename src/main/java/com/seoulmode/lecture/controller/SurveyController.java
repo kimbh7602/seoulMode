@@ -72,7 +72,8 @@ public class SurveyController {
 			service.survey_modify(paramMap);
 			resultList=(List<Object>) service.getList(paramMap);
 		}else if("response".equals(action)){
-//			service.insert_response(paramMap);
+			service.insert_response(paramMap);
+			resultList=(List<Object>) service.getList(paramMap);
 		}else if("read".equals(action)) {
 			resultList = (List<Object>) service.getList_Read(paramMap);
 		}else if("delete".equals(action)) {

@@ -18,7 +18,7 @@
 					<form role="form" method="POST"
 						action="<c:url value='/survey/response' />">
 						<div class="x_title">
-							<input type="hidden" name="SUEVEY_SEQ"
+							<input type="hidden" name="SURVEY_SEQ"
 								value="${paramMap.SURVEY_SEQ}"> <input type="hidden"
 								name="forwardView" value="/survey/list">
 							<h2>${paramMap.SURVEY_NAME}<small>설문조사 회차</small>
@@ -52,13 +52,13 @@
 												<c:when
 													test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}">
 													<pre><input type="radio" name="OBJECTIVE_RESPONSE_SINGULAR,${resultData.QUESTION_SEQ}"
-													value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
+													value="${questionData.VIEW_NAME}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
 													</pre>
 												</c:when>
 												<c:when
 													test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}">
 													<pre><input type="checkbox" name="OBJECTIVE_RESPONSE_PLURAL" ques_seq ="${resultData.QUESTION_SEQ}"
-															value="${questionData.VIEW_SEQ}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
+															value="${questionData.VIEW_NAME}">${questionData.VIEW_NUM})${questionData.VIEW_NAME}
 													</pre>
 												</c:when>
 												<c:when

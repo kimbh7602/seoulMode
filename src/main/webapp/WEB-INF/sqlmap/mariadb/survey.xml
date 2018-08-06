@@ -88,6 +88,12 @@
 		from SM_QUESTION
 		where SURVEY_SEQ = #{SURVEY_SEQ}
 	</select>
+	
+	<select id="courserexam" resultType="Map" parameterType="Map">
+		SELECT *
+		FROM SM_COURSEREXAM
+		WHERE SURVEY_SEQ = #{SURVEY_SEQ}
+	</select>
 
 
 	<insert id="survey_insert" parameterType="Map">
@@ -98,14 +104,15 @@
 
 
 	<insert id="insert_response" parameterType="Map">
-		INSERT INTO
-		SM_SURVEY_RESPONSE
-		VALUES(null,null,#{MEMBER_SEQ},#{QUESTION_SEQ},#{COURSE_SEQ},#{SURVEY_SEQ},#{SURVEY_SERIES})
+		INSERT INTO SM_SURVEY_RESPONSE
+		VALUES
+			<foreach collection="inputList" item="item" index="index" separator=",">
+				(#{item.SUBJECTIVE_RESPONSE},#{item.OBJECTIVE_RESPONSE},#{item.MEMBER_SEQ},#{item.QUESTION_SEQ},#{item.SURVEY_SERIES},#{item.SURVEY_SEQ},#{item.COURSE_SEQ})
+			</foreach>
 	</insert>
 
 	<insert id="course_rel_insert" parameterType="Map">
-		INSERT INTO
-		SM_COURSEREXAM
+		INSERT INTO SM_COURSEREXAM
 		VALUES (
 		null
 		, #{SURVEY_SEQ}
@@ -114,18 +121,16 @@
 	</insert>
 
 	<insert id="view_insert" parameterType="Map">
-		INSERT INTO
-		SM_QUESTIONRVIEW
+		INSERT INTO SM_QUESTIONRVIEW
 		VALUES
 		<foreach collection="inputdata" item="item" index="index"
 			separator=",">
-			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.VIEW_NUM},#{item.QEUSTION_SEQ})
+			(#{item.VIEW_SEQ},#{item.VIEW_NAME},#{item.VIEW_NUM},#{item.QUESTION_SEQ})
 		</foreach>
 	</insert>
 
 	<insert id="ques_insert" parameterType="Map">
-		INSERT INTO
-		SM_QUESTION
+		INSERT INTO SM_QUESTION
 		VALUES(#{QUESTION_SEQ},#{QUESTION_NUM},#{QUESTION_NAME},#{QUESTION_KEYWORD},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
 

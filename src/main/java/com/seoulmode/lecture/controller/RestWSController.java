@@ -1,7 +1,6 @@
 package com.seoulmode.lecture.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,14 +30,27 @@ public class RestWSController {
 	   String[] views_num = request.getParameterValues("views_num");
 	   paramMap.put("views_num",views_num);
 	   Map<Object,Object> resultMap = new HashMap<Object,Object>();
+	   List<Object> resultList = new ArrayList<Object>();
+	   
+	   Object resultObject = new Object();
 	   
 		if("survey_insert".equals(action)) {
 			String survey_seq =	(String) surveyservice.insertSurvey(paramMap);
 			paramMap.put("SURVEY_SEQ",survey_seq);
 			resultMap = (Map<Object, Object>) surveyservice.insertView(paramMap);
+			
+			resultObject = resultMap;
+		}else if("question_list".equals(action)) {
+			resultList = (List<Object>) surveyservice.get_question_list(paramMap);
+			
+			resultObject = resultList;
+		}else if("response_list".equals(action)) {
+			resultList = (List<Object>) surveyservice.get_response_list(paramMap);
+			
+			resultObject = resultList;
 		}
          
-   return resultMap;
+   return resultObject;
       
    }
 }

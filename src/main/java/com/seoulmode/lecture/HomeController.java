@@ -49,7 +49,6 @@ public class HomeController {
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());
-		System.out.println(resultMap.get("auth")); 
 		if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
 			resultList=(List<Object>) service.getList(paramMap);
 		}else {
@@ -86,7 +85,6 @@ public class HomeController {
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		resultMap.put("auth",auth.get(0).toString());
-		System.out.println(resultMap.get("auth")); 
 		if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
 			resultList=(List<Object>) service.getList(paramMap);
 		}else {

@@ -185,12 +185,6 @@ public class SurveyService {
 		
 		
 		for(int i =0;i<question_count;i++) {	// 질문 갯수만큼 반복 
-/*			Map<Object,Object> inputMap = new HashMap<Object,Object>();		 // 한 질문에 대한 데이터
-			inputMap.put("QUESTION_SEQ", a_QUESTION_SEQ[i]);
-			inputMap.put("MEMBER_SEQ", MEMBER_SEQ);
-			inputMap.put("COURSE_SEQ", COURSE_SEQ);
-			inputMap.put("SURVEY_SERIES", SURVEY_SERIES);
-			inputMap.put("SURVEY_SEQ", SURVEY_SEQ);*/
 
 			if( a_QUESTION_FLAG[i].equals("UUID_8000")){		// 객관식 단수
 				// 순서대로 도는거니까 여기서 List 에 값을 넣자
@@ -324,6 +318,7 @@ public class SurveyService {
 		String[] VIEW_SEQ = (String[]) dataMap.get("VIEW_SEQ");
 		String[] VIEW_NAME = (String[]) dataMap.get("VIEW_NAME");
 		for(int i =0;i<QUESTION_NAME.length;i++) {
+			// 반복이 문제 수만큼만 반복되니까 보기가 많은 문항에 대해서도 Update를 해줘야지 Idx를 세서....Insert처럼....복잡하게...해야하겠지....쉬이벌...
 			Map<String,Object> inputMap = new HashMap<String,Object>();
 			
 			inputMap.put("QUESTION_NAME",QUESTION_NAME[i]);
@@ -335,8 +330,34 @@ public class SurveyService {
 			dao.updateObject("view_update",inputMap);
 
 		}
-
 		
 		return resultData;
+	}
+	
+	public Object get_question_list(Object dataMap) {
+		Object resultData = dao.getList("survey.question_list", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object get_response_list(Object dataMap) {
+		Object resultData = dao.getList("survey.response_list",dataMap);
+		
+		return resultData;
+	}
+	
+	public void insert_subjective_response(Map<Object,Object> dataMap) {
+		String QUESTION_SEQ = (String) dataMap.get("QUESTION_SEQ");
+		String SURVEY_SEQ = (String) dataMap.get("SURVEY_SEQ");
+		String[] OBJECTIVE_RESPONSE = (String[]) dataMap.get("OBJECTIVE_RESPONSE");
+		String[] MEMBER_SEQ = (String[]) dataMap.get("MEMBER_SEQ");
+		for(int i =0;i<MEMBER_SEQ.length;i++) {
+			Map<String,Object> inputMap = new HashMap<String,Object>();		
+			inputMap.put("QUESTION_SEQ",QUESTION_SEQ);
+			inputMap.put("SURVEY_SEQ",SURVEY_SEQ);
+			inputMap.put("OBJECTIVE_RESPONSE",OBJECTIVE_RESPONSE[i]);
+			inputMap.put("MEMBER_SEQ",MEMBER_SEQ[i]);
+			dao.updateObject("survey.response_update", inputMap);
+		}
 	}
 }

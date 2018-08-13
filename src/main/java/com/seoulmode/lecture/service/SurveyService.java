@@ -63,7 +63,6 @@ public class SurveyService {
 	}
 	
 	public Object check_response(List<Object> dataList,Map<Object,Object> paramMap) {
-		// 위에서 한걸로 데이터 받아와서 설문 SEQ 별로 select문 돌리고 값이 있나 없나로 flag만들어서 수행가능설문 갯수만큼 데이터 만들자.
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String MEMBER_SEQ = (String)((Map<String, Object>) dao.getObject("survey.member_info", paramMap)).get("MEMBER_SEQ");
 		
@@ -396,5 +395,20 @@ public class SurveyService {
 			inputMap.put("MEMBER_SEQ",MEMBER_SEQ[i]);
 			dao.updateObject("survey.response_update", inputMap);
 		}
+	}
+	
+	public Map<Object,Object> compare_response_count(Object dataMap){
+		Map<Object,Object> resultMap = new HashMap<Object,Object>();
+		
+		Map<String,Object> resultData = (Map<String, Object>) dao.getObject("survey.member_per_survey",dataMap);
+		Object MEMBER_COUNT = resultData.get("COUNT");
+		Map<String,Object> resultData2 = (Map<String, Object>) dao.getObject("survey.response_per_survey",dataMap);
+		Object RESPONSE_COUNT = resultData2.get("COUNT");
+		if(String.valueOf(MEMBER_COUNT).equals(String.valueOf(RESPONSE_COUNT))) {
+			resultMap.put("CHECK","same");
+		}else {
+			resultMap.put("CHECK","not");
+		}		
+		return resultMap;
 	}
 }

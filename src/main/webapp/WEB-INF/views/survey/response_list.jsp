@@ -69,6 +69,24 @@
 $(document).on("change", "#survey_flag", function() {
 	var survey_seq = $('#survey_flag option:selected').val();
 	$.ajax({
+		type:"POST",
+		url:"<c:url value='/ws/check_response'/>",
+		data: {"SURVEY_SEQ":survey_seq},
+		traditional : true,
+		success : function(data){
+			if(data.CHECK == "same"){
+				alert("해당 설문은 모든 수강생이 응답을 마쳤습니다.");
+			}else{
+				alert("해당 설문은 아직 응답하지 못한 수강생이 있습니다.");
+			}
+		},
+		error:function(xhr,status,exception){
+			
+		}
+	});
+	
+	
+	$.ajax({
 		type : "POST",
 		url : "<c:url value='/ws/question_list'/>",
 		data : {"SURVEY_SEQ" : survey_seq},

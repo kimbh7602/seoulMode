@@ -48,6 +48,10 @@ public class RestWSController {
 			resultList = (List<Object>) surveyservice.get_response_list(paramMap);
 			
 			resultObject = resultList;
+		}else if("check_response".equals(action)) {
+			resultMap = surveyservice.compare_response_count(paramMap);
+			
+			resultObject = resultMap;
 		}
          
    return resultObject;

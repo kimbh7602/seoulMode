@@ -313,20 +313,28 @@ public class SurveyService {
 		
 		List<Map<String,Object>> inputdata = new ArrayList<Map<String,Object>>();
 		Object resultData = null;
+		int question_idx =  Integer.parseInt((String)dataMap.get("question_idx"));
+		int view_idx =  Integer.parseInt((String)dataMap.get("view_idx"));
 		String[] QUESTION_NAME = (String[]) dataMap.get("QUESTION_NAME");
 		String[] QUESTION_SEQ = (String[]) dataMap.get("QUESTION_SEQ");
 		String[] VIEW_SEQ = (String[]) dataMap.get("VIEW_SEQ");
 		String[] VIEW_NAME = (String[]) dataMap.get("VIEW_NAME");
-		for(int i =0;i<QUESTION_NAME.length;i++) {
+		for(int i =0;i<question_idx;i++) {
 			// 반복이 문제 수만큼만 반복되니까 보기가 많은 문항에 대해서도 Update를 해줘야지 Idx를 세서....Insert처럼....복잡하게...해야하겠지....쉬이벌...
 			Map<String,Object> inputMap = new HashMap<String,Object>();
 			
 			inputMap.put("QUESTION_NAME",QUESTION_NAME[i]);
 			inputMap.put("QUESTION_SEQ",QUESTION_SEQ[i]);
-			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
-			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
 
 			resultData = dao.updateObject("question_update",inputMap);			
+
+		}
+		
+		for(int i=0;i<view_idx;i++) {
+			Map<String,Object> inputMap = new HashMap<String,Object>();
+			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
+			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
+			
 			dao.updateObject("view_update",inputMap);
 
 		}

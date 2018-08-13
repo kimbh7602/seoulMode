@@ -6,7 +6,7 @@
 		<div class="page-title">
 			<div class="title_left">
 				<h3>
-					Response List <small> 수강생들의 응답을 확인할 수 있습니다.</small>
+					Response List <small>질문에 대항 응답을 확인할 수 있고, 통계를 위한 객관식 응답을 입력할 수 있습니다.</small>
 				</h3>
 			</div>
 		</div>
@@ -120,5 +120,5 @@ $(document).on("change", "#question_flag", function() {
 	});
 });
 
-// 얼추 된거같은데 추가 기능으로는 무엇이 필요할까나 노트정리한거 보고 추가하도록 하자 // 면접 준비해야하는거 알지?
+// 얼추 된거같은데 추가 기능으로는 무엇이 필요할까나 노트정리한거 보고 추가하도록 하자 f// 면접 준비해야하는거 알지?
 </script>

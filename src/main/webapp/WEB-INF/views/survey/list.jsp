@@ -29,7 +29,6 @@
 									<thead>
 										<tr>
 											<th>설문조사 명</th>
-											<th>SEQ</th>
 											<th>기관</th>
 											<th>응답여부</th>
 										</tr>
@@ -39,7 +38,6 @@
 											varStatus="loop">
 											<tr>
 												<td>${resultData.SURVEY_NAME}</td>
-												<td>${resultData.SURVEY_SEQ}</td>
 												<td>${resultData.ORGANIZATION_NAME}</td>
 												<td><a
 													href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">미응답</a></td>
@@ -52,7 +50,6 @@
 									<thead>
 										<tr>
 											<th>설문조사 명</th>
-											<th>SEQ</th>
 											<th>기관</th>
 											<th>Delete</th>
 											<th>Modify</th>
@@ -64,7 +61,6 @@
 											<tr>
 												<td><a
 													href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">${resultData.SURVEY_NAME}</a></td>
-												<td>${resultData.SURVEY_SEQ}</td>
 												<td>${resultData.ORGANIZATION_NAME}</td>
 												<td><a
 													href="<c:url value='/survey/delete?SURVEY_SEQ=${resultData.SURVEY_SEQ}&forwardView=${resultData.forwardView}'/>">삭제</a></td>

@@ -30,7 +30,6 @@ public class SurveyService {
 			Object ORGANIZATION_NAME = inputData.get("ORGANIZATION_NAME");
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_SEQ",ORGANIZATION_SEQ);
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_NAME",ORGANIZATION_NAME);
-			((Map<String, Object>) ((List)resultData).get(i)).put("forwardView","/survey/list");
 		}
 		return resultData;
 	}
@@ -51,10 +50,40 @@ public class SurveyService {
 	}
 	
 	public Object getMemberList(Object dataMap) {
-		Object resultData = dao.getList("survey.member_list",dataMap);
-		Object resultData2 = dao.getList("organization_list",dataMap);
-
+		List<Object> resultData = (List<Object>) dao.getList("survey.member_list",dataMap);
+		List<Object> resultData2 = (List<Object>) dao.getList("survey.organization_list",dataMap);
+		Map<String,Object> inputMap = new HashMap<String,Object>();
+		Object ORGANIZATION_NAME = ((Map)resultData2.get(0)).get("ORGANIZATION_NAME");
+		Object ORGANIZATION_SEQ = ((Map)resultData2.get(0)).get("ORGANIZATION_SEQ");
+		for(int i=0;i<resultData.size();i++) {
+			((Map<String, Object>) resultData.get(i)).put("ORGANIZATION_NAME", ORGANIZATION_NAME);
+			((Map<String, Object>) resultData.get(i)).put("ORGANIZATION_SEQ", ORGANIZATION_SEQ);
+		}
 		return resultData;
+	}
+	
+	public Object check_response(List<Object> dataList,Map<Object,Object> paramMap) {
+		// 위에서 한걸로 데이터 받아와서 설문 SEQ 별로 select문 돌리고 값이 있나 없나로 flag만들어서 수행가능설문 갯수만큼 데이터 만들자.
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String MEMBER_SEQ = (String)((Map<String, Object>) dao.getObject("survey.member_info", paramMap)).get("MEMBER_SEQ");
+		
+		
+		for(int i=0;i<dataList.size();i++) {
+			
+			Map<String,Object> inputMap = new HashMap<String,Object>();
+			Object SURVEY_SEQ =((Map)dataList.get(i)).get("SURVEY_SEQ");
+			inputMap.put("MEMBER_SEQ", MEMBER_SEQ);
+			inputMap.put("SURVEY_SEQ", SURVEY_SEQ);
+			Map<String,Object> resultData = (Map<String, Object>) dao.getObject("survey.check_response",inputMap);
+			Object data = resultData.get("COUNT");
+			if(String.valueOf(data).equals("0")) {
+				((Map<String, Object>) dataList.get(i)).put("CHECK",0);
+			}else {
+				((Map<String, Object>) dataList.get(i)).put("CHECK",1);
+			}
+		}
+		
+		return dataList;
 	}
 	
 	public Object getObject(Object dataMap) {

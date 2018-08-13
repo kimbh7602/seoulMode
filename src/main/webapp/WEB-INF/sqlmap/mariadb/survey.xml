@@ -116,9 +116,17 @@
 		GROUP BY sq.QUESTION_NUM
 	</select>
 	
+	<select id="member_info" resultType="Map" parameterType="Map">
+		SELECT MEMBER_SEQ
+		FROM SM_MEMBER
+		WHERE MEMBER_EMAIL = #{MEMBER_EMAIL}
+	</select>
 	
-	
-	
+	<select id="check_response" resultType="Map" parameterType="Map">
+		SELECT COUNT(MEMBER_SEQ) as COUNT
+		FROM SM_SURVEY_RESPONSE
+		WHERE MEMBER_SEQ =#{MEMBER_SEQ} and SURVEY_SEQ = #{SURVEY_SEQ}
+	</select>
 	
 
 

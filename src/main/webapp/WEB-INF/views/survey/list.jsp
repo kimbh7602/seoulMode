@@ -6,7 +6,7 @@
 		<div class="page-title">
 			<div class="title_left">
 				<h3>
-					List <small>Some examples to get you started</small>
+					List <small>응답가능한 설문조사 리스트입니다.</small>
 				</h3>
 			</div>
 		</div>
@@ -16,7 +16,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>
-							Survey Board <small>Users</small>
+							Survey Board <small>${principalName}</small>
 						</h2>
 						<div class="clearfix"></div>
 					</div>
@@ -25,7 +25,7 @@
 						</p>
 						<table id="datatable" class="table table-striped table-bordered">
 							<c:choose>
-								<c:when test="${resultMap.auth eq 'ROLE_USER'}">
+								<c:when test="${paramMap.auth eq 'ROLE_USER'}">
 									<thead>
 										<tr>
 											<th>설문조사 명</th>
@@ -39,8 +39,14 @@
 											<tr>
 												<td>${resultData.SURVEY_NAME}</td>
 												<td>${resultData.ORGANIZATION_NAME}</td>
-												<td><a
-													href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">미응답</a></td>
+												<c:choose>
+													<c:when test="${resultData.CHECK eq '1'}">
+														<td style=color:red>응답완료</td>
+													</c:when>
+													<c:when test="${resultData.CHECK eq '0'}">
+														<td><a href="<c:url value='/survey/read?SURVEY_SEQ=${resultData.SURVEY_SEQ}'/>">미응답</a></td>
+													</c:when>
+												</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>

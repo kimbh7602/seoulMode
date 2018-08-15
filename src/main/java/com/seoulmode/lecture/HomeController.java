@@ -84,8 +84,8 @@ public class HomeController {
 		}
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		resultMap.put("auth",auth.get(0).toString());
-		if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
+		paramMap.put("auth",auth.get(0).toString());
+		if(((String)paramMap.get("auth")).equals("ROLE_ADMIN")) {
 			resultList=(List<Object>) service.getList(paramMap);
 		}else {
 		resultList=(List<Object>) service.getMemberList(paramMap);

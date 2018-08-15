@@ -52,7 +52,7 @@
 									</tbody>
 								</c:when>
 
-								<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
+								<c:when test="${paramMap.auth eq 'ROLE_ADMIN'}">
 									<thead>
 										<tr>
 											<th>설문조사 명</th>

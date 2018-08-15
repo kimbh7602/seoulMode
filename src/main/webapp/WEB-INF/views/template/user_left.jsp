@@ -47,7 +47,7 @@
                 </ul>
               </div>
              <c:choose>
-		      		<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
+		      		<c:when test="${paramMap.auth eq 'ROLE_ADMIN'}">
 			              <div class="menu_section">
                             <h3>관리자 화면</h3>
 			                <ul class="nav side-menu">

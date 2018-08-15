@@ -67,24 +67,7 @@
 		SET MEMBER_NAME = #{MEMBER_NAME}, MEMBER_EMAIL =#{MEMBER_EMAIL}, MEMBER_PASSWORD = #{MEMBER_PASSWORD}
 		WHERE MEMBER_SEQ = #{MEMBER_SEQ}
 	</update>
-	<!-- <update id = "update_board_img" parameterType="Map">
-		UPDATE board_img
-		SET IMG_NAME = #{file}
-		WHERE IMG_SEQ = #{IMG_SEQ}
-	</update>
-	<update id = "update_view" parameterType="Map">
-		UPDATE board
-		SET views = views+1
-		WHERE CATEGORY_SEQ = #{CATEGORY_SEQ}
-	</update>
-	<delete id="delete_board_img_rel" parameterType="Map">
-		delete from BOARD_IMG_REL
-		where BOARD_SEQ = #{BOARD_SEQ}
-	</delete>
-	<delete id="delete_board_img" parameterType="Map">
-		delete from BOARD_IMG
-		where IMG_SEQ = #{IMG_SEQ}
-	</delete> -->
+
 	<delete id="delete" parameterType="Map">
 		delete from SM_MEMBER
 		where MEMBER_SEQ = #{MEMBER_SEQ}

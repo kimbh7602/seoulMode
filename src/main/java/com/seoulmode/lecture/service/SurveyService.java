@@ -140,7 +140,7 @@ public class SurveyService {
 		for(int i =0;i<views_name.length; i++) {
 			Map<String,Object> inputMap = new HashMap<String, Object>();
 			String view_uniqueSequence = commonutil.getUniqueSequence();
-			inputMap.put("QEUSTION_SEQ",uniqueSequence);
+			inputMap.put("QUESTION_SEQ",uniqueSequence);
 			inputMap.put("VIEW_SEQ",view_uniqueSequence);
 			inputMap.put("VIEW_NAME",views_name[i]);
 			inputMap.put("VIEW_NUM",views_num[i]);

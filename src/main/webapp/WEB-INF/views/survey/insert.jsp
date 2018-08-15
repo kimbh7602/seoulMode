@@ -253,7 +253,7 @@ p{font-size:20px};
 							}
 							console.log(test);
 							$('#insert_check').append(
-									'<div class = "form-group">' + '<p>질문 :'
+									'<div class = "form-group">' + '<p>질문 :'+ques_idx+')'
 											+ data.QUESTION_NAME + ' </p>'
 											+ test);
 							$.fn.changeoriginal();

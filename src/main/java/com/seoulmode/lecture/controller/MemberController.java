@@ -63,7 +63,7 @@ public class MemberController {
 		}
 		// Left 를 위한 권한 가져오기
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		resultMap.put("auth",auth.get(0).toString());
+		paramMap.put("auth",auth.get(0).toString());
 		
 		
 		modelandView.setViewName(viewName);

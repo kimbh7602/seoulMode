@@ -51,7 +51,6 @@
 										</c:forEach>
 									</tbody>
 								</c:when>
-
 								<c:when test="${paramMap.auth eq 'ROLE_ADMIN'}">
 									<thead>
 										<tr>

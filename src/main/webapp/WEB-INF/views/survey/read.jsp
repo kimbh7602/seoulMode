@@ -94,6 +94,7 @@
 						</div>
 						<input type="hidden" name= "OBJECT_PLURAL_IDX" value ="${object_plural_idx}">
 						<input type="hidden" name= "SUBJECTIVE_IDX" value ="${subjectivce_idx}">
+						<small>등록을 누르기 전에 응답하지않은 문항이 있는지 확인해주세요.</small>
 						<button type="submit" class="btn btn-default">등록</button>
 					</form>
 				</div>

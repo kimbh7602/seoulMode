@@ -30,7 +30,6 @@ public class SurveyService {
 			Object ORGANIZATION_NAME = inputData.get("ORGANIZATION_NAME");
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_SEQ",ORGANIZATION_SEQ);
 			((Map<String, Object>) ((List)resultData).get(i)).put("ORGANIZATION_NAME",ORGANIZATION_NAME);
-			((Map<String, Object>) ((List)resultData).get(i)).put("forwardView","/survey/list");
 		}
 		return resultData;
 	}
@@ -51,10 +50,39 @@ public class SurveyService {
 	}
 	
 	public Object getMemberList(Object dataMap) {
-		Object resultData = dao.getList("survey.member_list",dataMap);
-		Object resultData2 = dao.getList("organization_list",dataMap);
-
+		List<Object> resultData = (List<Object>) dao.getList("survey.member_list",dataMap);
+		List<Object> resultData2 = (List<Object>) dao.getList("survey.organization_list",dataMap);
+		Map<String,Object> inputMap = new HashMap<String,Object>();
+		Object ORGANIZATION_NAME = ((Map)resultData2.get(0)).get("ORGANIZATION_NAME");
+		Object ORGANIZATION_SEQ = ((Map)resultData2.get(0)).get("ORGANIZATION_SEQ");
+		for(int i=0;i<resultData.size();i++) {
+			((Map<String, Object>) resultData.get(i)).put("ORGANIZATION_NAME", ORGANIZATION_NAME);
+			((Map<String, Object>) resultData.get(i)).put("ORGANIZATION_SEQ", ORGANIZATION_SEQ);
+		}
 		return resultData;
+	}
+	
+	public Object check_response(List<Object> dataList,Map<Object,Object> paramMap) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String MEMBER_SEQ = (String)((Map<String, Object>) dao.getObject("survey.member_info", paramMap)).get("MEMBER_SEQ");
+		
+		
+		for(int i=0;i<dataList.size();i++) {
+			
+			Map<String,Object> inputMap = new HashMap<String,Object>();
+			Object SURVEY_SEQ =((Map)dataList.get(i)).get("SURVEY_SEQ");
+			inputMap.put("MEMBER_SEQ", MEMBER_SEQ);
+			inputMap.put("SURVEY_SEQ", SURVEY_SEQ);
+			Map<String,Object> resultData = (Map<String, Object>) dao.getObject("survey.check_response",inputMap);
+			Object data = resultData.get("COUNT");
+			if(String.valueOf(data).equals("0")) {
+				((Map<String, Object>) dataList.get(i)).put("CHECK",0);
+			}else {
+				((Map<String, Object>) dataList.get(i)).put("CHECK",1);
+			}
+		}
+		
+		return dataList;
 	}
 	
 	public Object getObject(Object dataMap) {
@@ -112,7 +140,7 @@ public class SurveyService {
 		for(int i =0;i<views_name.length; i++) {
 			Map<String,Object> inputMap = new HashMap<String, Object>();
 			String view_uniqueSequence = commonutil.getUniqueSequence();
-			inputMap.put("QEUSTION_SEQ",uniqueSequence);
+			inputMap.put("QUESTION_SEQ",uniqueSequence);
 			inputMap.put("VIEW_SEQ",view_uniqueSequence);
 			inputMap.put("VIEW_NAME",views_name[i]);
 			inputMap.put("VIEW_NUM",views_num[i]);
@@ -185,12 +213,6 @@ public class SurveyService {
 		
 		
 		for(int i =0;i<question_count;i++) {	// 질문 갯수만큼 반복 
-/*			Map<Object,Object> inputMap = new HashMap<Object,Object>();		 // 한 질문에 대한 데이터
-			inputMap.put("QUESTION_SEQ", a_QUESTION_SEQ[i]);
-			inputMap.put("MEMBER_SEQ", MEMBER_SEQ);
-			inputMap.put("COURSE_SEQ", COURSE_SEQ);
-			inputMap.put("SURVEY_SERIES", SURVEY_SERIES);
-			inputMap.put("SURVEY_SEQ", SURVEY_SEQ);*/
 
 			if( a_QUESTION_FLAG[i].equals("UUID_8000")){		// 객관식 단수
 				// 순서대로 도는거니까 여기서 List 에 값을 넣자
@@ -319,24 +341,74 @@ public class SurveyService {
 		
 		List<Map<String,Object>> inputdata = new ArrayList<Map<String,Object>>();
 		Object resultData = null;
+		int question_idx =  Integer.parseInt((String)dataMap.get("question_idx"));
+		int view_idx =  Integer.parseInt((String)dataMap.get("view_idx"));
 		String[] QUESTION_NAME = (String[]) dataMap.get("QUESTION_NAME");
 		String[] QUESTION_SEQ = (String[]) dataMap.get("QUESTION_SEQ");
 		String[] VIEW_SEQ = (String[]) dataMap.get("VIEW_SEQ");
 		String[] VIEW_NAME = (String[]) dataMap.get("VIEW_NAME");
-		for(int i =0;i<QUESTION_NAME.length;i++) {
+		for(int i =0;i<question_idx;i++) {
+			// 반복이 문제 수만큼만 반복되니까 보기가 많은 문항에 대해서도 Update를 해줘야지 Idx를 세서....Insert처럼....복잡하게...해야하겠지....쉬이벌...
 			Map<String,Object> inputMap = new HashMap<String,Object>();
 			
 			inputMap.put("QUESTION_NAME",QUESTION_NAME[i]);
 			inputMap.put("QUESTION_SEQ",QUESTION_SEQ[i]);
-			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
-			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
 
 			resultData = dao.updateObject("question_update",inputMap);			
+
+		}
+		
+		for(int i=0;i<view_idx;i++) {
+			Map<String,Object> inputMap = new HashMap<String,Object>();
+			inputMap.put("VIEW_SEQ",VIEW_SEQ[i]);
+			inputMap.put("VIEW_NAME",VIEW_NAME[i]);
+			
 			dao.updateObject("view_update",inputMap);
 
 		}
-
 		
 		return resultData;
+	}
+	
+	public Object get_question_list(Object dataMap) {
+		Object resultData = dao.getList("survey.question_list", dataMap);
+		
+		return resultData;
+	}
+	
+	public Object get_response_list(Object dataMap) {
+		Object resultData = dao.getList("survey.response_list",dataMap);
+		
+		return resultData;
+	}
+	
+	public void insert_subjective_response(Map<Object,Object> dataMap) {
+		String QUESTION_SEQ = (String) dataMap.get("QUESTION_SEQ");
+		String SURVEY_SEQ = (String) dataMap.get("SURVEY_SEQ");
+		String[] OBJECTIVE_RESPONSE = (String[]) dataMap.get("OBJECTIVE_RESPONSE");
+		String[] MEMBER_SEQ = (String[]) dataMap.get("MEMBER_SEQ");
+		for(int i =0;i<MEMBER_SEQ.length;i++) {
+			Map<String,Object> inputMap = new HashMap<String,Object>();		
+			inputMap.put("QUESTION_SEQ",QUESTION_SEQ);
+			inputMap.put("SURVEY_SEQ",SURVEY_SEQ);
+			inputMap.put("OBJECTIVE_RESPONSE",OBJECTIVE_RESPONSE[i]);
+			inputMap.put("MEMBER_SEQ",MEMBER_SEQ[i]);
+			dao.updateObject("survey.response_update", inputMap);
+		}
+	}
+	
+	public Map<Object,Object> compare_response_count(Object dataMap){
+		Map<Object,Object> resultMap = new HashMap<Object,Object>();
+		
+		Map<String,Object> resultData = (Map<String, Object>) dao.getObject("survey.member_per_survey",dataMap);
+		Object MEMBER_COUNT = resultData.get("COUNT");
+		Map<String,Object> resultData2 = (Map<String, Object>) dao.getObject("survey.response_per_survey",dataMap);
+		Object RESPONSE_COUNT = resultData2.get("COUNT");
+		if(String.valueOf(MEMBER_COUNT).equals(String.valueOf(RESPONSE_COUNT))) {
+			resultMap.put("CHECK","same");
+		}else {
+			resultMap.put("CHECK","not");
+		}		
+		return resultMap;
 	}
 }

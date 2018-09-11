@@ -8,7 +8,7 @@
 		<div class="page-title">
 			<div class="title_left">
 				<h3>
-					Modify <small>Some examples to get you started</small>
+					Modify <small>설문의 질문과 보기의 내용을 수정할 수 있습니다.</small>
 				</h3>
 			</div>
 		</div>
@@ -34,14 +34,15 @@
 									<hr>
 									<c:forEach items="${resultData.VIEWS}" var="questionData"
 										varStatus="loop2">
-										<c:set var="view_idx" value="${view_idx+1}"/>
 										<c:choose>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8000'}">
+												<c:set var="view_idx" value="${view_idx+1}"/>
 												<input type="hidden" name="VIEW_SEQ" value="${questionData.VIEW_SEQ}">
 												<pre >${questionData.VIEW_NUM})<input type="text"  style="width: 60%;" name="VIEW_NAME" value="${questionData.VIEW_NAME}">
 												</pre>
 											</c:when>
 											<c:when test="${resultData.QUESTION_FLAG_SEQ == 'UUID_8001'}">
+												<c:set var="view_idx" value="${view_idx+1}"/>
 												<input type="hidden" name="VIEW_SEQ" value="${questionData.VIEW_SEQ}">
 												<pre >${questionData.VIEW_NUM})<input type="text"  style="width: 60%;" name="VIEW_NAME" value="${questionData.VIEW_NAME}">
 												</pre>
@@ -55,13 +56,14 @@
 										</c:choose>
 									</c:forEach>
 								</div>
-							<c:set var="view_idx" value="0"/>
 							<c:set var="question_idx" value="${question_idx+1}"/>
 							<hr>
 							</c:forEach>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">등록</button>
+					<input type="hidden" name="view_idx" value="${view_idx}">
+					<input type="hidden" name="question_idx" value="${question_idx}">
+					<button type="submit" class="btn btn-default">수정</button>
 					</form>
 				</div>
 			</div>
@@ -69,6 +71,7 @@
 	</div>
 </div>
 <script>
-
+console.log('${view_idx}');
+console.log('${question_idx}');
 </script>
 <!-- /page content -->

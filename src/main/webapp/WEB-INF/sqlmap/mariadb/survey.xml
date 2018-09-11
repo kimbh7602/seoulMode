@@ -68,32 +68,96 @@
 		where ss.SURVEY_SEQ = s.SURVEY_SEQ;
 	</select>
 
-	<select id="organization_list" resultType="Map"	parameterType="Map">
+	<select id="organization_list" resultType="Map"
+		parameterType="Map">
 		select ORGANIZATION_SEQ, ORGANIZATION_NAME
-		from SM_ORGANIZATION
+		from
+		SM_ORGANIZATION
 		where ORGANIZATION_SEQ =
 		(select
 		ORGANIZATION_SEQ
-		from SM_COURSE sc
+		from
+		SM_COURSE sc
 		where sc.COURSE_SEQ =
 		(select
 		COURSE_SEQ
 		from SM_MEMBER
-		where MEMBER_EMAIL = #{MEMBER_EMAIL}));
+		where
+		MEMBER_EMAIL = #{MEMBER_EMAIL}));
 	</select>
 
 	<select id="question_seq" resultType="Map" parameterType="Map">
 		select
 		DISTINCT(SURVEY_SEQ), QUESTION_SEQ
 		from SM_QUESTION
-		where SURVEY_SEQ = #{SURVEY_SEQ}
+		where SURVEY_SEQ =
+		#{SURVEY_SEQ}
 	</select>
-	
+
 	<select id="courserexam" resultType="Map" parameterType="Map">
 		SELECT *
 		FROM SM_COURSEREXAM
 		WHERE SURVEY_SEQ = #{SURVEY_SEQ}
 	</select>
+
+	<select id="response_list" resultType="Map" parameterType="Map">
+		SELECT sm.MEMBER_NAME,sm.MEMBER_EMAIL,ssr.*
+		FROM SM_MEMBER sm INNER
+		JOIN (
+		SELECT *
+		FROM SM_SURVEY_RESPONSE
+		WHERE QUESTION_SEQ =
+		#{QUESTION_SEQ} and SURVEY_SEQ = #{SURVEY_SEQ}) ssr
+		ON ssr.COURSE_SEQ =
+		sm.COURSE_SEQ
+		WHERE sm.MEMBER_SEQ = ssr.MEMBER_SEQ;
+	</select>
+
+	<select id="question_list" resultType="Map" parameterType="Map">
+		SELECT sq.QUESTION_SEQ, sq.QUESTION_NAME, sq.QUESTION_NUM,
+		sq.QUESTION_FLAG_SEQ, sq.SURVEY_SEQ
+		FROM SM_SURVEY ss INNER JOIN
+		SM_QUESTION sq
+		ON sq.SURVEY_SEQ = ss.SURVEY_SEQ
+		WHERE sq.SURVEY_SEQ=
+		#{SURVEY_SEQ} and sq.QUESTION_FLAG_SEQ ='UUID_8002' or
+		sq.QUESTION_FLAG_SEQ ='UUID_8003'
+		GROUP BY sq.QUESTION_NUM
+	</select>
+
+	<select id="member_info" resultType="Map" parameterType="Map">
+		SELECT
+		MEMBER_SEQ
+		FROM SM_MEMBER
+		WHERE MEMBER_EMAIL = #{MEMBER_EMAIL}
+	</select>
+
+	<select id="check_response" resultType="Map" parameterType="Map">
+		SELECT COUNT(MEMBER_SEQ) as COUNT
+		FROM SM_SURVEY_RESPONSE
+		WHERE
+		MEMBER_SEQ =#{MEMBER_SEQ} and SURVEY_SEQ = #{SURVEY_SEQ}
+	</select>
+
+	<select id="member_per_survey" resultType="Map"
+		parameterType="Map">
+		select count(DISTINCT(ssr.MEMBER_SEQ)) as COUNT
+		from
+		SM_SURVEY_RESPONSE as ssr INNER JOIN (SELECT * FROM SM_MEMBER as sm
+		WHERE sm.COURSE_SEQ = (select COURSE_SEQ FROM SM_COURSEREXAM WHERE
+		SURVEY_SEQ =#{SURVEY_SEQ})) ch
+		ON ssr.COURSE_SEQ = ch.COURSE_SEQ
+		where
+		1=1;
+	</select>
+
+	<select id="response_per_survey" resultType="Map"
+		parameterType="Map">
+		SELECT count(MEMBER_SEQ) as COUNT FROM SM_MEMBER as sm WHERE sm.COURSE_SEQ =
+		(select COURSE_SEQ FROM SM_COURSEREXAM WHERE SURVEY_SEQ =#{SURVEY_SEQ});
+	</select>
+
+
 
 
 	<insert id="survey_insert" parameterType="Map">
@@ -106,13 +170,15 @@
 	<insert id="insert_response" parameterType="Map">
 		INSERT INTO SM_SURVEY_RESPONSE
 		VALUES
-			<foreach collection="inputList" item="item" index="index" separator=",">
-				(#{item.SUBJECTIVE_RESPONSE},#{item.OBJECTIVE_RESPONSE},#{item.MEMBER_SEQ},#{item.QUESTION_SEQ},#{item.SURVEY_SERIES},#{item.SURVEY_SEQ},#{item.COURSE_SEQ})
-			</foreach>
+		<foreach collection="inputList" item="item" index="index"
+			separator=",">
+			(#{item.SUBJECTIVE_RESPONSE},#{item.OBJECTIVE_RESPONSE},#{item.MEMBER_SEQ},#{item.QUESTION_SEQ},#{item.SURVEY_SERIES},#{item.SURVEY_SEQ},#{item.COURSE_SEQ})
+		</foreach>
 	</insert>
 
 	<insert id="course_rel_insert" parameterType="Map">
-		INSERT INTO SM_COURSEREXAM
+		INSERT INTO
+		SM_COURSEREXAM
 		VALUES (
 		null
 		, #{SURVEY_SEQ}
@@ -133,6 +199,7 @@
 		INSERT INTO SM_QUESTION
 		VALUES(#{QUESTION_SEQ},#{QUESTION_NUM},#{QUESTION_NAME},#{QUESTION_KEYWORD},#{QUESTION_FLAG},#{SURVEY_SEQ})
 	</insert>
+
 
 	<update id="survey_update" parameterType="Map">
 		UPDATE SM_SURVEY
@@ -157,6 +224,16 @@
 		VIEW_NAME = #{VIEW_NAME}
 		WHERE
 		VIEW_SEQ = #{VIEW_SEQ}
+	</update>
+
+	<update id="response_update" parameterType="Map">
+		UPDATE
+		SM_SURVEY_RESPONSE
+		SET
+		OBJECTIVE_RESPONSE = #{OBJECTIVE_RESPONSE}
+		WHERE
+		MEMBER_SEQ = #{MEMBER_SEQ} and QUESTION_SEQ = #{QUESTION_SEQ} and
+		SURVEY_SEQ = #{SURVEY_SEQ}
 	</update>
 
 

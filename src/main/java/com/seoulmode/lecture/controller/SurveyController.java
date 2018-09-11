@@ -40,7 +40,7 @@ public class SurveyController {
 		String forwardView = (String) paramMap.get("forwardView") ;
 		
 		List auth = (List) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		resultMap.put("auth",auth.get(0).toString());
+		paramMap.put("auth",auth.get(0).toString());
 		
 
 		String member_name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -56,10 +56,10 @@ public class SurveyController {
 		
 
 		if("list".equals(action)) {
-			if(((String)resultMap.get("auth")).equals("ROLE_ADMIN")) {
+			if(((String)paramMap.get("auth")).equals("ROLE_ADMIN")) {
 				resultList=(List<Object>) service.getList(paramMap);
 			}else {
-			resultList=(List<Object>) service.getMemberList(paramMap);
+			resultList = (List<Object>) service.check_response(resultList=(List<Object>) service.getMemberList(paramMap),paramMap);
 			}
 		}else if("insert".equals(action)) {
 			resultList = (List<Object>) service.getList_insert(paramMap);
@@ -79,8 +79,12 @@ public class SurveyController {
 		}else if("delete".equals(action)) {
 			service.delete_survey(paramMap);
 			resultList=(List<Object>) service.getList(paramMap);
-		}else {
-			
+		}else if("response_list".equals(action)){
+			// response_list 부분에 대한 데이터를 넣을 수 있는 Service 메서드를 구현해보자아
+			resultList = (List<Object>) service.getList(paramMap);
+		}else if("response_enrollment".equals(action)) {
+			service.insert_subjective_response(paramMap);
+			resultList = (List<Object>) service.getList(paramMap);
 		}
 		
 		if(forwardView != null){

@@ -46,9 +46,8 @@
 		      		</c:choose>
                 </ul>
               </div>
-                            <!-- 권한에 따라서 띄워주게끔, Admin 이면 뜨게 -->
-              <c:choose>
-		      		<c:when test="${resultMap.auth eq 'ROLE_ADMIN'}">
+             <c:choose>
+		      		<c:when test="${paramMap.auth eq 'ROLE_ADMIN'}">
 			              <div class="menu_section">
                             <h3>관리자 화면</h3>
 			                <ul class="nav side-menu">
@@ -56,6 +55,7 @@
 			                    <ul class="nav child_menu">
 			                      <li><a href="<c:url value ='/survey/list'/>">List</a></li>
 			                      <li><a href="<c:url value ='/survey/insert'/>">Insert</a></li>
+			                      <li><a href="<c:url value ='/survey/response_list'/>">Response</a></li>
 			                    </ul>
 			                  </li>
 			                  <li><a><i class="fa fa-desktop"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
